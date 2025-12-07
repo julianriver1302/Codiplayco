@@ -1,84 +1,241 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Bandeja | Codiplay Dashboard</title>
-	<link rel="stylesheet" th:href="@{/assetsPanelUsuaario/styleUsuario.css}" />
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Bandeja - CodiPlay</title>
+	<link rel="stylesheet" th:href="@{/assetsPanelUsuaario/styleUsuario.css}">
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+
 	<div class="dashboard-container">
+		<!-- SIDEBAR -->
 		<aside class="sidebar">
-			<div class="logo">
-				<a th:href="@{/PanelControlUsuario/inicio}">
-					<img th:src="@{/assetsPanelUsuaario/unnamed-removebg-preview.PNG}" alt="Logo Codiplay" />
-				</a>
-				<span class="logo-text"></span>
+			<div class="logo-container">
+				<div class="logo-icon">
+					<i class="fa-solid fa-robot"></i>
+				</div>
+				<span class="logo-text">CodiPlay</span>
 			</div>
-			<nav class="main-nav">
+
+			<nav class="sidebar-menu">
 				<ul>
-					<li class="nav-item">
-						<a th:href="@{/PanelControlUsuario/inicio}"><i class="fas fa-home"></i> Inicio</a>
+					<li>
+						<a th:href="@{/PanelControlUsuario/inicio}">
+							<i class="fa-solid fa-house"></i>
+							<span>Inicio</span>
+						</a>
 					</li>
-					<li class="nav-item">
-						<a th:href="@{/PanelControlUsuario/mis_cursos}"><i class="fas fa-book"></i> Mis cursos</a>
+					<li>
+						<a th:href="@{/PanelControlUsuario/mis_cursos}">
+							<i class="fa-solid fa-book-open"></i>
+							<span>Mis cursos</span>
+						</a>
 					</li>
-					<li class="nav-item">
-						<a th:href="@{/PanelControlUsuario/mis_logros}"><i class="fas fa-medal"></i> Mis logros</a>
+					<li>
+						<a th:href="@{/PanelControlUsuario/mis_logros}">
+							<i class="fa-solid fa-trophy"></i>
+							<span>Mis logros</span>
+						</a>
 					</li>
-					<li class="nav-item active">
-						<a th:href="@{/PanelControlUsuario/bandeja}"><i class="fas fa-inbox"></i> Bandeja</a>
+					<li class="active">
+						<a th:href="@{/PanelControlUsuario/bandeja}">
+							<i class="fa-solid fa-inbox"></i>
+							<span>Bandeja</span>
+						</a>
+					</li>
+					<li>
+						<a th:href="@{/PanelControlUsuario/foros}">
+							<i class="fa-solid fa-users"></i>
+							<span>Foros</span>
+						</a>
 					</li>
 				</ul>
 			</nav>
-			<div class="support-section">
-				<a th:href="@{/PanelControlUsuario/soporte}"><i class="fas fa-life-ring"></i> Soporte</a>
+
+			<div class="sidebar-footer">
+				<a th:href="@{/PanelControlUsuario/soporte}" class="support-link">
+					<i class="fa-solid fa-headset"></i>
+					<span>Soporte</span>
+				</a>
 			</div>
+			
 		</aside>
 
+		<!-- MAIN CONTENT -->
 		<main class="main-content">
-			<header class="top-bar">
-				<header class="h1eader">
-					<h1>Bandeja</h1>
-				</header>
+			
+			<!-- HEADER -->
+			<header class="top-header">
+				<div class="page-header">
+					<div class="header-text">
+						<h1>Bandeja</h1>
+						<p>Gestiona tus mensajes y notificaciones.</p>
+					</div>
+					<div class="header-watermark">CodiPlayCo</div>
+				</div>
+				<div class="search-bar search-bar--hidden-bandeja">
+					<i class="fa-solid fa-magnifying-glass"></i>
+					<input type="text" placeholder="Buscar mensajes...">
+				</div>
+
+				<div class="user-actions" style="display: flex; align-items: center; gap: 20px;">
+					<div class="icon-btn theme-btn" id="theme-toggle" title="Cambiar Tema">
+						<i class="fa-solid fa-moon"></i>
+					</div>
+					<div class="user-profile" id="user-profile-toggle">
+						<div class="avatar">
+							<img th:if="${usuario != null and usuario.avatar != null and !#strings.isEmpty(usuario.avatar)}"
+								th:src="@{'/uploads/avatars/' + ${usuario.avatar}}" alt="User Avatar"
+								class="avatar-img" />
+							<img th:unless="${usuario != null and usuario.avatar != null and !#strings.isEmpty(usuario.avatar)}"
+								th:src="@{/assetsPanelUsuaario/22b8078e-03d9-49d7-a4a6-f70b4208e8c9-removebg-preview.png}"
+								alt="User Avatar" class="avatar-img" />
+						</div>
+						<span class="username"
+							th:text="${usuario != null} ? ${usuario.nombre} : 'Usuario'">Usuario</span>
+						<i class="fa-solid fa-chevron-down" style="font-size: 12px; margin-left: 4px;"></i>
+					</div>
+					<div class="user-menu" id="user-menu" style="display: none;">
+						<a th:href="@{/PanelControlUsuario/editar-perfil}"><i class="fa-solid fa-user-pen"></i> Editar perfil</a>
+						<a th:href="@{/logout}"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a>
+					</div>
+				</div>
 			</header>
 
-			<section class="modules-section">
-				<div class="module-cards-wrapper">
-					<div class="module-card">
-						<h3>Mensajes recibidos</h3>
-						<div th:if="${#lists.isEmpty(mensajesRecibidos)}">
-							<p>No tienes mensajes nuevos.</p>
+			<!-- CONTENIDO BANDEJA -->
+			<div class="content-area">
+				
+				
+
+				<!-- CONTENEDOR DE LA BANDEJA -->
+				<div class="inbox-container">
+					
+					<!-- Pestañas de Navegación Interna -->
+					<div class="inbox-tabs">
+						<button class="tab-btn active" type="button" onclick="switchTab('recibidos')">
+							Mensajes recibidos
+							<span class="badge-mini" th:text="${#lists.size(mensajesRecibidos)}">0</span>
+						</button>
+						<button class="tab-btn" type="button" onclick="switchTab('enviados')">
+							Mensajes enviados
+							<span class="badge-mini" th:text="${#lists.size(mensajesEnviados)}">0</span>
+						</button>
+					</div>
+
+					<!-- PANEL: RECIBIDOS -->
+					<div id="recibidos" class="inbox-panel active-panel">
+						<div class="empty-state" th:if="${#lists.isEmpty(mensajesRecibidos)}">
+							<div class="empty-icon-bg">
+								<i class="fa-regular fa-envelope-open"></i>
+							</div>
+							<h3>¡Todo al día!</h3>
+							<p>No tienes mensajes nuevos en tu bandeja de entrada.</p>
+							<button class="btn-ghost" type="button">
+								<i class="fa-solid fa-rotate-right"></i> Actualizar
+							</button>
 						</div>
-						<ul th:if="${!#lists.isEmpty(mensajesRecibidos)}" class="lista-mensajes">
-							<li th:each="m : ${mensajesRecibidos}">
-								<strong th:text="${m.remitente.nombre + ' ' + m.remitente.apellido}">Remitente</strong>
-								<span th:text="${#temporals.format(m.fechaEnvio, 'dd/MM/yyyy HH:mm')}">Fecha</span>
-								<p th:text="${m.contenido}">Contenido</p>
-								<form th:action="@{/PanelControlUsuario/bandeja/responder}" method="post" style="margin-top:0.5rem;">
+
+						<ul class="message-list" th:if="${!#lists.isEmpty(mensajesRecibidos)}">
+							<li class="message-card" th:each="m : ${mensajesRecibidos}">
+								<div class="message-header">
+									<strong th:text="${m.remitente.nombre + ' ' + m.remitente.apellido}">Remitente</strong>
+									<span class="message-date"
+										th:text="${#temporals.format(m.fechaEnvio, 'dd/MM/yyyy HH:mm')}">Fecha</span>
+								</div>
+								<p class="message-content" th:text="${m.contenido}">Contenido</p>
+								<form class="reply-form" th:action="@{/PanelControlUsuario/bandeja/responder}" method="post">
 									<input type="hidden" name="destinatarioId" th:value="${m.remitente.id}" />
 									<textarea name="contenido" rows="2" placeholder="Responder..." required></textarea>
-									<button type="submit">Responder</button>
+									<button type="submit" class="btn-primary-small">
+										<i class="fa-solid fa-paper-plane"></i> Enviar
+									</button>
 								</form>
 							</li>
 						</ul>
 					</div>
-					<div class="module-card" style="margin-top:1.5rem;">
-						<h3>Mensajes enviados</h3>
-						<div th:if="${#lists.isEmpty(mensajesEnviados)}">
-							<p>No has enviado mensajes todavía.</p>
+
+					<!-- PANEL: ENVIADOS -->
+					<div id="enviados" class="inbox-panel" style="display: none;">
+						<div class="empty-state" th:if="${#lists.isEmpty(mensajesEnviados)}">
+							<div class="empty-icon-bg">
+								<i class="fa-regular fa-paper-plane"></i>
+							</div>
+							<h3>Bandeja de salida vacía</h3>
+							<p>No has enviado mensajes todavía. ¡Comienza una conversación!</p>
+							<button class="btn-primary-small" type="button">
+								<i class="fa-solid fa-pen"></i> Redactar Nuevo
+							</button>
 						</div>
-						<ul th:if="${!#lists.isEmpty(mensajesEnviados)}" class="lista-mensajes">
-							<li th:each="m : ${mensajesEnviados}">
-								<strong th:text="${m.destinatario.nombre + ' ' + m.destinatario.apellido}">Destinatario</strong>
-								<span th:text="${#temporals.format(m.fechaEnvio, 'dd/MM/yyyy HH:mm')}">Fecha</span>
-								<p th:text="${m.contenido}">Contenido</p>
+
+						<ul class="message-list" th:if="${!#lists.isEmpty(mensajesEnviados)}">
+							<li class="message-card" th:each="m : ${mensajesEnviados}">
+								<div class="message-header">
+									<strong th:text="${m.destinatario.nombre + ' ' + m.destinatario.apellido}">Destinatario</strong>
+									<span class="message-date"
+										th:text="${#temporals.format(m.fechaEnvio, 'dd/MM/yyyy HH:mm')}">Fecha</span>
+								</div>
+								<p class="message-content" th:text="${m.contenido}">Contenido</p>
 							</li>
 						</ul>
 					</div>
+
 				</div>
-			</section>
+
+			</div>
+
 		</main>
 	</div>
+
+	<!-- Script simple para cambiar pestañas -->
+	<script>
+		function switchTab(tabName) {
+			// Ocultar todos los paneles
+			document.querySelectorAll('.inbox-panel').forEach(p => {
+				p.style.display = 'none';
+				p.classList.remove('active-panel');
+			});
+
+			// Desactivar todos los botones
+			document.querySelectorAll('.tab-btn').forEach(b => {
+				b.classList.remove('active');
+			});
+
+			// Mostrar el panel seleccionado
+			const panel = document.getElementById(tabName);
+			if (panel) {
+				panel.style.display = 'block';
+				panel.classList.add('active-panel');
+			}
+
+			// Activar el botón correspondiente (asumiendo orden fijo)
+			const buttons = document.querySelectorAll('.tab-btn');
+			if (tabName === 'recibidos' && buttons[0]) buttons[0].classList.add('active');
+			if (tabName === 'enviados' && buttons[1]) buttons[1].classList.add('active');
+		}
+	</script>
+	<script th:src="@{/assetsPanelUsuaario/inicio.js}"></script>
+
+	<script>
+		// Toggle simple del menú de usuario al hacer clic en el chip
+		(function () {
+			const profile = document.getElementById('user-profile-toggle');
+			const menu = document.getElementById('user-menu');
+			if (!profile || !menu) return;
+
+			profile.addEventListener('click', function (e) {
+				e.stopPropagation();
+				const visible = menu.style.display === 'block';
+				menu.style.display = visible ? 'none' : 'block';
+			});
+
+			// Cerrar el menú si se hace clic fuera
+			document.addEventListener('click', function () {
+				menu.style.display = 'none';
+			});
+		})();
+	</script>
 </body>
 </html>

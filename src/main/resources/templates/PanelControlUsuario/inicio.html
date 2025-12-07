@@ -1,155 +1,232 @@
 <!DOCTYPE html>
-<html lang="es" xmlns: th="http://thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Inicio | Codiplay Dashboard</title>
-	<link rel="stylesheet" th:href="@{/assetsPanelUsuaario/styleUsuario.css}" />
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Inicio | CodiPlay Dashboard</title>
+
+	<!-- Estilos principales del panel de usuario -->
+	<link rel="stylesheet" th:href="@{/assetsPanelUsuaario/styleUsuario.css}">
+
+	<!-- Fuente Poppins -->
+	<link
+		href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+		rel="stylesheet">
+
+	<!-- Font Awesome -->
 	<link rel="stylesheet"
-		th:href="@{/https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css}" />
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body>
-	<div class="dashboard-container">
-		<aside class="sidebar">
-			<div class="logo">
-				<a th:href="@{/PanelControlUsuario/inicio}">
-					<img th:src="@{/assetsPanelUsuaario/unnamed-removebg-preview.PNG}" alt="Logo Codiplay" />
-				</a>
 
-				<span class="logo-text" th:unless="${usuario}"></span>
+	<div class="dashboard-container">
+		<!-- SIDEBAR -->
+		<aside class="sidebar">
+			<div class="logo-container">
+				<div class="logo-icon">
+					<i class="fa-solid fa-robot"></i>
+				</div>
+				<span class="logo-text">CodiPlay</span>
 			</div>
-			<nav class="main-nav">
+
+			<nav class="sidebar-menu">
 				<ul>
-					<li class="nav-item active">
-						<a th:href="@{/PanelControlUsuario/inicio}"><i class="fas fa-home"></i> Inicio</a>
+					<li class="active">
+						<a th:href="@{/PanelControlUsuario/inicio}">
+							<i class="fa-solid fa-house"></i>
+							<span>Inicio</span>
+						</a>
 					</li>
-					<li class="nav-item ">
-						<a th:href="@{/PanelControlUsuario/mis_cursos}"><i class="fas fa-book"></i> Mis cursos</a>
+					<li>
+						<a th:href="@{/PanelControlUsuario/mis_cursos}">
+							<i class="fa-solid fa-book-open"></i>
+							<span>Mis cursos</span>
+						</a>
 					</li>
-					<li class="nav-item">
-						<a th:href="@{/PanelControlUsuario/mis_logros}"><i class="fas fa-medal"></i> Mis logros</a>
+					<li>
+						<a th:href="@{/PanelControlUsuario/mis_logros}">
+							<i class="fa-solid fa-trophy"></i>
+							<span>Mis logros</span>
+						</a>
 					</li>
-					<li class="nav-item">
-						<a th:href="@{/PanelControlUsuario/bandeja}"><i class="fas fa-inbox"></i> Bandeja</a>
+					<li>
+						<a th:href="@{/PanelControlUsuario/bandeja}">
+							<i class="fa-solid fa-box"></i>
+							<span>Bandeja</span>
+						</a>
 					</li>
-					<li class="nav-item">
-						<a th:href="@{/PanelControlUsuario/foros}"><i class="fas fa-comments"></i> Foros</a>
+					<li>
+						<a th:href="@{/PanelControlUsuario/foros}">
+							<i class="fa-solid fa-users"></i>
+							<span>Foros</span>
+						</a>
 					</li>
 				</ul>
 			</nav>
-			<div class="support-section">
-				<a th:href="@{/PanelControlUsuario/soporte}"><i class="fas fa-life-ring"></i> Soporte</a>
+
+			<div class="sidebar-footer">
+				<a th:href="@{/PanelControlUsuario/soporte}" class="support-link">
+					<i class="fa-solid fa-headset"></i>
+					<span>Soporte</span>
+				</a>
 			</div>
 		</aside>
+
+		<!-- MAIN CONTENT -->
 		<main class="main-content">
-			<header class="top-bar">
-				<header class="h1eader">
-					<h1 th:if="${usuario}" th:text="'Bienvenido ' + ${usuario.nombre}">Bienvenido Usuario</h1>
-					<h1 th:unless="${usuario}">Bienvenido Usuario</h1>
-				</header>
-				<div class="user-info">
-					<div class="user-actions">
-						<i class="fas fa-info-circle"></i>
-						<i class="fas fa-bell"></i>
-						<div style="position: relative; display: inline-block;">
-							<button
-								onclick="document.getElementById('userMenu').style.display = document.getElementById('userMenu').style.display === 'block' ? 'none' : 'block';"
-								style="background: none; border: none; cursor: pointer; padding: 5px; border-radius: 50%;">
-								<img th:if="${usuario != null and usuario.avatar != null and !#strings.isEmpty(usuario.avatar)}"
-									th:src="@{'/uploads/avatars/' + ${usuario.avatar}}" alt="User Avatar"
-									class="avatar" />
-								<img th:unless="${usuario != null and usuario.avatar != null and !#strings.isEmpty(usuario.avatar)}"
-									th:src="@{/assetsPanelUsuaario/22b8078e-03d9-49d7-a4a6-f70b4208e8c9-removebg-preview.png}"
-									alt="User Avatar" class="avatar" />
-							</button>
 
-							<div id="userMenu"
-								style="display: none; position: absolute; background-color: white; min-width: 200px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); z-index: 10000; right: 0; top: 100%; border-radius: 8px; overflow: hidden; margin-top: 5px;">
-								<a th:href="@{/PanelControlUsuario/editar-perfil}"
-									style="color: #333; padding: 12px 16px; text-decoration: none; display: block; border-bottom: 1px solid #eee;"><i
-										class="fas fa-user-edit"></i> Editar Perfil</a>
-								<a th:href="@{/logout}"
-									style="color: #333; padding: 12px 16px; text-decoration: none; display: block;"><i
-										class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
-							</div>
-							<div class="user-name">
-								<span th:if="${usuario}" th:text="${usuario.nombre}">Usuario</span>
-								<span th:unless="${usuario}">Usuario</span>
-								<i class="fas fa-chevron-down"></i>
-							</div>
-						</div>
-			</header>
+			<!-- HEADER -->
+			<header class="top-header">
+				<div class="welcome-section">
+					<h1>
+						Bienvenido
+						<span class="highlight" th:if="${usuario}" th:text="${usuario.nombre}">Usuario</span>
+						<span class="highlight" th:unless="${usuario}">Usuario</span>
+					</h1>
+					<p>¡Continúa tu aventura de aprendizaje!</p>
+				</div>
+				
+				<div class="user-actions" style="display: flex; align-items: center; gap: 20px;">
 
-			<section class="modules-section">
-				<div class="module-cards-wrapper">
-					<div class="module-card no-aprobado">
-						<div class="module-header">
-							<span>Nuevo</span>
-							<span class="module-progress">0 / 285</span>
-						</div>
-						<img th:src="@{/assetsPanelUsuaario/ChatGPT Image 28 oct 2025, 13_36_17.png}" alt="Módulo 1" class="module-image">
-
-						<a th:href="@{/PanelControlUsuario/modulo1}" class="sin_linea">
-							<h3>Módulo 1</h3>
-						</a>
-						<p>Completado 0 de 4 lecciones</p>
-						<div class="progress-bar-container small">
-							<div class="progress-bar" style="width: 0%"></div>
-						</div>
+					<!-- Botón de tema (modo oscuro) -->
+					<div class="icon-btn theme-btn" id="theme-toggle" title="Cambiar Tema">
+						<i class="fa-solid fa-moon"></i>
 					</div>
-					<div class="module-card no-aprobado">
-						<div class="module-header">
-							<span>Nuevo</span>
-							<span class="module-progress">0 / 30</span>
-						</div>
-						
-						<img th:src="@{/assetsPanelUsuaario/ChatGPT Image 28 oct 2025, 13_42_09.png}" alt="Módulo 2" class="module-image">
 
-						<a th:href="@{/PanelControlUsuario/modulo2}" class="sin_linea">
-							<h3>Módulo 2</h3>
-						</a>
-						<p>Completado 0 de 4 lecciones</p>
-						<div class="progress-bar-container small">
-							<div class="progress-bar" style="width: 0%"></div>
+					
+					<div class="user-profile" id="user-profile-toggle">
+						<div class="avatar">
+
+							<!-- Avatar dinámico del usuario -->
+							<img th:if="${usuario != null and usuario.avatar != null and !#strings.isEmpty(usuario.avatar)}"
+								th:src="@{'/uploads/avatars/' + ${usuario.avatar}}" alt="User Avatar"
+								class="avatar-img" />
+							<img th:unless="${usuario != null and usuario.avatar != null and !#strings.isEmpty(usuario.avatar)}"
+								th:src="@{/assetsPanelUsuaario/22b8078e-03d9-49d7-a4a6-f70b4208e8c9-removebg-preview.png}"
+								alt="User Avatar" class="avatar-img" />
 						</div>
+						<span class="username"
+							th:text="${usuario != null} ? ${usuario.nombre} : 'Usuario'">Usuario</span>
+						<i class="fa-solid fa-chevron-down" style="font-size: 12px; margin-left: 4px;"></i>
 					</div>
-					<div class="module-card nuevo">
-						<div class="module-header">
-							<span>Nuevo</span>
-							<span class="module-progress">0 / 285</span>
-						</div>
-						<img th:src="@{/assetsPanelUsuaario/ChatGPT Image 28 oct 2025, 13_46_14.png}" alt="Módulo 3" class="module-image">
-
-						<a th:href="@{/PanelControlUsuario/modulo3}" class="sin_linea">
-							<h3>Módulo 3</h3>
-						</a>
-						<p>Completado 0 de 4 lecciones</p>
-						<div class="progress-bar-container small">
-							<div class="progress-bar" style="width: 0%"></div>
-						</div>
-					</div>
-					<div class="module-card no-aprobado">
-						<div class="module-header">
-							<span>Nuevo </span>
-							<span class="module-progress">0 / 30</span>
-						</div>
-						<img th:src="@{/assetsPanelUsuaario/ChatGPT Image 28 oct 2025, 13_49_21.png}" alt="Módulo 4" class="module-image">
-
-						<a th:href="@{/PanelControlUsuario/modulo4}" class="sin_linea">
-							<h3>Módulo 4</h3>
-						</a>
-						<p>Completado 0 de 4 lecciones</p>
-						<div class="progress-bar-container small">
-							<div class="progress-bar" style="width: 0%"></div>
-						</div>
+					<div class="user-menu" id="user-menu" style="display: none;">
+						<a th:href="@{/PanelControlUsuario/editar-perfil}"><i class="fa-solid fa-user-pen"></i> Editar perfil</a>
+						<a th:href="@{/logout}"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a>
 					</div>
 				</div>
-			</section>
+			</header>
+
+			<!-- CONTENIDO PRINCIPAL -->
+			<div class="content-area">
+				
+				<br>
+
+				<div class="cards-grid">
+					<!-- Tarjeta 1 - Módulo 1 -->
+					<div class="course-card active-card">
+						<div class="card-header">
+							<span class="badge">Nuevo</span>
+							<span class="progress-text">0 / 285</span>
+						</div>
+						<div class="card-icon-container">
+							<div class="icon-circle">
+								<i class="fa-solid fa-rocket rocket-icon"></i>
+							</div>
+						</div>
+						<h3>Módulo 1</h3>
+						<p class="lessons-info">Completado 0 de 4 lecciones</p>
+						<div class="progress-bar-bg">
+							<div class="progress-bar-fill" style="width: 0%;"></div>
+						</div>
+						<a th:href="@{/PanelControlUsuario/modulo1}" class="btn-continue">
+							<i class="fa-solid fa-play-circle"></i> Continuar
+						</a>
+					</div>
+
+					<!-- Tarjeta 2 - Módulo 2 -->
+					<div class="course-card locked-card">
+						<div class="card-header">
+							
+							<span class="progress-text">0 / 30</span>
+						</div>
+						<div class="card-icon-container">
+							<div class="icon-circle">
+								<i class="fa-solid fa-rocket rocket-icon"></i>
+								<div class="lock-overlay"><i class="fa-solid fa-lock"></i></div>
+							</div>
+						</div>
+						<h3>Módulo 2</h3>
+						<p class="lessons-info">Completado 0 de 4 lecciones</p>
+						<button class="btn-locked" type="button">
+							<i class="fa-solid fa-lock"></i> Bloqueado
+						</button>
+					</div>
+
+					<!-- Tarjeta 3 - Módulo 3 -->
+					<div class="course-card locked-card">
+						<div class="card-header">
+							<span class="badge">Nuevo</span>
+							<span class="progress-text">0 / 285</span>
+						</div>
+						<div class="card-icon-container">
+							<div class="icon-circle">
+								<i class="fa-solid fa-rocket rocket-icon"></i>
+								<div class="lock-overlay"><i class="fa-solid fa-lock"></i></div>
+							</div>
+						</div>
+						<h3>Módulo 3</h3>
+						<p class="lessons-info">Completado 0 de 4 lecciones</p>
+						<button class="btn-locked" type="button">
+							<i class="fa-solid fa-lock"></i> Bloqueado
+						</button>
+					</div>
+
+					<!-- Tarjeta 4 - Módulo 4 -->
+					<div class="course-card locked-card">
+						<div class="card-header">
+							<span class="badge">Nuevo</span>
+							<span class="progress-text">0 / 30</span>
+						</div>
+						<div class="card-icon-container">
+							<div class="icon-circle">
+								<i class="fa-solid fa-rocket rocket-icon"></i>
+								<div class="lock-overlay"><i class="fa-solid fa-lock"></i></div>
+							</div>
+						</div>
+						<h3>Módulo 4</h3>
+						<p class="lessons-info">Completado 0 de 4 lecciones</p>
+						<button class="btn-locked" type="button">
+							<i class="fa-solid fa-lock"></i> Bloqueado
+						</button>
+					</div>
+				</div>
+			</div>
 		</main>
 	</div>
 
+	<script th:src="@{/assetsPanelUsuaario/inicio.js}"></script>
+
+	<script>
+		// Toggle simple del menú de usuario al hacer clic en el chip
+		(function () {
+			const profile = document.getElementById('user-profile-toggle');
+			const menu = document.getElementById('user-menu');
+			if (!profile || !menu) return;
+
+			profile.addEventListener('click', function (e) {
+				e.stopPropagation();
+				const visible = menu.style.display === 'block';
+				menu.style.display = visible ? 'none' : 'block';
+			});
+
+			// Cerrar el menú si se hace clic fuera
+			document.addEventListener('click', function () {
+				menu.style.display = 'none';
+			});
+		})();
+	</script>
 
 </body>
 
