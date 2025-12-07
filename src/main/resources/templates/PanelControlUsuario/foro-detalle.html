@@ -1,325 +1,439 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Detalle Foro</title>
-    <link rel="stylesheet" th:href="@{/assetsPanelUsuaario/styleUsuario.css}" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle Foro - CodiPlay</title>
+    <!-- Tu hoja de estilos principal -->
+    <link rel="stylesheet" th:href="@{/assetsPanelUsuaario/styleUsuario.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <style>
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        .panel {
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            padding: 25px;
-            margin-bottom: 25px;
-        }
-        
-        .btn {
-            display: inline-block;
-            padding: 8px 20px;
-            background-color: #4CAF50;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            border: none;
-            cursor: pointer;
-            font-size: 14px;
-            transition: background-color 0.3s;
-        }
-        
-        .btn:hover {
-            background-color: #45a049;
-        }
-        
-        .btn-back {
-            background: none;
-            color: #4CAF50;
-            padding: 0;
+        /* --- ESTILOS ESPECÍFICOS PARA ESTA VISTA (INTEGRADOS) --- */
+
+        /* Botón Volver Ajustado */
+        .back-link-container {
             margin-bottom: 20px;
+        }
+
+        .back-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
             display: inline-flex;
             align-items: center;
-            font-size: 15px;
+            gap: 8px;
+            transition: color 0.3s;
         }
-        
-        .btn-back i {
-            margin-right: 8px;
+        .back-link:hover { color: var(--primary-blue); }
+
+        /* Contenedor Central de Tarjetas */
+        .forum-detail-content {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
         }
-        
-        .btn-back:hover {
-            background: none;
-            text-decoration: underline;
+
+        /* Estilo Unificado de Tarjetas */
+        .forum-card {
+            background: var(--bg-panel);
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: var(--shadow-card);
+            border: 1px solid transparent;
+            transition: transform 0.3s ease;
         }
-        
-        .foro-header {
-            border-bottom: 1px solid #eee;
-            padding-bottom: 15px;
+
+        /* 1. Tarjeta de Pregunta */
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
             margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .author-info h2 {
+            font-size: 22px;
+            color: var(--text-main);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .forum-meta {
+            font-size: 13px;
+            color: var(--text-secondary);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .forum-meta span {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .post-date {
+            font-size: 13px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--bg-body-gradient-start);
+            padding: 5px 12px;
+            border-radius: 20px;
+        }
+
+        .post-content p {
+            color: var(--text-main);
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        /* 2. Sección Respuestas */
+        .responses-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 25px;
+            color: var(--text-main);
         }
         
-        .foro-title {
-            font-size: 1.8rem;
-            color: #333;
-            margin: 0 0 10px 0;
+        .responses-header i {
+            color: var(--primary-blue);
+            font-size: 20px;
         }
-        
-        .foro-meta {
-            color: #666;
-            font-size: 0.9rem;
+
+        .empty-state-box {
+            text-align: center;
+            padding: 40px 0;
+            background: var(--bg-body-gradient-start);
+            border-radius: 16px;
+            border: 1px dashed var(--border-light);
+        }
+
+        .empty-icon {
+            font-size: 40px;
+            color: var(--text-secondary);
             margin-bottom: 15px;
+            opacity: 0.6;
         }
-        
-        .foro-content {
-            color: #444;
-            line-height: 1.6;
-            margin-bottom: 20px;
+
+        .empty-text {
+            color: var(--text-secondary);
+            font-size: 14px;
         }
-        
-        .respuestas-header {
+
+        .responses-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .response-item {
+            padding: 16px 18px;
+            border-radius: 16px;
+            background: var(--bg-input);
+        }
+
+        .response-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .respuestas-title {
-            font-size: 1.4rem;
-            color: #333;
-            margin: 0;
-        }
-        
-        .respuesta-item {
-            padding: 15px 0;
-            border-bottom: 1px solid #f5f5f5;
-        }
-        
-        .respuesta-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        
-        .respuesta-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: #4CAF50;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 12px;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-        
-        .respuesta-info {
-            flex: 1;
-        }
-        
-        .respuesta-autor {
-            font-weight: 600;
-            color: #333;
-            margin: 0 0 3px 0;
-        }
-        
-        .respuesta-fecha {
-            color: #888;
-            font-size: 0.85rem;
-            margin: 0;
-        }
-        
-        .respuesta-contenido {
-            color: #444;
-            line-height: 1.5;
-            margin: 0 0 0 52px;
-        }
-        
-        .sin-respuestas {
-            text-align: center;
-            padding: 30px;
-            color: #666;
-            font-style: italic;
-        }
-        
-        .form-group {
-            margin-bottom: 15px;
-        }
-        
-        .form-group label {
-            display: block;
             margin-bottom: 8px;
-            font-weight: 500;
-            color: #444;
         }
-        
-        textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            min-height: 100px;
-            resize: vertical;
-            font-family: inherit;
+
+        .response-author {
+            font-weight: 600;
+            color: var(--text-main);
             font-size: 14px;
         }
-        
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: white;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-            padding: 10px 0;
-            z-index: 1000;
+
+        .response-date {
+            font-size: 12px;
+            color: var(--text-secondary);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
-        
-        .nav-links {
-            display: flex;
-            justify-content: space-around;
-            max-width: 600px;
-            margin: 0 auto;
+
+        .response-message {
+            font-size: 14px;
+            color: var(--text-main);
+            line-height: 1.6;
         }
-        
-        .nav-link {
-            text-decoration: none;
-            color: #666;
-            text-align: center;
-            padding: 5px 0;
-        }
-        
-        .nav-link i {
+
+        /* 3. Caja de Respuesta */
+        .reply-box label {
             display: block;
-            font-size: 1.5rem;
-            margin-bottom: 3px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 12px;
         }
-        
-        .nav-link span {
-            font-size: 0.8rem;
+
+        .reply-textarea {
+            width: 100%;
+            height: 120px;
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            padding: 20px;
+            font-family: 'Poppins', sans-serif;
+            resize: vertical;
+            outline: none;
+            background: var(--bg-input);
+            color: var(--text-main);
+            transition: all 0.3s ease;
+            font-size: 14px;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.02);
         }
-        
-        .nav-link.active {
-            color: #4CAF50;
+
+        .reply-textarea:focus {
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 4px rgba(0, 194, 255, 0.1);
         }
-        
-        .nav-link.active span {
-            font-weight: 500;
+
+        .btn-submit-reply {
+            margin-top: 20px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--primary-hover));
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            float: right;
         }
-        
-        .content-wrapper {
-            padding-bottom: 70px;
+
+        .btn-submit-reply:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 194, 255, 0.3);
         }
+
+        /* Limpiar float */
+        .reply-actions::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
     </style>
 </head>
 <body>
-<div class="main-layout">
-    <div class="content-wrapper">
-        <div class="container">
-            <!-- Botón de volver -->
-            <a th:href="@{/PanelControlUsuario/foros}" class="btn btn-back">
-                <i class="fas fa-arrow-left"></i> Volver a foros
-            </a>
-            
-            <!-- Encabezado del foro -->
-            <div class="panel">
-                <div class="foro-header">
-                    <h1 class="foro-title" th:text="${foro.titulo}">Título del foro</h1>
-                    <div class="foro-meta">
-                        <i class="far fa-calendar-alt"></i> 
-                        <span th:text="${#temporals.format(foro.fechaCreacion, 'dd/MM/yyyy HH:mm')}">Fecha de publicación</span>
-                    </div>
+
+    <div class="dashboard-container">
+        <!-- SIDEBAR (Igual que dashboard principal) -->
+        <aside class="sidebar">
+            <div class="logo-container">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-robot"></i>
                 </div>
-                <div class="foro-content" th:text="${foro.descripcion}">
-                    Descripción del foro
-                </div>
+                <span class="logo-text">CodiPlay</span>
             </div>
 
-            <!-- Sección de respuestas -->
-            <div class="panel">
-                <div class="respuestas-header">
-                    <h2 class="respuestas-title">
-                        <i class="far fa-comments" style="margin-right: 10px;"></i>
-                        Respuestas
-                    </h2>
+            <nav class="sidebar-menu">
+                <ul>
+                    <li>
+                        <a th:href="@{/PanelControlUsuario/inicio}">
+                            <i class="fa-solid fa-house"></i>
+                            <span>Inicio</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/PanelControlUsuario/mis_cursos}">
+                            <i class="fa-solid fa-book-open"></i>
+                            <span>Mis cursos</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/PanelControlUsuario/mis_logros}">
+                            <i class="fa-solid fa-trophy"></i>
+                            <span>Mis logros</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/PanelControlUsuario/bandeja}">
+                            <i class="fa-solid fa-inbox"></i>
+                            <span>Bandeja</span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a th:href="@{/PanelControlUsuario/foros}">
+                            <i class="fa-solid fa-users"></i>
+                            <span>Foros</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="#" class="support-link">
+                    <i class="fa-solid fa-headset"></i>
+                    <span>Soporte</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <main class="main-content">
+            
+            <!-- HEADER SUPERIOR (igual que en foros.html) -->
+            <header class="top-header">
+                <div class="search-bar search-bar--hidden-foros">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Buscar en foros...">
                 </div>
+
+                <div class="user-actions" style="display: flex; align-items: center; gap: 20px;">
+                    <div class="icon-btn theme-btn" id="theme-toggle" title="Cambiar Tema">
+                        <i class="fa-solid fa-moon"></i>
+                    </div>
+                    <div class="user-profile" id="user-profile-toggle">
+                        <div class="avatar">
+                            <img th:if="${usuario != null and usuario.avatar != null and !#strings.isEmpty(usuario.avatar)}"
+                                 th:src="@{'/uploads/avatars/' + ${usuario.avatar}}" alt="User Avatar"
+                                 class="avatar-img" />
+                            <img th:unless="${usuario != null and usuario.avatar != null and !#strings.isEmpty(usuario.avatar)}"
+                                 th:src="@{/assetsPanelUsuaario/22b8078e-03d9-49d7-a4a6-f70b4208e8c9-removebg-preview.png}"
+                                 alt="User Avatar" class="avatar-img" />
+                        </div>
+                        <span class="username"
+                              th:text="${usuario != null} ? ${usuario.nombre} : 'Usuario'">Usuario</span>
+                        <i class="fa-solid fa-chevron-down" style="font-size: 12px; margin-left: 4px;"></i>
+                    </div>
+                    <div class="user-menu" id="user-menu" style="display: none;">
+                        <a th:href="@{/PanelControlUsuario/editar-perfil}"><i class="fa-solid fa-user-pen"></i> Editar perfil</a>
+                        <a th:href="@{/logout}"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a>
+                    </div>
+                </div>
+            </header>
+
+            <!-- AREA DE CONTENIDO DEL FORO -->
+            <div class="content-area">
                 
-                <!-- Lista de respuestas -->
-                <div th:if="${respuestas != null and !#lists.isEmpty(respuestas)}">
-                    <div th:each="resp : ${respuestas}" class="respuesta-item">
-                        <div class="respuesta-header">
-                            <div class="respuesta-avatar" th:text="${#strings.substring(resp.autor.nombre, 0, 1)}">
-                                A
+                <!-- Link Volver -->
+                <div class="back-link-container">
+                    <a th:href="@{/PanelControlUsuario/foros}" class="back-link">
+                        <i class="fa-solid fa-arrow-left"></i> Volver a la lista de foros
+                    </a>
+                </div>
+
+                <div class="forum-detail-content">
+                    
+                    <!-- 1. TARJETA: PREGUNTA PRINCIPAL -->
+                    <div class="forum-card main-post">
+                        <div class="post-header">
+                            <div class="author-info">
+                                <h2 th:text="${foro.titulo}">Título del foro</h2>
+                                <div class="forum-meta">
+                                    <span>
+                                        <i class="fa-solid fa-book"></i>
+                                        <span th:text="${foro.curso.curso}">Nombre del curso</span>
+                                    </span>
+                                    <span>
+                                        <i class="fa-solid fa-user"></i>
+                                        <span th:text="${foro.docente.nombre}">Docente</span>
+                                    </span>
+                                </div>
                             </div>
-                            <div class="respuesta-info">
-                                <h4 class="respuesta-autor" th:text="${resp.autor.nombre}">Nombre autor</h4>
-                                <p class="respuesta-fecha" th:text="${#temporals.format(resp.fechaCreacion, 'dd/MM/yyyy HH:mm')}">
-                                    Fecha
-                                </p>
+                            <div class="post-date">
+                                <i class="fa-regular fa-calendar"></i>
+                                <span th:text="${#temporals.format(foro.fechaCreacion, 'dd/MM/yyyy HH:mm')}">06/12/2025 20:05</span>
                             </div>
                         </div>
-                        <p class="respuesta-contenido" th:text="${resp.mensaje}">
-                            Contenido de la respuesta
-                        </p>
+                        <div class="post-content">
+                            <p th:text="${foro.descripcion}">Descripción del foro...</p>
+                        </div>
                     </div>
-                </div>
-                
-                <!-- Mensaje cuando no hay respuestas -->
-                <div th:if="${respuestas == null or #lists.isEmpty(respuestas)}" class="sin-respuestas">
-                    <i class="far fa-comment-slash" style="font-size: 2rem; margin-bottom: 10px; opacity: 0.5;"></i>
-                    <p>Aún no hay respuestas en este foro. ¡Sé el primero en responder!</p>
+
+                    <!-- 2. TARJETA: RESPUESTAS -->
+                    <div class="forum-card responses-section">
+                        <div class="responses-header">
+                            <i class="fa-regular fa-comments"></i>
+                            <h3>Respuestas</h3>
+                        </div>
+
+                        <!-- Estado vacío -->
+                        <div class="empty-state-box" th:if="${#lists.isEmpty(respuestas)}">
+                            <div class="empty-icon">
+                                <i class="fa-regular fa-comment-dots"></i>
+                            </div>
+                            <p class="empty-text">Aún no hay respuestas en este foro. <br><strong>¡Sé el primero en responder!</strong></p>
+                        </div>
+
+                        <!-- Lista de respuestas -->
+                        <div class="responses-list" th:if="${!#lists.isEmpty(respuestas)}">
+                            <div class="response-item" th:each="resp : ${respuestas}">
+                                <div class="response-header">
+                                    <span class="response-author" th:text="${resp.autor.nombre}">Nombre estudiante</span>
+                                    <span class="response-date">
+                                        <i class="fa-regular fa-clock"></i>
+                                        <span th:text="${#temporals.format(resp.fechaCreacion, 'dd/MM/yyyy HH:mm')}">Fecha</span>
+                                    </span>
+                                </div>
+                                <div class="response-message" th:text="${resp.mensaje}">
+                                    Mensaje de respuesta del estudiante...
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. TARJETA: FORMULARIO RESPUESTA -->
+                    <div class="forum-card reply-section">
+                        <div class="responses-header">
+                            <i class="fa-solid fa-pen"></i>
+                            <h3>Tu Respuesta</h3>
+                        </div>
+                        
+                        <form th:action="@{'/PanelControlUsuario/foros/' + ${foro.id} + '/responder'}" method="POST" class="reply-form">
+                            <div class="reply-box">
+                                <label for="mensaje">Tu respuesta</label>
+                                <textarea id="mensaje" name="mensaje" class="reply-textarea" placeholder="Escribe tu respuesta aquí... Comparte tu conocimiento."></textarea>
+                            </div>
+                            <div class="reply-actions">
+                                <button type="submit" class="btn-submit-reply">
+                                    <i class="fa-regular fa-paper-plane"></i> Publicar Respuesta
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
                 </div>
             </div>
 
-            <!-- Formulario de respuesta -->
-            <div class="panel">
-                <h3 style="margin-top: 0; margin-bottom: 20px; color: #333;">
-                    <i class="far fa-edit" style="margin-right: 10px;"></i>
-                    Responder
-                </h3>
-                <form th:action="@{'/PanelControlUsuario/foros/' + ${foro.id} + '/responder'}" method="post">
-                    <div class="form-group">
-                        <label for="mensaje">Tu respuesta:</label>
-                        <textarea id="mensaje" name="mensaje" rows="4" placeholder="Escribe tu respuesta..." required></textarea>
-                    </div>
-                    <button type="submit" class="btn">
-                        <i class="far fa-paper-plane" style="margin-right: 8px;"></i>
-                        Enviar respuesta
-                    </button>
-                </form>
-            </div>
-        </div>
+        </main>
     </div>
-    
-    <!-- Barra de navegación inferior -->
-    <div class="bottom-nav">
-        <div class="nav-links">
-            <a th:href="@{/PanelControlUsuario/inicio}" class="nav-link">
-                <i class="fas fa-home"></i>
-                <span>Inicio</span>
-            </a>
-            <a th:href="@{/PanelControlUsuario/mis_cursos}" class="nav-link">
-                <i class="fas fa-book"></i>
-                <span>Cursos</span>
-            </a>
-            <a th:href="@{/PanelControlUsuario/foros}" class="nav-link active">
-                <i class="fas fa-comments"></i>
-                <span>Foros</span>
-            </a>
-            <a th:href="@{/PanelControlUsuario/editar-perfil}" class="nav-link">
-                <i class="fas fa-user"></i>
-                <span>Perfil</span>
-            </a>
-        </div>
-    </div>
-</div>
+
+    <!-- Scripts JS -->
+    <script th:src="@{/assetsPanelUsuaario/inicio.js}"></script>
+    <script>
+        // Toggle simple del menú de usuario al hacer clic en el chip (igual que en foros.html)
+        (function () {
+            const profile = document.getElementById('user-profile-toggle');
+            const menu = document.getElementById('user-menu');
+            if (!profile || !menu) return;
+
+            profile.addEventListener('click', function (e) {
+                e.stopPropagation();
+                const visible = menu.style.display === 'block';
+                menu.style.display = visible ? 'none' : 'block';
+            });
+
+            // Cerrar el menú si se hace clic fuera
+            document.addEventListener('click', function () {
+                menu.style.display = 'none';
+            });
+        })();
+    </script>
 </body>
 </html>

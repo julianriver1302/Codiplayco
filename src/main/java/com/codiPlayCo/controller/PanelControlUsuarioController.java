@@ -159,11 +159,10 @@ public class PanelControlUsuarioController {
 
 	@GetMapping("/PanelControlUsuario/mis_logros")
 	public String misLogros(Model model, HttpSession session) {
-		Object usuario = session.getAttribute("usuario");
-		if (usuario == null) {
-			return "/PanelControlUsuario/mis_logros";
+		Integer idUsuario = (Integer) session.getAttribute("idUsuario");
+		if (idUsuario != null) {
+			usuarioService.findById(idUsuario).ifPresent(usuario -> model.addAttribute("usuario", usuario));
 		}
-		model.addAttribute("usuario", usuario);
 		return "PanelControlUsuario/mis_logros";
 	}
 
@@ -274,7 +273,11 @@ public class PanelControlUsuarioController {
 	}
 
 	@GetMapping("/PanelControlUsuario/soporte")
-	public String soporte() {
+	public String soporte(HttpSession session, Model model) {
+		Integer idUsuario = (Integer) session.getAttribute("idUsuario");
+		if (idUsuario != null) {
+			usuarioService.findById(idUsuario).ifPresent(usuario -> model.addAttribute("usuario", usuario));
+		}
 		return "PanelControlUsuario/soporte";
 	}
 

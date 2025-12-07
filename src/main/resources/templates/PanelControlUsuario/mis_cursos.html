@@ -1,67 +1,192 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Mis Cursos | Codiplay Dashboard</title>
-	<link rel="stylesheet" th:href="@{/assetsPanelUsuaario/styleUsuario.css}" />
-	<script src="https://kit.fontawesome.com/a2d9a6b8d0.js" crossorigin="anonymous"></script>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Mis Cursos | CodiPlay Dashboard</title>
+
+	<!-- Estilos principales del panel de usuario -->
+	<link rel="stylesheet" th:href="@{/assetsPanelUsuaario/styleUsuario.css}">
+
+	<!-- Fuente Poppins -->
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+		rel="stylesheet">
+
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body>
+
 	<div class="dashboard-container">
+		<!-- SIDEBAR (reutilizada de inicio) -->
 		<aside class="sidebar">
-			<div class="logo">
-				<a th:href="@{/PanelControlUsuario/inicio}">
-					<img th:src="@{/assetsPanelUsuaario/unnamed-removebg-preview.PNG}" alt="Logo Codiplay" />
-				</a>
-				<span class="logo-text" th:unless="${usuario}"></span>
+			<div class="logo-container">
+				<div class="logo-icon">
+					<i class="fa-solid fa-robot"></i>
+				</div>
+				<span class="logo-text">CodiPlay</span>
 			</div>
 
-			<nav class="main-nav">
+			<nav class="sidebar-menu">
 				<ul>
-					<li class="nav-item">
-						<a th:href="@{/PanelControlUsuario/inicio}"><i class="fas fa-home"></i> Inicio</a>
+					<li>
+						<a th:href="@{/PanelControlUsuario/inicio}">
+							<i class="fa-solid fa-house"></i>
+							<span>Inicio</span>
+						</a>
 					</li>
-					<li class="nav-item active">
-						<a th:href="@{/PanelControlUsuario/mis_cursos}"><i class="fas fa-book"></i> Mis cursos</a>
+					<li class="active">
+						<a th:href="@{/PanelControlUsuario/mis_cursos}">
+							<i class="fa-solid fa-book-open"></i>
+							<span>Mis cursos</span>
+						</a>
 					</li>
-					<li class="nav-item">
-						<a th:href="@{/PanelControlUsuario/mis_logros}"><i class="fas fa-medal"></i> Mis logros</a>
+					<li>
+						<a th:href="@{/PanelControlUsuario/mis_logros}">
+							<i class="fa-solid fa-trophy"></i>
+							<span>Mis logros</span>
+						</a>
 					</li>
-					<li class="nav-item">
-											<a th:href="@{/PanelControlUsuario/foros}"><i class="fas fa-medal"></i> foros</a>
-										</li>
+					<li>
+						<a th:href="@{/PanelControlUsuario/bandeja}">
+							<i class="fa-solid fa-box"></i>
+							<span>Bandeja</span>
+						</a>
+					</li>
+					<li>
+						<a th:href="@{/PanelControlUsuario/foros}">
+							<i class="fa-solid fa-users"></i>
+							<span>Foros</span>
+						</a>
+					</li>
 				</ul>
 			</nav>
 
-			<div class="support-section">
-				<a th:href="@{/PanelControlUsuario/soporte}"><i class="fas fa-life-ring"></i> Soporte</a>
+			<div class="sidebar-footer">
+				<a th:href="@{/PanelControlUsuario/soporte}" class="support-link">
+					<i class="fa-solid fa-headset"></i>
+					<span>Soporte</span>
+				</a>
 			</div>
 		</aside>
 
+		<!-- MAIN CONTENT -->
 		<main class="main-content">
-			<section class="modules-section">
-				<h2>Mis cursos</h2>
-				<p>Aquí se mostrarán los cursos registrados del usuario.</p>
 
-				<!-- ✅ Si el usuario no tiene cursos -->
+			<!-- HEADER (igual que en inicio, con modo oscuro y avatar dinámico) -->
+			<header class="top-header">
+					<div class="page-header">
+					<div class="header-text">
+						<h1>Mis Cursos</h1>
+					</div>
+				</div>
+
+				<div class="user-actions" style="display: flex; align-items: center; gap: 20px;">
+					<!-- Botón de tema (modo oscuro) -->
+					<div class="icon-btn theme-btn" id="theme-toggle" title="Cambiar Tema">
+						<i class="fa-solid fa-moon"></i>
+					</div>
+
+					<div class="user-profile" id="user-profile-toggle">
+						<div class="avatar">
+							<!-- Avatar dinámico del usuario -->
+							<img th:if="${usuario != null and usuario.avatar != null and !#strings.isEmpty(usuario.avatar)}"
+								th:src="@{'/uploads/avatars/' + ${usuario.avatar}}" alt="User Avatar"
+								class="avatar-img" />
+							<img th:unless="${usuario != null and usuario.avatar != null and !#strings.isEmpty(usuario.avatar)}"
+								th:src="@{/assetsPanelUsuaario/22b8078e-03d9-49d7-a4a6-f70b4208e8c9-removebg-preview.png}"
+								alt="User Avatar" class="avatar-img" />
+						</div>
+						<span class="username"
+							th:text="${usuario != null} ? ${usuario.nombre} : 'Usuario'">Usuario</span>
+						<i class="fa-solid fa-chevron-down" style="font-size: 12px; margin-left: 4px;"></i>
+					</div>
+					<div class="user-menu" id="user-menu" style="display: none;">
+						<a th:href="@{/PanelControlUsuario/editar-perfil}"><i class="fa-solid fa-user-pen"></i> Editar
+							perfil</a>
+						<a th:href="@{/logout}"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a>
+					</div>
+				</div>
+			</header>
+
+			<!-- CONTENIDO PRINCIPAL: MIS CURSOS -->
+			<div class="content-area">
+			
+
+				<!-- Si el usuario no tiene cursos -->
 				<div th:if="${#lists.isEmpty(cursos)}" class="no-cursos">
 					<p>No estás inscrito en ningún curso todavía.</p>
 				</div>
 
-				<!-- ✅ Mostrar lista de cursos -->
-				<div class="cursos-lista" th:if="${!#lists.isEmpty(cursos)}">
-					<div class="curso-card" th:each="curso : ${cursos}">
-						<h3 th:text="${curso.curso}">Nombre del curso</h3>
-						<p th:text="${curso.descripcion}">Descripción del curso</p>
-						<p><strong>Precio:</strong> <span th:text="${curso.precio}">$100</span></p>
-						<p><strong>Dirigido a:</strong> <span th:text="${curso.dirigido}">Todos</span></p>
+				<!-- Lista de cursos -->
+				<div class="courses-list" th:if="${!#lists.isEmpty(cursos)}">
+					<div class="course-list-card" th:each="curso : ${cursos}">
+						<div class="course-image-container java-bg">
+							<i class="fa-solid fa-code"></i>
+						</div>
+
+						<div class="course-details">
+							<div class="course-top-row">
+								<h2 class="course-title" th:text="${curso.curso}">Nombre del curso</h2>
+								<span class="course-price" th:text="${curso.precio}">$0.00</span>
+							</div>
+
+							<p class="course-description" th:text="${curso.descripcion}">
+								Descripción del curso
+							</p>
+
+							<div class="course-meta">
+								<div class="meta-item">
+									<i class="fa-solid fa-child-reaching"></i>
+									<span>Dirigido a: <strong th:text="${curso.dirigido}">Todos</strong></span>
+								</div>
+								<div class="meta-item">
+									<i class="fa-solid fa-layer-group"></i>
+									<span>Nivel: <strong>Básico</strong></span>
+								</div>
+							</div>
+						</div>
+
+						<div class="course-actions">
+							<button class="btn-continue" type="button">
+								<i class="fa-solid fa-play"></i> Ver curso
+							</button>
+						</div>
 					</div>
 				</div>
-			</section>
+			</div>
+
+			<div class="floating-help">
+				<i class="fa-solid fa-question"></i>
+			</div>
+
 		</main>
 	</div>
+
+	<script th:src="@{/assetsPanelUsuaario/inicio.js}"></script>
+
+	<script>
+		// Toggle simple del menú de usuario al hacer clic en el chip
+		(function () {
+			const profile = document.getElementById('user-profile-toggle');
+			const menu = document.getElementById('user-menu');
+			if (!profile || !menu) return;
+
+			profile.addEventListener('click', function (e) {
+				e.stopPropagation();
+				const visible = menu.style.display === 'block';
+				menu.style.display = visible ? 'none' : 'block';
+			});
+
+			// Cerrar el menú si se hace clic fuera
+			document.addEventListener('click', function () {
+				menu.style.display = 'none';
+			});
+		})();
+	</script>
+
 </body>
+
 </html>

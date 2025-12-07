@@ -2,146 +2,483 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Editar Perfil | Codiplay Dashboard</title>
-	<link rel="stylesheet" th:href="@{/assetsPanelUsuaario/styleUsuario.css}" />
-	<script src="https://kit.fontawesome.com/a2d9a6b8d0.js" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Perfil - CodiPlay</title>
+    <link rel="stylesheet" th:href="@{/assetsPanelUsuaario/styleUsuario.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
+<style>/* --- ESTILOS PROFESIONALES PARA PÁGINA "EDITAR PERFIL" --- */
+
+/* Alertas de Mensaje (Éxito/Error) */
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.alert-success {
+    background-color: #E8F5E9;
+    color: #2E7D32;
+    border: 1px solid #C8E6C9;
+}
+.alert-danger {
+    background-color: #FFEBEE;
+    color: #C62828;
+    border: 1px solid #FFCDD2;
+}
+
+/* 1. Layout Principal de 2 Columnas */
+.profile-layout {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+/* 2. Tarjeta Izquierda (Identidad y Avatar) */
+.profile-card-left {
+    flex: 1;
+    max-width: 340px; /* Ancho fijo para la tarjeta de perfil */
+    background: var(--bg-panel);
+    border-radius: 24px;
+    padding: 30px 25px;
+    text-align: center;
+    box-shadow: var(--shadow-card);
+}
+
+.profile-avatar-large {
+    width: 120px;
+    height: 120px;
+    position: relative;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    border: 4px solid var(--bg-body-gradient-start);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.07);
+}
+
+.avatar-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.edit-avatar-badge {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 35px;
+    height: 35px;
+    background: var(--primary-blue);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid var(--bg-panel);
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+.edit-avatar-badge:hover {
+    transform: scale(1.15);
+}
+
+.profile-name-large {
+    font-size: 22px;
+    color: var(--text-main);
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.profile-role {
+    font-size: 14px;
+    color: var(--text-secondary);
+    background: var(--bg-body-gradient-start);
+    padding: 4px 15px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 30px;
+}
+
+.profile-actions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    border-top: 1px solid var(--border-light);
+    padding-top: 25px;
+}
+
+/* Botón Cambiar Foto */
+.btn-action-outline {
+    background: transparent;
+    border: 1px solid var(--border-light);
+    color: var(--text-main);
+    padding: 12px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+.btn-action-outline:hover {
+    border-color: var(--primary-blue);
+    color: var(--primary-blue);
+    background: rgba(0, 194, 255, 0.05);
+}
+
+/* Botón Cerrar Sesión */
+.btn-action-text.danger {
+    background: none;
+    border: none;
+    color: #FF5252;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px;
+    border-radius: 12px;
+    transition: background-color 0.3s;
+    text-decoration: none;
+}
+.btn-action-text.danger:hover {
+    background: #FFEBEE;
+}
+
+/* 3. Tarjeta Derecha (Formulario) */
+.profile-card-right {
+    flex: 2.5;
+    background: var(--bg-panel);
+    border-radius: 24px;
+    padding: 30px 40px;
+    box-shadow: var(--shadow-card);
+}
+
+.card-title-row {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.card-title-row h3 {
+    font-size: 20px;
+    color: var(--text-main);
+    font-weight: 600;
+}
+
+/* Grid del Formulario */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 30px; /* Espacio vertical y horizontal */
+}
+
+.form-group.full-width {
+    grid-column: span 2;
+}
+
+/* Estilos de Inputs */
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.input-with-icon {
+    position: relative;
+}
+
+.input-with-icon i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+    font-size: 16px;
+}
+
+.input-with-icon input {
+    width: 100%;
+    padding: 12px 15px 12px 45px;
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    background: var(--bg-input);
+    color: var(--text-main);
+    font-size: 14px;
+    outline: none;
+    transition: all 0.3s;
+}
+.input-with-icon input:focus {
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 3px rgba(0, 194, 255, 0.1);
+}
+
+/* Estilo del Input de Archivo */
+.form-control { /* Para tu <input type="file"> */
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+.form-text { /* Para tu <small> */
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 5px;
+    display: block;
+}
+
+/* Botones de Acción del Formulario */
+.form-actions {
+    padding-top: 20px;
+    border-top: 1px solid var(--border-light);
+    display: flex;
+    justify-content: flex-end; /* Alinea los botones a la derecha */
+    gap: 15px;
+}
+
+.btn {
+    padding: 10px 25px;
+    border-radius: 10px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-primary {
+    background: linear-gradient(90deg, var(--primary-blue), var(--primary-hover));
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 194, 255, 0.2);
+}
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 194, 255, 0.3);
+}
+
+.btn-secondary {
+    background: var(--bg-body-gradient-start);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-light);
+}
+.btn-secondary:hover {
+    color: var(--text-main);
+    border-color: var(--text-secondary);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .profile-layout { flex-direction: column; }
+    .profile-card-left { max-width: 100%; }
+    .form-grid { grid-template-columns: 1fr; }
+    .form-group.full-width { grid-column: span 1; }
+}
+</style>
+
 
 <body>
-	<div class="dashboard-container">
-		<aside class="sidebar">
-			<div class="logo">
-				<a th:href="@{/PanelControlUsuario/inicio}">
-					<img th:src="@{/assetsPanelUsuaario/unnamed-removebg-preview.PNG}" alt="Logo Codiplay" />
-				</a>
-			</div>
 
-			<nav class="main-nav">
-				<ul>
-					<li class="nav-item">
-						<a th:href="@{/PanelControlUsuario/inicio}"><i class="fas fa-home"></i> Inicio</a>
-					</li>
-					<li class="nav-item">
-						<a th:href="@{/PanelControlUsuario/mis_cursos}"><i class="fas fa-book"></i> Mis cursos</a>
-					</li>
-					<li class="nav-item">
-						<a th:href="@{/PanelControlUsuario/mis_logros}"><i class="fas fa-medal"></i> Mis logros</a>
-					</li>
-				</ul>
-			</nav>
+    <div class="dashboard-container">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="logo-container">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-robot"></i>
+                </div>
+                <span class="logo-text">CodiPlay</span>
+            </div>
 
-			<div class="support-section">
-				<a th:href="@{/PanelControlUsuario/soporte}"><i class="fas fa-life-ring"></i> Soporte</a>
-			</div>
-		</aside>
+            <nav class="sidebar-menu">
+                <ul>
+                    <li><a th:href="@{/PanelControlUsuario/inicio}"><i class="fa-solid fa-house"></i><span>Inicio</span></a></li>
+                    <li><a th:href="@{/PanelControlUsuario/mis_cursos}"><i class="fa-solid fa-book-open"></i><span>Mis cursos</span></a></li>
+                    <li><a th:href="@{/PanelControlUsuario/mis_logros}"><i class="fa-solid fa-trophy"></i><span>Mis logros</span></a></li>
+                    <li><a th:href="@{/PanelControlUsuario/foros}"><i class="fa-solid fa-users"></i><span>Foros</span></a></li>
+                </ul>
+            </nav>
 
-		<main class="main-content">
-			<header class="top-bar">
-				<div class="h1eader">
-					<h1 th:if="${usuario}" th:text="'Bienvenido ' + ${usuario.nombre}">Bienvenido Usuario</h1>
-					<h1 th:unless="${usuario}">Bienvenido Usuario</h1>
-				</div>
+            <div class="sidebar-footer">
+                <a th:href="@{/PanelControlUsuario/soporte}" class="support-link">
+                    <i class="fa-solid fa-headset"></i><span>Soporte</span>
+                </a>
+            </div>
+        </aside>
 
-				<div class="user-info">
-					<div class="user-actions">
-						<i class="fas fa-info-circle"></i>
-						<i class="fas fa-bell"></i>
-						<div class="user-dropdown">
-							<div class="logo-dropdown-trigger" onclick="toggleDropdown()">
-								<img th:if="${usuario != null and usuario.avatar != null and !#strings.isEmpty(usuario.avatar)}"
-									th:src="@{'/uploads/avatars/' + ${usuario.avatar}}" alt="User Avatar"
-									class="avatar" />
-								<img th:unless="${usuario != null and usuario.avatar != null and !#strings.isEmpty(usuario.avatar)}"
-									th:src="@{/assetsPanelUsuaario/22b8078e-03d9-49d7-a4a6-f70b4208e8c9-removebg-preview.png}"
-									alt="User Avatar" class="avatar" />
-							</div>
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+            
+            <!-- HEADER -->
+            <header class="top-header" style="display: flex; align-items: center; justify-content: space-between;">
+                <div class="header-title-inline">
+                    <h1>Editar Perfil</h1>
+                    <p style="margin-top: 4px; font-size: 14px; color: var(--text-secondary);">Actualiza tu información personal y foto de perfil.</p>
+                </div>
 
-							<div class="dropdown-content" id="userDropdown">
-								<a th:href="@{/PanelControlUsuario/editar-perfil}"><i class="fas fa-user-edit"></i> Editar Perfil</a>
-								<a th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
-							</div>
-						</div>
-					</div>
+                <div class="user-actions" style="display: flex; align-items: center; gap: 20px;">
+                    <div class="icon-btn theme-btn" id="theme-toggle" title="Cambiar Tema">
+                        <i class="fa-solid fa-moon"></i>
+                    </div>
+                    <div class="user-profile" id="user-profile-toggle">
+                        <div class="avatar">
+                            <img th:if="${usuario != null and usuario.avatar != null and !#strings.isEmpty(usuario.avatar)}"
+                                 th:src="@{'/uploads/avatars/' + ${usuario.avatar}}" alt="User Avatar"
+                                 class="avatar-img" />
+                            <img th:unless="${usuario != null and usuario.avatar != null and !#strings.isEmpty(usuario.avatar)}"
+                                 th:src="@{/assetsPanelUsuaario/22b8078e-03d9-49d7-a4a6-f70b4208e8c9-removebg-preview.png}"
+                                 alt="User Avatar" class="avatar-img" />
+                        </div>
+                        <span class="username"
+                              th:text="${usuario != null} ? ${usuario.nombre} : 'Usuario'">Usuario</span>
+                        <i class="fa-solid fa-chevron-down" style="font-size: 12px; margin-left: 4px;"></i>
+                    </div>
+                    <div class="user-menu" id="user-menu" style="display: none;">
+                        <a th:href="@{/PanelControlUsuario/editar-perfil}"><i class="fa-solid fa-user-pen"></i> Editar perfil</a>
+                        <a th:href="@{/logout}"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a>
+                    </div>
+                </div>
+            </header>
 
-					<div class="user-name">
-						<span th:if="${usuario}" th:text="${usuario.nombre}">Usuario</span>
-						<span th:unless="${usuario}">Usuario</span>
-						<i class="fas fa-chevron-down"></i>
-					</div>
-				</div>
-			</header>
+            <!-- CONTENIDO EDITAR PERFIL -->
+            <div class="content-area">
+                
+                <div class="profile-layout">
+                    
+                    <!-- COLUMNA IZQUIERDA: TARJETA DE FOTO -->
+                    <div class="profile-card-left">
+                        <div class="profile-avatar-large">
+                            <img th:if="${usuario != null and usuario.avatar != null and !#strings.isEmpty(usuario.avatar)}"
+                                 th:src="@{'/uploads/avatars/' + ${usuario.avatar}}" alt="Avatar actual" class="avatar-img">
+                            <img th:unless="${usuario != null and usuario.avatar != null and !#strings.isEmpty(usuario.avatar)}"
+                                 th:src="@{/assetsPanelUsuaario/22b8078e-03d9-49d7-a4a6-f70b4208e8c9-removebg-preview.png}"
+                                 alt="Avatar por defecto" class="avatar-img">
+                            <div class="edit-avatar-badge">
+                                <i class="fa-solid fa-camera"></i>
+                            </div>
+                        </div>
+                        
+                        <h2 class="profile-name-large" th:text="${usuario != null} ? ${usuario.nombre} + ' ' + ${usuario.apellido} : 'Usuario'">Alejo</h2>
+                        <span class="profile-role">Estudiante</span>
 
-			<section class="profile-edit-section">
-				<div class="profile-edit-card">
-					<!-- Mensajes -->
-					<div th:if="${mensaje}" class="alert alert-success">
-						<span th:text="${mensaje}"></span>
-					</div>
-					<div th:if="${error}" class="alert alert-danger">
-						<span th:text="${error}"></span>
-					</div>
+                        <div class="profile-actions-list">
+                            <label for="avatar" class="btn-action-outline" style="cursor:pointer;">
+                                <i class="fa-solid fa-upload"></i> Cambiar Foto
+								
+                            </label>
+                            <a th:href="@{/logout}" class="btn-action-text danger">
+                                <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
+                            </a>
+                        </div>
+                    </div>
 
-					<form th:action="@{/PanelControlUsuario/editar-perfil}" method="post" enctype="multipart/form-data"
-						th:object="${usuario}">
-						<div class="form-group">
-							<label for="nombre">Nombre</label>
-							<input type="text" id="nombre" th:field="*{nombre}" class="form-control" required />
-						</div>
+                    <!-- COLUMNA DERECHA: FORMULARIO DE EDICIÓN -->
+                    <div class="profile-card-right">
+                        <div class="card-title-row">
+                            <h3>Información Personal</h3>
+                        </div>
 
-						<div class="form-group">
-							<label for="apellido">Apellido</label>
-							<input type="text" id="apellido" th:field="*{apellido}" class="form-control" />
-						</div>
+                        <!-- Mensajes de éxito / error -->
+                        <div th:if="${mensaje}" class="alert alert-success">
+                            <span th:text="${mensaje}"></span>
+                        </div>
+                        <div th:if="${error}" class="alert alert-danger">
+                            <span th:text="${error}"></span>
+                        </div>
 
-						<div class="form-group">
-							<label for="email">Correo Electrónico</label>
-							<input type="email" id="email" th:field="*{email}" class="form-control" required />
-						</div>
+                        <form class="edit-profile-form" th:action="@{/PanelControlUsuario/editar-perfil}" method="post" enctype="multipart/form-data" th:object="${usuario}">
+                            <div class="form-grid">
+                                <!-- Nombre -->
+                                <div class="form-group">
+                                    <label for="nombre">Nombre</label>
+                                    <div class="input-with-icon">
+                                        <i class="fa-regular fa-user"></i>
+                                        <input type="text" id="nombre" th:field="*{nombre}" required>
+                                    </div>
+                                </div>
+                                <!-- Apellido -->
+                                <div class="form-group">
+                                    <label for="apellido">Apellido</label>
+                                    <div class="input-with-icon">
+                                        <i class="fa-regular fa-user"></i>
+                                        <input type="text" id="apellido" th:field="*{apellido}">
+                                    </div>
+                                </div>
+                                <!-- Correo -->
+                                <div class="form-group full-width">
+                                    <label for="email">Correo Electrónico</label>
+                                    <div class="input-with-icon">
+                                        <i class="fa-regular fa-envelope"></i>
+                                        <input type="email" id="email" th:field="*{email}" required>
+                                    </div>
+                                </div>
+                                <!-- Teléfono -->
+                                <div class="form-group">
+                                    <label for="celular">Teléfono</label>
+                                    <div class="input-with-icon">
+                                        <i class="fa-solid fa-phone"></i>
+                                        <input type="text" id="celular" th:field="*{celular}">
+                                    </div>
+                                </div>
+                                <!-- Documento -->
+                                <div class="form-group">
+                                    <label for="documento">Documento</label>
+                                    <div class="input-with-icon">
+                                        <i class="fa-regular fa-id-card"></i>
+                                        <input type="text" id="documento" th:field="*{documento}" disabled style="opacity: 0.7; cursor: not-allowed;">
+                                    </div>
+                                </div>
 
-						<div class="form-group">
-							<label for="celular">Teléfono</label>
-							<input type="text" id="celular" th:field="*{celular}" class="form-control" />
-						</div>
+                                <!-- Foto de perfil (input de archivo) -->
+                                <div class="form-group full-width">
+                                    <label for="avatar">Foto de Perfil</label>
+                                    <input type="file" id="avatar" name="avatarFile" accept="image/*" class="form-control" />
+                                    <small class="form-text">Selecciona una nueva imagen (JPG, PNG, GIF - Máx. 2MB)</small>
+                                </div>
+                            </div>
 
-						<div class="form-group">
-							<label for="documento">Documento</label>
-							<input type="text" id="documento" th:field="*{documento}" class="form-control" />
-						</div>
+                            <div class="form-actions" style="margin-top: 20px; display: flex; gap: 10px;">
+                                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                                <a th:href="@{/PanelControlUsuario/inicio}" class="btn btn-secondary">Cancelar</a>
+                            </div>
+                        </form>
+                    </div>
 
-						<div class="form-group">
-							<label for="avatar">Foto de Perfil</label>
-							<div class="avatar-upload">
-								<div class="current-avatar">
-									<img th:if="${usuario != null and usuario.avatar != null and !#strings.isEmpty(usuario.avatar)}"
-										th:src="@{'/uploads/avatars/' + ${usuario.avatar}}" alt="Avatar actual"
-										class="avatar-preview" />
-									<img th:unless="${usuario != null and usuario.avatar != null and !#strings.isEmpty(usuario.avatar)}"
-										th:src="@{/assetsPanelUsuaario/22b8078e-03d9-49d7-a4a6-f70b4208e8c9-removebg-preview.png}"
-										alt="Avatar por defecto" class="avatar-preview" />
-								</div>
-								<input type="file" id="avatar" name="avatarFile" accept="image/*" class="form-control" />
-								<small class="form-text">Selecciona una nueva imagen (JPG, PNG, GIF - Máx. 2MB)</small>
-							</div>
-						</div>
+                </div>
+            </div>
 
-						<div class="form-actions">
-							<button type="submit" class="btn btn-primary">Guardar Cambios</button>
-							<a th:href="@{/PanelControlUsuario/inicio}" class="btn btn-secondary">Cancelar</a>
-						</div>
-					</form>
-				</div>
-			</section>
-		</main>
-	</div>
+        </main>
+    </div>
 
-	<script>
-		function toggleDropdown() {
-			const dropdown = document.getElementById("userDropdown");
-			dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
-		}
-	</script>
+    <!-- Scripts JS -->
+    <script th:src="@{/assetsPanelUsuaario/inicio.js}"></script>
+    <script>
+        // Toggle simple del menú de usuario (igual que en otras vistas)
+        (function () {
+            const profile = document.getElementById('user-profile-toggle');
+            const menu = document.getElementById('user-menu');
+            if (!profile || !menu) return;
+
+            profile.addEventListener('click', function (e) {
+                e.stopPropagation();
+                const visible = menu.style.display === 'block';
+                menu.style.display = visible ? 'none' : 'block';
+            });
+
+            document.addEventListener('click', function () {
+                menu.style.display = 'none';
+            });
+        })();
+    </script>
 
 </body>
 </html>
