@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="es" xmlns: th="http://thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Módulo 1</title>
+    <link rel="stylesheet" th:href="@{/assetsPanelUsuaario/styleUsuario.css}" />
+  </head>
+  <style>/* --- ESTILOS MODERNOS PARA DETALLE DE CURSO (MÓDULO 1) --- */
+
+/* Reset básico para esta página */
+body {
+    background: linear-gradient(135deg, var(--bg-body-gradient-start), var(--bg-body-gradient-end)); /* Usa tus vars o #F0F9FF */
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-main);
+    min-height: 100vh;
+    padding: 0; /* Quitamos padding para que el layout ocupe todo */
+    margin: 0;
+}
+
+/* Fondo en modo oscuro */
+body.dark-mode {
+    background: linear-gradient(135deg, #020617, #0B1120);
+}
+
+/* Botón Volver (Estilo Flotante Moderno) */
+.btn-volver {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--bg-panel);
+    padding: 12px 24px;
+    border-radius: 30px;
+    color: var(--text-main);
+    text-decoration: none;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+    position: fixed; /* Fijo para que siempre esté accesible */
+    top: 30px;
+    left: 30px;
+    z-index: 100;
+}
+
+.btn-volver:hover {
+    transform: translateX(-5px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    color: var(--primary-blue);
+}
+
+/* Layout Principal (2 Columnas) */
+.layout {
+    display: flex;
+    width: 100%;
+    max-width: 100%;
+    margin: 0; /* Ocupa todo el ancho, sin márgenes laterales */
+    background: transparent;
+    border-radius: 0; /* Se integra con el fondo del panel */
+    box-shadow: none;
+    overflow: hidden; /* Para que la imagen respete el borde si luego se ajusta */
+    min-height: 100vh; /* Ocupa todo el alto visible */
+}
+
+body.dark-mode .layout {
+    background: transparent;
+}
+
+/* Panel Izquierdo (Imagen Fija) */
+.left-panel {
+    flex: 1; /* 40% del ancho */
+    background: linear-gradient(135deg, #E3F2FD, #BBDEFB); /* Claro por defecto */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 40px;
+}
+
+body.dark-mode .left-panel {
+    background: radial-gradient(circle at top left, #1E293B, #020617);
+}
+
+.left-panel img {
+    max-width: 90%;
+    max-height: 80vh;
+    object-fit: contain;
+    filter: drop-shadow(0 20px 40px rgba(0,0,0,0.15));
+    transition: transform 0.5s ease;
+    animation: robotFloat 4s ease-in-out infinite;
+}
+
+.left-panel:hover img {
+    transform: scale(1.05) rotate(2deg);
+}
+
+/* Animación divertida para el robot (flotar suavemente) */
+@keyframes robotFloat {
+    0%   { transform: translateY(0) scale(1); }
+    25%  { transform: translateY(-8px) scale(1.02); }
+    50%  { transform: translateY(0) scale(1); }
+    75%  { transform: translateY(6px) scale(0.99); }
+    100% { transform: translateY(0) scale(1); }
+}
+
+/* Panel Derecho (Contenido Scrollable) */
+.right-panel {
+    flex: 1.5; /* 60% del ancho */
+    padding: 60px;
+    overflow-y: auto; /* Scroll interno si es muy largo */
+    max-height: 90vh; /* Limitar altura */
+    background: transparent;
+}
+
+body.dark-mode .right-panel {
+    background: transparent;
+}
+
+/* Títulos */
+.right-panel h1 {
+    font-size: 36px;
+    color: var(--text-main);
+    margin-bottom: 10px;
+    font-weight: 700;
+    letter-spacing: -1px;
+}
+
+.subtitulo {
+    font-size: 16px;
+    color: var(--text-secondary);
+    background: #F8FAFC;
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 40px;
+    border-left: 4px solid var(--primary-blue);
+    line-height: 1.6;
+}
+
+body.dark-mode .subtitulo {
+    background: transparent !important;
+    color: #CBD5F5 !important;
+    border-left-color: var(--primary-blue) !important;
+}
+
+/* TARJETAS DE LECCIONES (Timeline Style) */
+.card {
+    background: var(--bg-panel);
+    border: 1px solid rgba(0,0,0,0.05);
+    border-radius: 20px;
+    padding: 25px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+}
+
+body.dark-mode .card {
+    background: #020617;
+    border-color: rgba(148,163,184,0.3);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+}
+
+/* Efecto Hover en Tarjeta */
+.card:hover {
+    transform: translateY(-5px) scale(1.01);
+    box-shadow: 0 15px 30px rgba(0, 194, 255, 0.1);
+    border-color: rgba(0, 194, 255, 0.3);
+}
+
+/* Decoración lateral de la tarjeta */
+.card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: var(--border-light);
+    border-radius: 0 4px 4px 0;
+    transition: background 0.3s;
+}
+
+.card:hover::before {
+    background: var(--primary-blue);
+}
+
+/* Contenido de la tarjeta */
+.card-content {
+    flex: 1;
+}
+
+.card-content h3 {
+    font-size: 18px;
+    color: var(--text-main);
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.card-content p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Botón "Vamos" */
+.card-button {
+    background: var(--bg-input); /* Gris suave por defecto */
+    color: var(--text-main);
+    padding: 10px 24px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.3s;
+    white-space: nowrap; /* Evita que el texto se rompa */
+}
+
+.card:hover .card-button {
+    background: var(--primary-blue);
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 194, 255, 0.3);
+}
+
+body.dark-mode .card-button {
+    background: #0F172A;
+    color: #E5E7EB;
+}
+
+body.dark-mode .card:hover .card-button {
+    background: var(--primary-blue);
+    color: #F9FAFB;
+}
+
+/* Estado bloqueado para lecciones */
+.lesson-btn.locked {
+    background: #E5E7EB;
+    color: #9CA3AF;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+body.dark-mode .lesson-btn.locked {
+    background: #111827;
+    color: #4B5563;
+}
+
+/* RESPONSIVE (Móvil) */
+@media (max-width: 900px) {
+    .layout {
+        flex-direction: column;
+        margin-top: 80px; /* Espacio para botón volver */
+    }
+
+    .left-panel {
+        padding: 40px 20px;
+        min-height: 300px;
+    }
+
+    .right-panel {
+        padding: 30px 20px;
+        max-height: none; /* Quitar scroll interno en móvil */
+        overflow: visible;
+    }
+
+    .card {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+    }
+
+    .card-button {
+        width: 100%;
+        text-align: center;
+        margin-top: 15px;
+    }
+
+    .btn-volver {
+        left: 20px;
+        top: 20px;
+        padding: 10px 20px;
+    }
+}
+</style>
+
+  <body>
+    <a th:href="@{/PanelControlUsuario/inicio}" class="btn-volver">← Volver</a>
+
+    <div class="layout">
+      <!-- Columna izquierda (imagen) -->
+      <div class="left-panel">
+        <img
+          th:src="@{/assetsPanelUsuaario/Codiplay Html-Photoroom.png}"
+          alt="Imagen del curso"
+        />
+      </div>
+
+      <!-- Columna derecha (contenido del curso) -->
+      <div class="right-panel">
+        <h1>Módulo 1 - HTML</h1>
+        <p class="subtitulo">
+          Plan de Clases Clase Tema Descripción de la clase Actividad en casa
+        </p>
+
+        <div class="card">
+          <div class="card-content">
+            <h3>¿Qué es Internet y las Páginas Web?</h3>
+            <p>Explicación con dibujos y ejemplos de qué es una página web y cómo funciona Internet. Dibujar cómo se imagina su propia web.</p>
+          </div>
+         <a th:href="@{/CursoTrilogia1/index}" class="card-button lesson-btn" data-lesson="1">Vamos</a>
+        </div>
+
+        <div class="card">
+          <div class="card-content">
+            <h3> Introducción a HTML</h3>
+            <p>Explicar qué es HTML, para qué sirve y crear su primera estructura básica. Escribir una página con su nombre.</p>
+          </div>
+         <a th:href="@{/}" class="card-button lesson-btn" data-lesson="2">Vamos</a>
+        </div>
+
+        <div class="card">
+          <div class="card-content">
+            <h3>Etiquetas de Título y Texto</h3>
+            <p>Aprender Etiquetas basicas de HTML, Crear una hoja con 3 titulos y 3 parrafos            </p>
+          </div>
+         <a th:href="@{/}" class="card-button lesson-btn" data-lesson="3">Vamos</a>
+        </div>
+
+        <div class="card">
+          <div class="card-content">
+            <h3>Agregar Imágenes Etiqueta img, rutas de imagen</h3>
+            <p>Colocar 3 imágenes favoritas </p>
+          </div>
+         <a th:href="@{/}" class="card-button lesson-btn" data-lesson="4">Vamos</a>
+        </div>
+
+        <div class="card">
+          <div class="card-content">
+            <h3> Listas en HTML Listas ordenadas y desordenadas (ul, ol, li).</h3>
+            <p>Crear lista de sus juguetes o películas favoritas</p>
+          </div>
+         <a th:href="@{/}" class="card-button lesson-btn" data-lesson="5">Vamos</a>
+      </div> 
+
+      <div class="card">
+          <div class="card-content">
+            <h3>Enlaces y Navegación, a y href para crear enlaces.</h3>
+            <p>Crear un menú con enlaces ficticios.</p>
+          </div>
+         <a th:href="@{/}" class="card-button lesson-btn" data-lesson="6">Vamos</a>
+      </div> 
+    
+       <div class="card">
+          <div class="card-content">
+            <h3> Tablas Básicas.</h3>
+            <p>Crear tablas sencillas con table, tr, td. Crear una tabla de calificaciones ficticias</p>
+          </div>
+         <a th:href="@{/}" class="card-button lesson-btn" data-lesson="7">Vamos</a>
+      </div> 
+
+       <div class="card">
+          <div class="card-content">
+            <h3> Formularios Simples Etiquetas input, label, button. </h3>
+            <p>Crear un formulario con su nombre y edad.</p>
+          </div>
+         <a th:href="@{/}" class="card-button lesson-btn" data-lesson="8">Vamos</a>
+      </div> 
+
+      <div class="card">
+          <div class="card-content">
+            <h3>Proyecto Mini Página Personal </h3>
+            <p>Integrar imágenes, texto y enlaces en una sola página. Personalizar su página.</p>
+          </div>
+         <a th:href="@{/}" class="card-button lesson-btn" data-lesson="9">Vamos</a>
+      </div>
+    </div>
+
+    <script>
+      // Sincronizar modo oscuro/claro con el valor guardado globalmente
+      document.addEventListener('DOMContentLoaded', function () {
+        const savedTheme = localStorage.getItem('codiplay-theme');
+        if (savedTheme === 'dark') {
+          document.body.classList.add('dark-mode');
+        } else {
+          document.body.classList.remove('dark-mode');
+        }
+      });
+
+      // Lógica de desbloqueo secuencial de lecciones para el Módulo 1
+      document.addEventListener('DOMContentLoaded', function () {
+        const LESSON_KEY = 'modulo1_maxLesson';
+        const buttons = Array.from(document.querySelectorAll('.lesson-btn'));
+        if (buttons.length === 0) return;
+
+        // Máxima lección completada (0 si ninguna)
+        let maxCompleted = parseInt(localStorage.getItem(LESSON_KEY) || '0', 10);
+        if (isNaN(maxCompleted)) maxCompleted = 0;
+
+        function applyLockStates() {
+          const unlockUpTo = Math.min(maxCompleted + 1, buttons.length); // siguiente se desbloquea
+          buttons.forEach(btn => {
+            const n = parseInt(btn.dataset.lesson || '0', 10);
+            if (!n) return;
+            if (n <= unlockUpTo) {
+              btn.classList.remove('locked');
+              btn.setAttribute('aria-disabled', 'false');
+            } else {
+              btn.classList.add('locked');
+              btn.setAttribute('aria-disabled', 'true');
+            }
+          });
+        }
+
+        applyLockStates();
+
+        buttons.forEach(btn => {
+          btn.addEventListener('click', function (e) {
+            const n = parseInt(this.dataset.lesson || '0', 10);
+            if (!n) return;
+
+            // Si la lección está bloqueada, cancelar navegación
+            if (this.classList.contains('locked')) {
+              e.preventDefault();
+              return;
+            }
+
+            // Marcar como completada (solo avanzamos hacia adelante)
+            if (n > maxCompleted) {
+              maxCompleted = n;
+              localStorage.setItem(LESSON_KEY, String(maxCompleted));
+              applyLockStates();
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
