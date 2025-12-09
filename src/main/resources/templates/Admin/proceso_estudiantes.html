@@ -276,6 +276,41 @@
 
     // Iniciar animación al cargar
     setTimeout(animateProgressBars, 1000);
+
+    // Set active nav link based on current URL
+    document.addEventListener('DOMContentLoaded', function() {
+      const currentPath = window.location.pathname;
+      
+      // Primero, remover la clase active de TODOS los elementos
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      
+      // Luego, encontrar la mejor coincidencia (la más específica/larga)
+      let bestMatch = null;
+      let bestMatchLength = 0;
+      
+      document.querySelectorAll('.nav-link').forEach(link => {
+        const href = link.getAttribute('href');
+        if (href) {
+          // Coincidencia exacta tiene prioridad
+          if (currentPath === href) {
+            bestMatch = link.closest('.nav-item') || link.parentElement;
+            bestMatchLength = Infinity; // Máxima prioridad
+          }
+          // Si no hay coincidencia exacta, buscar includes pero priorizar las más largas
+          else if (currentPath.includes(href) && href.length > bestMatchLength) {
+            bestMatch = link.closest('.nav-item') || link.parentElement;
+            bestMatchLength = href.length;
+          }
+        }
+      });
+      
+      // Aplicar active solo al mejor match
+      if (bestMatch) {
+        bestMatch.classList.add('active');
+      }
+    });
   </script>
   <script th:src="@{/assets/loader.js}"></script>
 </body>

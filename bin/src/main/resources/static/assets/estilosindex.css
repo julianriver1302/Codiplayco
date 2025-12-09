@@ -17,6 +17,20 @@ body::before {
     pointer-events: none;
     z-index: 0;
 }
+a,
+button,
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+.btn,
+.btn-launch,
+.btn-trade,
+.submit,
+.nav-link-glass,
+.hamburger,
+.card a.btn-yellow {
+    cursor: pointer;
+}
 #main-header, main, .mobile-menu, .glass-navbar {
     position: relative;
     z-index: 1;
