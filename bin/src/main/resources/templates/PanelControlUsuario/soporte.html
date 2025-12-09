@@ -1,53 +1,365 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Soporte | CodiplayCo</title>
-  <link rel="stylesheet" th:href="@{/assetsPanelUsuaario/styleUsuario.css}" />
-  <script src="https://kit.fontawesome.com/a2d9a6b8d0.js" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soporte al Cliente - CodiPlay</title>
+    <link rel="stylesheet" th:href="@{/assetsPanelUsuaario/styleUsuario.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
+<style>/* --- ESTILOS DE LUJO PARA EL FORMULARIO DE SOPORTE --- */
+
+/* Contenedor del Formulario */
+.support-card-form {
+    flex: 2;
+    background: var(--bg-panel); /* Blanco puro en modo claro */
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.05); /* Sombra más suave y difusa */
+    border: 1px solid rgba(255,255,255,0.5); /* Borde sutil */
+    position: relative;
+    overflow: hidden;
+}
+
+/* Título del Formulario */
+.form-title {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 35px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid rgba(0,0,0,0.03);
+}
+
+.form-title i {
+    font-size: 24px;
+    background: linear-gradient(135deg, var(--primary-blue), var(--primary-hover));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 4px 6px rgba(0, 194, 255, 0.2));
+}
+
+.form-title h3 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-main);
+    letter-spacing: -0.5px;
+}
+
+/* Grupos de Inputs */
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--text-main);
+    font-size: 14px;
+    font-weight: 600;
+    margin-left: 5px; /* Alineación visual */
+}
+
+/* Contenedor del Input con Icono */
+.input-with-icon {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+/* Icono dentro del input */
+.input-with-icon i {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+    font-size: 18px;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+/* Ajuste para icono de textarea */
+.input-with-icon.textarea-icon i {
+    top: 22px;
+    transform: none;
+}
+
+/* Estilo Base de Inputs */
+.input-with-icon input,
+.input-with-icon select,
+.input-with-icon textarea {
+    width: 100%;
+    padding: 16px 20px 16px 50px; /* Más padding para aire */
+    border: 2px solid transparent; /* Truco para borde suave */
+    background: #F8FAFC; /* Fondo gris muy suave por defecto */
+    border-radius: 16px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    color: var(--text-main);
+    outline: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); /* Sombra interna sutil */
+}
+
+/* Modo Oscuro Inputs */
+body.dark-mode .input-with-icon input,
+body.dark-mode .input-with-icon select,
+body.dark-mode .input-with-icon textarea {
+    background: rgba(255,255,255,0.05); /* Translucido en modo oscuro */
+}
+
+/* ESTADO FOCUS (Cuando el usuario escribe) */
+.input-with-icon input:focus,
+.input-with-icon select:focus,
+.input-with-icon textarea:focus {
+    background: var(--bg-panel); /* Vuelve a blanco/panel */
+    border-color: var(--primary-blue);
+    box-shadow: 0 8px 20px rgba(0, 194, 255, 0.15); /* Resplandor azul suave */
+    transform: translateY(-2px); /* Pequeña elevación */
+}
+
+/* El icono también se ilumina al hacer foco */
+.input-with-icon:focus-within i {
+    color: var(--primary-blue);
+    transform: translateY(-50%) scale(1.1);
+}
+.input-with-icon.textarea-icon:focus-within i {
+    transform: scale(1.1);
+}
+
+/* Estilo específico para Textarea */
+.input-with-icon textarea {
+    height: 140px;
+    resize: none;
+    line-height: 1.6;
+}
+
+/* Botón de Enviar (Estilo Premium) */
+.btn-submit-support {
+    width: 100%;
+    padding: 18px;
+    margin-top: 15px;
+    background: linear-gradient(135deg, var(--primary-blue), #0091EA);
+    color: white;
+    border: none;
+    border-radius: 16px;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(0, 194, 255, 0.3);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* Efecto Hover del Botón */
+.btn-submit-support:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(0, 194, 255, 0.4);
+    background: linear-gradient(135deg, #00B0FF, #0081D5);
+}
+
+.btn-submit-support:active {
+    transform: translateY(-1px);
+}
+
+</style>
 <body>
-  <div class="dashboard-container">
-    <aside class="sidebar">
-      <div class="logo">
-        <a th:href="@{/PanelControlUsuario/inicio}">
-          <img th:src="@{/assetsPanelUsuaario/unnamed-removebg-preview.PNG}" alt="Logo CodiplayCo" />
-        </a>
-      </div>
-      <nav class="main-nav">
-        <ul>
-          <li class="nav-item"><a th:href="@{/PanelControlUsuario/inicio}"><i class="fas fa-home"></i> Inicio</a></li>
-          <li class="nav-item"><a th:href="@{/PanelControlUsuario/mis_cursos}"><i class="fas fa-book"></i> Mis cursos</a></li>
-          <li class="nav-item"><a th:href="@{/PanelControlUsuario/mis_logros}"><i class="fas fa-medal"></i> Mis logros</a></li>
-          <li class="nav-item active"><a th:href="@{/PanelControlUsuario/soporte}"><i class="fas fa-headset"></i> Soporte</a></li>
-        </ul>
-      </nav>
-    </aside>
 
-    <main class="main-content">
-      <div class="support-wrapper">
-        <div class="support-container">
-          <h1><i class="fas fa-headset"></i> Soporte al Cliente</h1>
-          <p class="support-subtitle">¿Tienes algún problema o duda? Estamos aquí para ayudarte 💬</p>
+    <div class="dashboard-container">
+        <!-- SIDEBAR (igual al resto del panel) -->
+        <aside class="sidebar">
+            <div class="logo-container">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-robot"></i>
+                </div>
+                <span class="logo-text">CodiPlay</span>
+            </div>
 
-          <form class="support-form">
-            <label for="name"><i class="fas fa-user"></i> Nombre completo</label>
-            <input type="text" id="name" placeholder="Tu nombre completo" required>
+            <nav class="sidebar-menu">
+                <ul>
+                    <li>
+                        <a th:href="@{/PanelControlUsuario/inicio}">
+                            <i class="fa-solid fa-house"></i>
+                            <span>Inicio</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/PanelControlUsuario/mis_cursos}">
+                            <i class="fa-solid fa-book-open"></i>
+                            <span>Mis cursos</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/PanelControlUsuario/mis_logros}">
+                            <i class="fa-solid fa-trophy"></i>
+                            <span>Mis logros</span>
+                        </a>
+                    </li>
+                     <li>
+                        <a th:href="@{/PanelControlUsuario/bandeja}">
+                            <i class="fa-solid fa-inbox"></i>
+                            <span>Bandeja</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/PanelControlUsuario/foros}">
+                            <i class="fa-solid fa-users"></i>
+                            <span>Foros</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
 
-            <label for="email"><i class="fas fa-envelope"></i> Correo electrónico</label>
-            <input type="email" id="email" placeholder="tucorreo@ejemplo.com" required>
+            <div class="sidebar-footer">
+                <a th:href="@{/PanelControlUsuario/soporte}" class="support-link active-link">
+                    <i class="fa-solid fa-headset"></i>
+                    <span>Soporte</span>
+                </a>
+            </div>
+        </aside>
 
-            <label for="issue"><i class="fas fa-comment-dots"></i> Describe tu problema</label>
-            <textarea id="issue" rows="5" placeholder="Escribe aquí tu duda o problema..." required></textarea>
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+            
+            <!-- HEADER -->
+            <header class="top-header" style="display: flex; align-items: center; justify-content: space-between;">
+                <div class="header-title-inline">
+                    <h1>Soporte al Cliente</h1>
+                    <p style="margin-top: 4px; font-size: 14px; color: var(--text-secondary);">¿Tienes algún problema o duda? Estamos aquí para ayudarte.</p>
+                </div>
 
-            <button type="submit" class="btn-enviar">
-              Enviar solicitud <i class="fas fa-paper-plane"></i>
-            </button>
-          </form>
-        </div>
-      </div>
-    </main>
-  </div>
+                <div class="user-actions" style="display: flex; align-items: center; gap: 20px;">
+                    <div class="icon-btn theme-btn" id="theme-toggle" title="Cambiar Tema">
+                        <i class="fa-solid fa-moon"></i>
+                    </div>
+                    <div class="user-profile" id="user-profile-toggle">
+                        <div class="avatar">
+                            <img th:if="${usuario != null and usuario.avatar != null and !#strings.isEmpty(usuario.avatar)}"
+                                 th:src="@{'/uploads/avatars/' + ${usuario.avatar}}" alt="User Avatar"
+                                 class="avatar-img" />
+                            <img th:unless="${usuario != null and usuario.avatar != null and !#strings.isEmpty(usuario.avatar)}"
+                                 th:src="@{/assetsPanelUsuaario/22b8078e-03d9-49d7-a4a6-f70b4208e8c9-removebg-preview.png}"
+                                 alt="User Avatar" class="avatar-img" />
+                        </div>
+                        <span class="username"
+                              th:text="${usuario != null} ? ${usuario.nombre} : 'Usuario'">Usuario</span>
+                        <i class="fa-solid fa-chevron-down" style="font-size: 12px; margin-left: 4px;"></i>
+                    </div>
+                    <div class="user-menu" id="user-menu" style="display: none;">
+                        <a th:href="@{/PanelControlUsuario/editar-perfil}"><i class="fa-solid fa-user-pen"></i> Editar perfil</a>
+                        <a th:href="@{/logout}"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a>
+                    </div>
+                </div>
+            </header>
+
+            <!-- CONTENIDO SOPORTE -->
+            <div class="content-area">
+
+                <div class="support-layout">
+                    
+                    <!-- COLUMNA IZQUIERDA: FORMULARIO -->
+                    <div class="support-card-form">
+                        <div class="form-title">
+                            <i class="fa-solid fa-paper-plane"></i>
+                            <h3>Envíanos un mensaje</h3>
+                        </div>
+
+                        <form action="#" class="support-form">
+                            <!-- Fila 1 -->
+                            <div class="form-group">
+                                <label>Nombre completo</label>
+                                <div class="input-with-icon">
+                                    <i class="fa-regular fa-user"></i>
+                                    <input type="text" placeholder="Tu nombre completo">
+                                </div>
+                            </div>
+
+                            <!-- Fila 2 -->
+                            <div class="form-group">
+                                <label>Correo electrónico</label>
+                                <div class="input-with-icon">
+                                    <i class="fa-regular fa-envelope"></i>
+                                    <input type="email" placeholder="tucorreo@ejemplo.com">
+                                </div>
+                            </div>
+
+                            <!-- Fila 3 -->
+                            <div class="form-group">
+                                <label>Tipo de problema</label>
+                                <div class="input-with-icon">
+                                    <i class="fa-solid fa-list-ul"></i>
+                                    <select>
+                                        <option value="">Selecciona una opción...</option>
+                                        <option value="tecnico">Problema Técnico</option>
+                                        <option value="facturacion">Pagos y Facturación</option>
+                                        <option value="curso">Contenido del Curso</option>
+                                        <option value="otro">Otro</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Fila 4 -->
+                            <div class="form-group">
+                                <label>Describe tu problema</label>
+                                <div class="input-with-icon textarea-icon">
+                                    <i class="fa-regular fa-comment-dots"></i>
+                                    <textarea placeholder="Escribe aquí tu duda o problema con detalle..."></textarea>
+                                </div>
+                            </div>
+
+                            <button type="button" class="btn-submit-support">
+                                Enviar solicitud
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts JS -->
+    <script th:src="@{/assetsPanelUsuaario/inicio.js}"></script>
+    <script>
+        // Efecto simple para el botón enviar
+        document.addEventListener('DOMContentLoaded', function () {
+            const btn = document.querySelector('.btn-submit-support');
+            if (!btn) return;
+
+            btn.addEventListener('click', function () {
+                const originalText = this.innerText;
+                this.innerHTML = '<i class="fa-solid fa-circle-check"></i> ¡Enviado!';
+                this.style.background = '#2ECC71';
+                setTimeout(() => {
+                    this.innerText = originalText;
+                    this.style.background = '';
+                }, 3000);
+            });
+        });
+
+        // Toggle simple del menú de usuario (igual que en foros)
+        (function () {
+            const profile = document.getElementById('user-profile-toggle');
+            const menu = document.getElementById('user-menu');
+            if (!profile || !menu) return;
+
+            profile.addEventListener('click', function (e) {
+                e.stopPropagation();
+                const visible = menu.style.display === 'block';
+                menu.style.display = visible ? 'none' : 'block';
+            });
+
+            document.addEventListener('click', function () {
+                menu.style.display = 'none';
+            });
+        })();
+    </script>
 </body>
 </html>
