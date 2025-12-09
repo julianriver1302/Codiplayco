@@ -8,317 +8,270 @@
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 	<link rel="stylesheet" th:href="@{/assetsAdmin/css/panel_codiplay.css}">
+	<link rel="stylesheet" th:href="@{/assetsAdmin/css/editar_curso.css}">
 	<link th:href="@{/assets/loader.css}" rel="stylesheet" />
 </head>
 
 <body>
 	<div class="admin-container">
-		<!-- Sidebar -->
-		<nav class="sidebar">
-			<div class="sidebar-header">
-				<div class="logo-container">
-					<img th:src="@{/assetsAdmin/images/ChatGPT Image 4 jul 2025, 02_22_14 p.m..png}"
-						alt="CodiPlayCo Logo" class="logo">
-					<h2 class="brand-title">CodiPlayCo</h2>
+		<!-- Animated Background -->
+		<div class="bg-element bg-element-1"></div>
+		<div class="bg-element bg-element-2"></div>
+
+		<!-- Top Navigation -->
+		<nav class="top-nav">
+			<div class="nav-container">
+				<!-- Logo -->
+				<div class="logo-section">
+					<div class="logo-icon">
+						<img th:src="@{/assetsAdmin/images/ChatGPT Image 4 jul 2025, 02_22_14 p.m..png}" alt="CodiPlayCo Logo" />
+					</div>
+					<div class="logo-text">
+						<h1>CodiPlayCo</h1>
+						<p>Admin Dashboard</p>
+					</div>
 				</div>
-			</div>
-
-			<div class="sidebar-content">
-				<ul class="nav-menu">
-					<li class="nav-item">
-						<a th:href="@{/PanelCodiplay}" class="nav-link">
-							<i class="fas fa-home"></i>
-							<span>Dashboard</span>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a th:href="@{/PanelCodiplay/Admin/editar_usuarios}" class="nav-link">
-							<i class="fas fa-users-cog"></i>
-							<span>Gestionar Usuarios</span>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a th:href="@{/PanelCodiplay/Admin/registrar_docentes}" class="nav-link">
-							<i class="fas fa-chalkboard-teacher"></i>
-							<span>Registrar Docentes</span>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a th:href="@{/PanelCodiplay/Admin/proceso_estudiantes}" class="nav-link">
-							<i class="fas fa-chart-line"></i>
-							<span>Progreso Estudiantes</span>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a th:href="@{/PanelCodiplay/Admin/crear_curso}" class="nav-link">
-							<i class="fas fa-plus-circle"></i>
-							<span>Crear Curso</span>
-						</a>
-					</li>
-					<li class="nav-item active">
-						<a th:href="@{/PanelCodiplay/Admin/listar_cursos}" class="nav-link">
-							<i class="fas fa-list"></i>
-							<span>Cursos Disponibles</span>
-						</a>
-					</li>
-				</ul>
-			</div>
-
-			<div class="sidebar-footer">
-				<a th:href="@{/logout}" class="logout-btn">
-					<i class="fas fa-sign-out-alt"></i>
-					<span>Cerrar Sesión</span>
-				</a>
+				
+				<!-- Navigation Tabs -->
+				<div class="nav-tabs">
+					<a th:href="@{/PanelCodiplay}" class="nav-tab">
+						<svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+							<rect x="3" y="3" width="7" height="7"></rect>
+							<rect x="14" y="3" width="7" height="7"></rect>
+							<rect x="14" y="14" width="7" height="7"></rect>
+							<rect x="3" y="14" width="7" height="7"></rect>
+						</svg>
+						<span>Dashboard</span>
+					</a>
+					<a th:href="@{/PanelCodiplay/Admin/editar_usuarios}" class="nav-tab">
+						<svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+							<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+							<circle cx="9" cy="7" r="4"></circle>
+							<path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+							<path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+						</svg>
+						<span>Usuarios</span>
+					</a>
+					<a th:href="@{/PanelCodiplay/Admin/registrar_docentes}" class="nav-tab">
+						<svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+							<path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+							<path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+						</svg>
+						<span>Registrar Docentes</span>
+					</a>
+					<a th:href="@{/PanelCodiplay/Admin/listar_cursos}" class="nav-tab">
+						<svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+							<path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+							<path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+						</svg>
+						<span>Cursos</span>
+					</a>
+					<a th:href="@{/PanelCodiplay/Admin/proceso_estudiantes}" class="nav-tab">
+						<svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+							<path d="M3 3v18h18"></path>
+							<path d="M18 17V9"></path>
+							<path d="M13 17V5"></path>
+							<path d="M8 17v-3"></path>
+						</svg>
+						<span>Analytics</span>
+					</a>
+				</div>
+				
+				<!-- Right Actions -->
+				<div class="nav-actions">
+					<label aria-checked="false" role="switch" class="switch">
+						<input type="checkbox" id="theme-switch" />
+						<span class="slider">
+							<span class="slider-inner"></span>
+						</span>
+					</label>
+					<div class="user-profile" id="userProfileBtn">
+						<div class="user-avatar">
+							<svg fill="none" viewBox="0 0 24 24" stroke-width="2">
+								<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+								<circle cx="12" cy="7" r="4"></circle>
+							</svg>
+						</div>
+						<div class="user-info">
+							<h3>Admin User</h3>
+							<p>Administrador</p>
+						</div>
+						<i class="fas fa-chevron-down user-profile-arrow"></i>
+						<!-- Menú desplegable -->
+						<div class="user-profile-menu" id="userProfileMenu">
+							<a th:href="@{/logout}" class="user-menu-item">
+								<i class="fas fa-sign-out-alt"></i>
+								<span>Cerrar Sesión</span>
+							</a>
+						</div>
+					</div>
+				</div>
 			</div>
 		</nav>
 
 		<!-- Main Content -->
 		<main class="main-content">
-			<header class="main-header">
-				<div class="header-content">
-					<div class="page-info">
-						<button th:onclick="window.history.back()" class="btn-back">
-							<i class="fas fa-arrow-left"></i>
-							<span>Volver</span>
-						</button>
-						<h1 class="page-title">
-							<i class="fas fa-edit"></i>
-							Editar Curso
+			<div class="dashboard-content">
+				<div class="page-header-section">
+					<button type="button" onclick="window.history.back()" class="btn-back">
+						<i class="fas fa-arrow-left"></i>
+						<span>Volver</span>
+					</button>
+					<div class="page-header-title-group">
+						<h1 class="page-main-title">
+							<i class="fas fa-edit"></i> Editar Curso
 						</h1>
-					</div>
-					<div class="header-info">
-						<div class="admin-info">
-							<i class="fas fa-user-shield"></i>
-							<span>Administrador</span>
-						</div>
-						<div class="current-time" id="currentTime"></div>
+						<p class="page-subtitle">Modifica los datos del curso seleccionado</p>
 					</div>
 				</div>
-			</header>
 
-			<div class="form-container">
-				<div class="form-wrapper">
-					<!-- Formulario -->
-					<form class="course-form" th:action="@{/PanelCodiplay/Admin/actualizar_curso/{id}(id=${curso.id})}"
-						method="post">
-						<div class="form-header">
-							<div class="form-icon">
-								<i class="fas fa-book-open"></i>
+				<div class="form-container">
+					<div class="form-wrapper">
+						<!-- Formulario -->
+						<form class="course-form" th:action="@{/PanelCodiplay/Admin/actualizar_curso/{id}(id=${curso.id})}"
+							method="post">
+							<div class="form-header">
+								<div class="form-icon">
+									<i class="fas fa-book-open"></i>
+								</div>
+								<h2>Información del Curso</h2>
+								<p>Modifica los datos del curso seleccionado</p>
 							</div>
-							<h2>Información del Curso</h2>
-							<p>Modifica los datos del curso seleccionado</p>
-						</div>
 
 						<div class="form-grid">
-							<!-- Información Básica -->
-							<div class="form-section">
-								<h3 class="section-title">
-									<i class="fas fa-info-circle"></i>
-									Información Básica
-								</h3>
+							<!-- Información básica -->
+							<div class="form-group">
+								<label for="curso"><i class="fas fa-graduation-cap"></i> Nombre del Curso *</label>
+								<input type="text" id="curso" name="curso" th:value="${curso.curso}"
+									placeholder="Ej: HTML para Principiantes" required>
+							</div>
 
-								<div class="form-row">
-									<div class="form-group">
-										<label for="curso">
-											<i class="fas fa-graduation-cap"></i>
-											Nombre del Curso *
-										</label>
-										<input type="text" id="curso" name="curso" th:value="${curso.curso}"
-											placeholder="Ej: HTML para Principiantes" required>
-									</div>
-									<div class="form-group">
-										<label for="dirigido">
-											<i class="fas fa-users"></i>
-											Dirigido a *
-										</label>
-										<input type="text" id="dirigido" name="dirigido" th:value="${curso.dirigido}"
-											placeholder="Ej: Niños de 8-12 años" required>
-									</div>
-								</div>
+							<div class="form-group">
+								<label for="descripcion"><i class="fas fa-align-left"></i> Descripción *</label>
+								<textarea id="descripcion" name="descripcion" rows="3" required
+									placeholder="Describe brevemente el contenido del curso"
+									th:text="${curso.descripcion}"></textarea>
+							</div>
 
-								<div class="form-group">
-									<label for="descripcion">
-										<i class="fas fa-align-left"></i>
-										Descripción del Curso *
-									</label>
-									<textarea id="descripcion" name="descripcion" rows="4"
-										placeholder="Describe el contenido, objetivos y lo que aprenderán los estudiantes..."
-										th:text="${curso.descripcion}" required></textarea>
-									<small class="field-help">
-										<i class="fas fa-info-circle"></i>
-										Proporcione una descripción detallada del curso
-									</small>
+							<div class="form-group">
+								<label for="dirigido"><i class="fas fa-users"></i> Dirigido a *</label>
+								<input type="text" id="dirigido" name="dirigido" th:value="${curso.dirigido}"
+									placeholder="Ej: Principiantes en programación" required>
+							</div>
+
+							<!-- Docente -->
+							<div class="form-group">
+								<label for="asignacionDocente"><i class="fas fa-chalkboard-teacher"></i> Docente Asignado *</label>
+								<select id="asignacionDocente" name="asignacionDocente" required>
+									<option value="">Seleccionar docente...</option>
+									<option th:each="asignacion : ${asignaciones}"
+											th:value="${asignacion.id}"
+											th:selected="${curso.asignacionDocente != null and curso.asignacionDocente.id == asignacion.id}"
+											th:text="${asignacion.usuario.nombre + ' ' + asignacion.usuario.apellido}">
+									</option>
+								</select>
+								<div th:if="${#lists.isEmpty(asignaciones)}" class="alert alert-warning">
+									<i class="fas fa-exclamation-triangle"></i>
+									<span>No hay docentes asignados registrados. Primero registra una asignación docente.</span>
 								</div>
 							</div>
 
-							<!-- Configuración del Curso -->
-							<div class="form-section">
-								<h3 class="section-title">
-									<i class="fas fa-cog"></i>
-									Configuración del Curso
-								</h3>
-
-								<div class="form-row">
-									<div class="form-group">
-										<label for="asignacionDocente">
-											<i class="fas fa-chalkboard-teacher"></i>
-											Docente Asignado *
-										</label>
-										<select id="asignacionDocente" name="asignacionDocente" required>
-											<option value="">Seleccionar docente...</option>
-											<option th:each="asignacion : ${asignaciones}"
-												th:value="${asignacion.id}"
-												th:selected="${curso.asignacionDocente != null and curso.asignacionDocente.id == asignacion.id}"
-												th:text="${asignacion.usuario.nombre + ' ' + asignacion.usuario.apellido}">
-											</option>
-										</select>
-
-										<div th:if="${#lists.isEmpty(asignaciones)}" class="alert alert-warning">
-											<i class="fas fa-exclamation-triangle"></i>
-											<span>No hay docentes asignados registrados. Primero registra una asignación docente.</span>
-										</div>
+							<!-- Dificultad -->
+							<div class="form-group">
+								<label><i class="fas fa-star"></i> Nivel de Dificultad (1-5)</label>
+								<div class="star-rating-container">
+									<div class="star-rating" id="starRating">
+										<i class="fas fa-star star" data-rating="1" th:class="${curso.dificultad >= 1} ? 'active' : ''"></i>
+										<i class="fas fa-star star" data-rating="2" th:class="${curso.dificultad >= 2} ? 'active' : ''"></i>
+										<i class="fas fa-star star" data-rating="3" th:class="${curso.dificultad >= 3} ? 'active' : ''"></i>
+										<i class="fas fa-star star" data-rating="4" th:class="${curso.dificultad >= 4} ? 'active' : ''"></i>
+										<i class="fas fa-star star" data-rating="5" th:class="${curso.dificultad >= 5} ? 'active' : ''"></i>
 									</div>
-									<div class="form-group">
-										<label for="precio">
-											<i class="fas fa-dollar-sign"></i>
-											Precio del Curso *
-										</label>
-										<div class="price-input-wrapper">
-											<span class="currency-symbol">$</span>
-											<input type="number" id="precio" name="precio" step="0.01"
-												th:value="${curso.precio}" placeholder="0.00" required>
-										</div>
-									</div>
-								</div>
-
-							</div>
-						</div>
-
-						<!-- Nivel de Dificultad -->
-						<div class="form-section">
-							<h3 class="section-title">
-								<i class="fas fa-star"></i>
-								Nivel de Dificultad
-							</h3>
-
-							<div class="difficulty-container">
-								<div class="star-rating" id="starRating">
-									<span class="star" data-rating="1"
-										th:class="${curso.dificultad >= 1} ? 'active' : ''">
-										<i class="fas fa-star"></i>
-									</span>
-									<span class="star" data-rating="2"
-										th:class="${curso.dificultad >= 2} ? 'active' : ''">
-										<i class="fas fa-star"></i>
-									</span>
-									<span class="star" data-rating="3"
-										th:class="${curso.dificultad >= 3} ? 'active' : ''">
-										<i class="fas fa-star"></i>
-									</span>
-									<span class="star" data-rating="4"
-										th:class="${curso.dificultad >= 4} ? 'active' : ''">
-										<i class="fas fa-star"></i>
-									</span>
-									<span class="star" data-rating="5"
-										th:class="${curso.dificultad >= 5} ? 'active' : ''">
-										<i class="fas fa-star"></i>
-									</span>
-								</div>
-								<input type="hidden" id="dificultad" name="dificultad" th:value="${curso.dificultad}"
-									required>
-								<div class="difficulty-info">
-									<div class="difficulty-label" id="difficultyLabel">
+									<input type="hidden" id="dificultad" name="dificultad" th:value="${curso.dificultad}" required>
+									<span class="difficulty-label" id="difficultyLabel">
 										<span th:switch="${curso.dificultad}">
-											<span th:case="1">Muy fácil</span>
-											<span th:case="2">Fácil</span>
+											<span th:case="1">Principiante</span>
+											<span th:case="2">Básico</span>
 											<span th:case="3">Intermedio</span>
-											<span th:case="4">Difícil</span>
-											<span th:case="5">Muy difícil</span>
+											<span th:case="4">Avanzado</span>
+											<span th:case="5">Experto</span>
 										</span>
-									</div>
-									<div class="difficulty-description" id="difficultyDescription">
-										<span th:switch="${curso.dificultad}">
-											<span th:case="1">Ideal para principiantes sin experiencia previa</span>
-											<span th:case="2">Perfecto para estudiantes con conocimientos básicos</span>
-											<span th:case="3">Requiere conocimientos previos en el tema</span>
-											<span th:case="4">Para estudiantes con experiencia considerable</span>
-											<span th:case="5">Nivel avanzado para expertos</span>
-										</span>
-									</div>
+									</span>
+								</div>
+							</div>
+
+							<!-- Precio -->
+							<div class="form-group">
+								<label for="precio"><i class="fas fa-dollar-sign"></i> Precio *</label>
+								<div class="price-input-wrapper">
+									<span class="currency-symbol">$</span>
+									<input type="number" id="precio" name="precio" step="0.01"
+										th:value="${curso.precio}" placeholder="0.00" required>
 								</div>
 							</div>
 						</div>
-				</div>
 
-				<div class="form-actions">
-					<button type="button" th:onclick="window.history.back()" class="btn-secondary">
-						<i class="fas fa-times"></i>
-						Cancelar
-					</button>
-					<button type="submit" class="btn-primary" th:disabled="${#lists.isEmpty(asignaciones)}"
-						th:classappend="${#lists.isEmpty(asignaciones)} ? 'btn-disabled' : ''">
-						<i class="fas fa-save"></i>
-						Actualizar Curso
-					</button>
+						<div class="form-actions">
+							<button type="button" onclick="window.history.back()" class="btn-secondary">
+								<i class="fas fa-times"></i>
+								Cancelar
+							</button>
+							<button type="submit" class="btn-primary" th:disabled="${#lists.isEmpty(asignaciones)}"
+								th:classappend="${#lists.isEmpty(asignaciones)} ? 'btn-disabled' : ''">
+								<i class="fas fa-save"></i>
+								Actualizar Curso
+							</button>
+						</div>
+					</form>
 				</div>
-				</form>
 			</div>
-	</div>
+		</div>
 	</main>
-	</div>
+</div>
 
-	<script>
-		// Actualizar hora actual
-		function updateTime() {
-			const now = new Date();
-			const timeString = now.toLocaleString('es-ES', {
-				weekday: 'long',
-				year: 'numeric',
-				month: 'long',
-				day: 'numeric',
-				hour: '2-digit',
-				minute: '2-digit'
+<script>
+	// Validación de formulario y sistema de estrellas
+	document.addEventListener('DOMContentLoaded', function() {
+		const form = document.querySelector('.course-form');
+		if (form) {
+			form.addEventListener('submit', function (e) {
+				const requiredFields = this.querySelectorAll('input[required], select[required], textarea[required]');
+				let isValid = true;
+
+				requiredFields.forEach(field => {
+					if (!field.value.trim()) {
+						field.classList.add('error');
+						isValid = false;
+					} else {
+						field.classList.remove('error');
+					}
+				});
+
+				if (!isValid) {
+					e.preventDefault();
+					alert('Por favor, complete todos los campos obligatorios.');
+				}
 			});
-			document.getElementById('currentTime').textContent = timeString;
+
+			document.querySelectorAll('input, select, textarea').forEach(field => {
+				field.addEventListener('input', function () {
+					this.classList.remove('error');
+				});
+			});
 		}
 
-		updateTime();
-		setInterval(updateTime, 60000);
-
-		// Sistema de estrellas
-		const stars = document.querySelectorAll('.star');
-		const difficultyInput = document.getElementById('dificultad');
+		// Sistema de estrellas de dificultad
+		const stars = document.querySelectorAll('.star-rating .star');
+		const dificultadInput = document.getElementById('dificultad');
 		const difficultyLabel = document.getElementById('difficultyLabel');
-		const difficultyDescription = document.getElementById('difficultyDescription');
-
-		const difficultyLevels = {
-			1: {label: 'Muy fácil', description: 'Ideal para principiantes sin experiencia previa'},
-			2: {label: 'Fácil', description: 'Perfecto para estudiantes con conocimientos básicos'},
-			3: {label: 'Intermedio', description: 'Requiere conocimientos previos en el tema'},
-			4: {label: 'Difícil', description: 'Para estudiantes con experiencia considerable'},
-			5: {label: 'Muy difícil', description: 'Nivel avanzado para expertos'}
+		
+		const difficultyLabels = {
+			1: 'Principiante',
+			2: 'Básico',
+			3: 'Intermedio',
+			4: 'Avanzado',
+			5: 'Experto'
 		};
-
-		stars.forEach((star, index) => {
-			star.addEventListener('click', () => {
-				const rating = index + 1;
-				difficultyInput.value = rating;
-				updateStars(rating);
-				updateDifficultyInfo(rating);
-			});
-
-			star.addEventListener('mouseenter', () => {
-				const rating = index + 1;
-				updateStars(rating);
-				updateDifficultyInfo(rating);
-			});
-		});
-
-		document.getElementById('starRating').addEventListener('mouseleave', () => {
-			const currentRating = parseInt(difficultyInput.value);
-			updateStars(currentRating);
-			updateDifficultyInfo(currentRating);
-		});
 
 		function updateStars(rating) {
 			stars.forEach((star, index) => {
@@ -328,230 +281,174 @@
 					star.classList.remove('active');
 				}
 			});
+			dificultadInput.value = rating;
+			if (difficultyLabel) {
+				difficultyLabel.textContent = difficultyLabels[rating];
+			}
 		}
 
-		function updateDifficultyInfo(rating) {
-			const level = difficultyLevels[rating];
-			difficultyLabel.textContent = level.label;
-			difficultyDescription.textContent = level.description;
+		stars.forEach(star => {
+			star.addEventListener('click', function() {
+				const rating = parseInt(this.getAttribute('data-rating'));
+				updateStars(rating);
+			});
+
+			star.addEventListener('mouseenter', function() {
+				const rating = parseInt(this.getAttribute('data-rating'));
+				stars.forEach((s, index) => {
+					if (index < rating) {
+						s.classList.add('hover');
+					} else {
+						s.classList.remove('hover');
+					}
+				});
+			});
+		});
+
+		// Remover hover al salir del contenedor
+		const starRatingContainer = document.querySelector('.star-rating');
+		if (starRatingContainer) {
+			starRatingContainer.addEventListener('mouseleave', function() {
+				stars.forEach(star => star.classList.remove('hover'));
+			});
 		}
 
-		// Form validation
-		document.querySelector('.course-form').addEventListener('submit', function (e) {
-			const requiredFields = this.querySelectorAll('input[required], select[required], textarea[required]');
-			let isValid = true;
+		// Set active nav link based on current URL
+		const currentPath = window.location.pathname;
+		
+		// Primero, remover la clase active de TODOS los elementos
+		document.querySelectorAll('.nav-tab').forEach(link => {
+			link.classList.remove('active');
+		});
+		
+		// Mapeo de rutas relacionadas a sus secciones principales
+		const routeMapping = {
+			'editar_usuario': '/PanelCodiplay/Admin/editar_usuarios',
+			'editar_usuarios': '/PanelCodiplay/Admin/editar_usuarios',
+			'registrar_docentes': '/PanelCodiplay/Admin/registrar_docentes',
+			'listar_cursos': '/PanelCodiplay/Admin/listar_cursos',
+			'editar_curso': '/PanelCodiplay/Admin/listar_cursos',
+			'crear_curso': '/PanelCodiplay/Admin/listar_cursos',
+			'proceso_estudiantes': '/PanelCodiplay/Admin/proceso_estudiantes',
+			'progreso_por_curso': '/PanelCodiplay/Admin/proceso_estudiantes'
+		};
+		
+		// Determinar la ruta objetivo basada en el path actual
+		let targetRoute = currentPath;
+		
+		// Buscar si el path actual contiene alguna de las rutas mapeadas
+		for (const [key, route] of Object.entries(routeMapping)) {
+			if (currentPath.includes(key)) {
+				targetRoute = route;
+				break;
+			}
+		}
+		
+		// Si estamos en el dashboard exacto, mantenerlo
+		if (currentPath === '/PanelCodiplay' || currentPath === '/PanelCodiplay/') {
+			targetRoute = '/PanelCodiplay';
+		}
+		
+		// Luego, encontrar la mejor coincidencia
+		let bestMatch = null;
+		let bestMatchLength = 0;
+		
+		document.querySelectorAll('.nav-tab').forEach(link => {
+			const href = link.getAttribute('href');
+			if (href) {
+				// Coincidencia exacta tiene prioridad máxima
+				if (targetRoute === href || currentPath === href) {
+					bestMatch = link;
+					bestMatchLength = Infinity;
+				}
+				// Si no hay coincidencia exacta, buscar includes pero priorizar las más largas
+				else if (targetRoute.includes(href) && href.length > bestMatchLength) {
+					bestMatch = link;
+					bestMatchLength = href.length;
+				}
+			}
+		});
+		
+		// Aplicar la clase active solo al mejor match
+		if (bestMatch) {
+			bestMatch.classList.add('active');
+		}
 
-			requiredFields.forEach(field => {
-				if (!field.value.trim()) {
-					field.classList.add('error');
-					isValid = false;
+		// Theme Switch
+		const themeSwitch = document.getElementById('theme-switch');
+		const body = document.body;
+		const switchLabel = document.querySelector('.switch');
+
+		// Load saved theme preference
+		const savedTheme = localStorage.getItem('theme');
+		if (savedTheme === 'light') {
+			body.classList.add('light-theme');
+			if (themeSwitch) {
+				themeSwitch.checked = true;
+			}
+			if (switchLabel) {
+				switchLabel.setAttribute('aria-checked', 'true');
+			}
+		} else {
+			body.classList.remove('light-theme');
+			if (themeSwitch) {
+				themeSwitch.checked = false;
+			}
+			if (switchLabel) {
+				switchLabel.setAttribute('aria-checked', 'false');
+			}
+		}
+
+		// Handle theme switch
+		if (themeSwitch) {
+			themeSwitch.addEventListener('change', function() {
+				if (this.checked) {
+					body.classList.add('light-theme');
+					localStorage.setItem('theme', 'light');
+					if (switchLabel) {
+						switchLabel.setAttribute('aria-checked', 'true');
+					}
 				} else {
-					field.classList.remove('error');
+					body.classList.remove('light-theme');
+					localStorage.setItem('theme', 'dark');
+					if (switchLabel) {
+						switchLabel.setAttribute('aria-checked', 'false');
+					}
+				}
+			});
+		}
+
+		// User Profile Menu Toggle
+		const userProfileBtn = document.getElementById('userProfileBtn');
+		const userProfileMenu = document.getElementById('userProfileMenu');
+		
+		if (userProfileBtn && userProfileMenu) {
+			userProfileBtn.addEventListener('click', function(e) {
+				e.stopPropagation();
+				userProfileBtn.classList.toggle('active');
+			});
+
+			// Cerrar el menú al hacer clic fuera
+			document.addEventListener('click', function(e) {
+				if (!userProfileBtn.contains(e.target)) {
+					userProfileBtn.classList.remove('active');
 				}
 			});
 
-			if (!isValid) {
-				e.preventDefault();
-				alert('Por favor, complete todos los campos obligatorios.');
-			}
-		});
-
-		// Remove error class on input
-		document.querySelectorAll('input, select, textarea').forEach(field => {
-			field.addEventListener('input', function () {
-				this.classList.remove('error');
+			// Cerrar el menú al hacer clic en un item del menú
+			const menuItems = userProfileMenu.querySelectorAll('.user-menu-item');
+			menuItems.forEach(item => {
+				item.addEventListener('click', function() {
+					userProfileBtn.classList.remove('active');
+				});
 			});
-		});
-
-		// Efecto hover en tarjetas
-		document.querySelectorAll('.stat-card, .action-card').forEach(card => {
-			card.addEventListener('mouseenter', function () {
-				this.style.transform = 'translateY(-5px)';
-			});
-
-			card.addEventListener('mouseleave', function () {
-				this.style.transform = 'translateY(0)';
-			});
-		});
-	</script>
-
-	<style>
-		/* Estilos mejorados para el sistema de estrellas de dificultad */
-		.difficulty-container {
-			display: flex;
-			flex-direction: column;
-			gap: 15px;
-			padding: 20px;
-			background: #f8f9fa;
-			border-radius: 10px;
-			border: 2px solid #e9ecef;
 		}
+	});
+</script>
 
-		.star-rating {
-			display: flex;
-			gap: 8px;
-			justify-content: center;
-			margin-bottom: 10px;
-		}
+</body>
 
-		.star {
-			cursor: pointer;
-			font-size: 24px;
-			color: #E0E0E0;
-			transition: all 0.3s ease;
-			padding: 5px;
-			border-radius: 50%;
-		}
-
-		.star:hover {
-			transform: scale(1.2);
-			color: #FFD700;
-		}
-
-		.star.active {
-			color: #FFD700;
-			text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-		}
-
-		.star.active:hover {
-			color: #FFA500;
-			text-shadow: 0 0 15px rgba(255, 165, 0, 0.7);
-		}
-
-		.difficulty-info {
-			text-align: center;
-			padding: 15px;
-			background: white;
-			border-radius: 8px;
-			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-		}
-
-		.difficulty-label {
-			font-size: 18px;
-			font-weight: 600;
-			color: #333;
-			margin-bottom: 5px;
-		}
-
-		.difficulty-description {
-			font-size: 14px;
-			color: #666;
-			line-height: 1.4;
-		}
-
-		/* Animación de entrada para las estrellas */
-		.star {
-			animation: fadeInUp 0.5s ease forwards;
-		}
-
-		.star:nth-child(1) {
-			animation-delay: 0.1s;
-		}
-
-		.star:nth-child(2) {
-			animation-delay: 0.2s;
-		}
-
-		.star:nth-child(3) {
-			animation-delay: 0.3s;
-		}
-
-		.star:nth-child(4) {
-			animation-delay: 0.4s;
-		}
-
-		.star:nth-child(5) {
-			animation-delay: 0.5s;
-		}
-
-		@keyframes fadeInUp {
-			from {
-				opacity: 0;
-				transform: translateY(20px);
-			}
-
-			to {
-				opacity: 1;
-				transform: translateY(0);
-			}
-		}
-
-		/* Mejorar el layout del formulario */
-		.form-section {
-			margin-bottom: 25px;
-		}
-
-		.section-title {
-			display: flex;
-			align-items: center;
-			gap: 10px;
-			margin-bottom: 15px;
-			color: #333;
-			font-size: 16px;
-			font-weight: 600;
-		}
-
-		.section-title i {
-			color: #667eea;
-		}
-
-		/* Estilos para alertas */
-		.alert {
-			padding: 12px 16px;
-			border-radius: 8px;
-			margin-top: 10px;
-			display: flex;
-			align-items: center;
-			gap: 10px;
-			font-size: 14px;
-		}
-
-		.alert-warning {
-			background-color: #fff3cd;
-			border: 1px solid #ffeaa7;
-			color: #856404;
-		}
-
-		.alert-warning i {
-			color: #f39c12;
-		}
-
-		/* Mejorar el select de docentes */
-		.form-group select {
-			width: 100%;
-			padding: 12px 16px;
-			border: 2px solid #e9ecef;
-			border-radius: 8px;
-			background-color: white;
-			font-size: 14px;
-			transition: all 0.3s ease;
-		}
-
-		.form-group select:focus {
-			border-color: #667eea;
-			box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-			outline: none;
-		}
-
-		.form-group select:disabled {
-			background-color: #f8f9fa;
-			color: #6c757d;
-			cursor: not-allowed;
-		}
-
-		/* Estilos para botón deshabilitado */
-		.btn-disabled {
-			background-color: #6c757d !important;
-			color: white !important;
-			cursor: not-allowed !important;
-			opacity: 0.6 !important;
-		}
-
-		.btn-disabled:hover {
-			background-color: #6c757d !important;
-			transform: none !important;
-		}
-	</style>
+</html>
 
 </body>
 
