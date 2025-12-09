@@ -13,134 +13,245 @@
 </head>
 <body>
   <div class="admin-container">
-    <!-- Sidebar -->
-    <nav class="sidebar">
-      <div class="sidebar-header">
-        <div class="logo-container">
-          <img th:src="@{/assetsAdmin/images/ChatGPT Image 4 jul 2025, 02_22_14 p.m..png}" alt="CodiPlayCo Logo" class="logo">
-          <h2 class="brand-title">CodiPlayCo</h2>
+    <!-- Animated Background -->
+    <div class="bg-element bg-element-1"></div>
+    <div class="bg-element bg-element-2"></div>
+
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+      <div class="nav-container">
+        <!-- Logo -->
+        <div class="logo-section">
+          <div class="logo-icon">
+            <img th:src="@{/assetsAdmin/images/ChatGPT Image 4 jul 2025, 02_22_14 p.m..png}" alt="CodiPlayCo Logo" />
+          </div>
+          <div class="logo-text">
+            <h1>CodiPlayCo</h1>
+            <p>Admin Dashboard</p>
+          </div>
         </div>
-      </div>
-      
-      <div class="sidebar-content">
-        <ul class="nav-menu">
-          <li class="nav-item active">
-            <a th:href="@{/PanelCodiplay}" class="nav-link">
-              <i class="fas fa-home"></i>
-              <span>Dashboard</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a th:href="@{/PanelCodiplay/Admin/editar_usuarios}" class="nav-link">
-              <i class="fas fa-users-cog"></i>
-              <span>Gestionar Usuarios</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a th:href="@{/PanelCodiplay/Admin/registrar_docentes}" class="nav-link">
-              <i class="fas fa-chalkboard-teacher"></i>
-              <span>Registrar Docentes</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a th:href="@{/PanelCodiplay/Admin/proceso_estudiantes}" class="nav-link">
-              <i class="fas fa-chart-line"></i>
-              <span>Progreso Estudiantes</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a th:href="@{/PanelCodiplay/Admin/crear_curso}" class="nav-link">
-              <i class="fas fa-plus-circle"></i>
-              <span>Crear Curso</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a th:href="@{/PanelCodiplay/Admin/listar_cursos}" class="nav-link">
-              <i class="fas fa-list"></i>
-              <span>Cursos Disponibles</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-      
-      <div class="sidebar-footer">
-        <a th:href="@{/logout}" class="logout-btn">
-          <i class="fas fa-sign-out-alt"></i>
-          <span>Cerrar Sesión</span>
-        </a>
+
+        <!-- Navigation Tabs -->
+        <div class="nav-tabs">
+          <a th:href="@{/PanelCodiplay}" class="nav-tab active">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="7"></rect>
+              <rect x="14" y="3" width="7" height="7"></rect>
+              <rect x="14" y="14" width="7" height="7"></rect>
+              <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+            <span>Dashboard</span>
+          </a>
+          <a th:href="@{/PanelCodiplay/Admin/editar_usuarios}" class="nav-tab">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+            <span>Usuarios</span>
+          </a>
+          <a th:href="@{/PanelCodiplay/Admin/registrar_docentes}" class="nav-tab">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+            <span>Registrar Docentes</span>
+          </a>
+          <a th:href="@{/PanelCodiplay/Admin/listar_cursos}" class="nav-tab">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+              <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+            </svg>
+            <span>Cursos</span>
+          </a>
+          <a th:href="@{/PanelCodiplay/Admin/proceso_estudiantes}" class="nav-tab">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path d="M3 3v18h18"></path>
+              <path d="M18 17V9"></path>
+              <path d="M13 17V5"></path>
+              <path d="M8 17v-3"></path>
+            </svg>
+            <span>Analytics</span>
+          </a>
+        </div>
+
+        <!-- Right Actions -->
+        <div class="nav-actions">
+          <label aria-checked="false" role="switch" class="switch">
+            <input type="checkbox" id="theme-switch" />
+            <span class="slider">
+              <span class="slider-inner"></span>
+            </span>
+          </label>
+          <div class="user-profile" id="userProfileBtn">
+            <div class="user-avatar">
+              <svg fill="none" viewBox="0 0 24 24" stroke-width="2">
+                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+            </div>
+            <div class="user-info">
+              <h3>Admin User</h3>
+              <p>Administrador</p>
+            </div>
+            <i class="fas fa-chevron-down user-profile-arrow"></i>
+            <!-- Menú desplegable -->
+            <div class="user-profile-menu" id="userProfileMenu">
+              <a th:href="@{/logout}" class="user-menu-item">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Cerrar Sesión</span>
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
     </nav>
 
     <!-- Main Content -->
     <main class="main-content">
-      <header class="main-header">
-        <div class="header-content">
-          <h1 class="page-title">
-            <i class="fas fa-tachometer-alt"></i>
-            Panel Administrativo
-          </h1>
-        </div>
-      </header>
-
       <div class="dashboard-content">
-        <div class="welcome-section">
-          <div class="welcome-card">
-            <div class="welcome-icon">
-              <i class="fas fa-hand-wave"></i>
+        <div class="view-container">
+          <div class="grid grid-cols-12">
+            <!-- Hero Card -->
+            <div class="col-span-12">
+              <div class="hero-card">
+                <div class="hero-content">
+                  <h1>¡Bienvenido de nuevo! 👋</h1>
+                  <p>Aquí está lo que está sucediendo en CodiPlayCo hoy</p>
+                  <div class="hero-stats">
+                    <div class="hero-stat">
+                      <p>Estudiantes Activos</p>
+                      <h3>
+                        <span th:text="${totalEstudiantes != null ? totalEstudiantes : 0}">0</span>
+                      </h3>
+                    </div>
+                    <div class="hero-stat">
+                      <p>Tasa de Completación</p>
+                      <h3>87%</h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="welcome-text">
-              <h2>¡Bienvenido al Panel de Control!</h2>
-              <p>Gestiona todos los aspectos de la plataforma educativa CodiPlayCo desde aquí.</p>
+
+            <!-- Stat Cards -->
+            <div class="col-span-3">
+              <a  class="glass-card stat-card students">
+                <div class="stat-header">
+                  <div class="stat-icon gradient-blue">
+                    <svg fill="none" viewBox="0 0 24 24" stroke-width="2">
+                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                      <circle cx="9" cy="7" r="4"></circle>
+                      <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    </svg>
+                  </div>
+                  <span class="stat-change">
+                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <line x1="7" y1="17" x2="17" y2="7"></line>
+                      <polyline points="7 7 17 7 17 17"></polyline>
+                    </svg>
+                    
+                  </span>
+                </div>
+                <h3 class="stat-value">
+                  <span th:text="${totalEstudiantes != null ? totalEstudiantes : 0}">0</span>
+                </h3>
+                <p class="stat-label">Estudiantes Activos</p>
+                <div class="mini-chart">
+                  <div class="chart-bar" style="height: 40%; background: #3b82f6;"></div>
+                  <div class="chart-bar" style="height: 60%; background: #3b82f6;"></div>
+                  <div class="chart-bar" style="height: 45%; background: #3b82f6;"></div>
+                  <div class="chart-bar" style="height: 80%; background: #3b82f6;"></div>
+                  <div class="chart-bar" style="height: 55%; background: #3b82f6;"></div>
+                  <div class="chart-bar" style="height: 90%; background: #3b82f6;"></div>
+                  <div class="chart-bar" style="height: 70%; background: #3b82f6;"></div>
+                </div>
+              </a>
+            </div>
+
+            <div class="col-span-3">
+              <a  class="glass-card stat-card progress">
+                <div class="stat-header">
+                  <div class="stat-icon gradient-purple">
+                    <svg fill="none" viewBox="0 0 24 24" stroke-width="2">
+                      <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                      <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                    </svg>
+                  </div>
+                  <span class="stat-change"></span>
+                </div>
+                <h3 class="stat-value">
+                  <span th:text="${totalCursosActivos != null ? totalCursosActivos : 0}">0</span>
+                </h3>
+                <p class="stat-label">Cursos Activos</p>
+                <div class="mini-chart">
+                  <div class="chart-bar" style="height: 50%; background: #a855f7;"></div>
+                  <div class="chart-bar" style="height: 65%; background: #a855f7;"></div>
+                  <div class="chart-bar" style="height: 55%; background: #a855f7;"></div>
+                  <div class="chart-bar" style="height: 75%; background: #a855f7;"></div>
+                  <div class="chart-bar" style="height: 60%; background: #a855f7;"></div>
+                  <div class="chart-bar" style="height: 85%; background: #a855f7;"></div>
+                  <div class="chart-bar" style="height: 72%; background: #a855f7;"></div>
+                </div>
+              </a>
+            </div>
+
+            <div class="col-span-3">
+              <a  class="glass-card stat-card teachers">
+                <div class="stat-header">
+                  <div class="stat-icon gradient-green">
+                    <svg fill="none" viewBox="0 0 24 24" stroke-width="2">
+                      <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                      <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                    </svg>
+                  </div>
+                  <span class="stat-change"></span>
+                </div>
+                <h3 class="stat-value">
+                  <span th:text="${totalDocentesActivos != null ? totalDocentesActivos : 0}">0</span>
+                </h3>
+                <p class="stat-label">Docentes Activos</p>
+                <div class="mini-chart">
+                  <div class="chart-bar" style="height: 45%; background: #10b981;"></div>
+                  <div class="chart-bar" style="height: 58%; background: #10b981;"></div>
+                  <div class="chart-bar" style="height: 50%; background: #10b981;"></div>
+                  <div class="chart-bar" style="height: 70%; background: #10b981;"></div>
+                  <div class="chart-bar" style="height: 62%; background: #10b981;"></div>
+                  <div class="chart-bar" style="height: 88%; background: #10b981;"></div>
+                  <div class="chart-bar" style="height: 75%; background: #10b981;"></div>
+                </div>
+              </a>
+            </div>
+
+            <div class="col-span-3">
+              <div class="glass-card stat-card">
+                <div class="stat-header">
+                  <div class="stat-icon gradient-orange">
+                    <svg fill="none" viewBox="0 0 24 24" stroke-width="2">
+       S               <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                      <polyline points="17 6 23 6 23 12"></polyline>
+                    </svg>
+                  </div>
+                  <span class="stat-change"></span>
+                </div>
+                <h3 class="stat-value">87%</h3>
+                <p class="stat-label">Tasa de Éxito</p>
+                <div class="mini-chart">
+                  <div class="chart-bar" style="height: 48%; background: #f97316;"></div>
+                  <div class="chart-bar" style="height: 62%; background: #f97316;"></div>
+                  <div class="chart-bar" style="height: 55%; background: #f97316;"></div>
+                  <div class="chart-bar" style="height: 78%; background: #f97316;"></div>
+                  <div class="chart-bar" style="height: 65%; background: #f97316;"></div>
+                  <div class="chart-bar" style="height: 92%; background: #f97316;"></div>
+                  <div class="chart-bar" style="height: 80%; background: #f97316;"></div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-
-        <section class="stats-grid">
-          <div class="stat-card students" onclick="location.href='estudiantes_registrados.html'">
-            <div class="stat-icon">
-              <i class="fas fa-graduation-cap"></i>
-            </div>
-            <div class="stat-content">
-              <h3>Estudiantes Activos</h3>
-              <div class="stat-number">
-                <span th:text="${totalEstudiantes != null ? totalEstudiantes : 0}">0</span>
-              </div>
-              <p>Niños inscritos actualmente</p>
-            </div>
-            <div class="stat-action">
-              <i class="fas fa-arrow-right"></i>
-            </div>
-          </div>
-
-          <div class="stat-card progress" onclick="location.href='progreso_por_curso.html'">
-            <div class="stat-icon">
-              <i class="fas fa-chart-bar"></i>
-            </div>
-            <div class="stat-content">
-              <h3>Progreso por Curso</h3>
-              <div class="stat-number">100%</div>
-              <p>Visualización de avances</p>
-            </div>
-            <div class="stat-action">
-              <i class="fas fa-arrow-right"></i>
-            </div>
-          </div>
-
-          <div class="stat-card teachers" onclick="location.href='docentes_asociados.html'">
-            <div class="stat-icon">
-              <i class="fas fa-chalkboard-teacher"></i>
-            </div>
-            <div class="stat-content">
-              <h3>Docentes Activos</h3>
-              <div class="stat-number">5</div>
-              <p>Profesores asociados</p>
-            </div>
-            <div class="stat-action">
-              <i class="fas fa-arrow-right"></i>
-            </div>
-          </div>
-
-        </section>
 
         <section class="quick-actions">
           <h3 class="section-title">
@@ -148,19 +259,18 @@
             Acciones Rápidas
           </h3>
           <div class="actions-grid">
-            <div class="action-card" onclick="location.href='@/PanelCodiplay/Admin/editar_usuarios'">
+            <a th:href="@{/PanelCodiplay/Admin/editar_usuarios}" class="action-card">
               <i class="fas fa-user-edit"></i>
               <span>Editar Usuarios</span>
-            </div>
-            <div class="action-card" onclick="location.href='@/PanelCodiplay/Admin/registrar_docentes'">
+            </a>
+            <a th:href="@{/PanelCodiplay/Admin/registrar_docentes}" class="action-card">
               <i class="fas fa-user-plus"></i>
               <span>Registrar Docente</span>
-            </div>
-            <div class="action-card" onclick="location.href='@/PanelCodiplay/Admin/listar_cursos'">
+            </a>
+            <a th:href="@{/PanelCodiplay/Admin/listar_cursos}" class="action-card">
               <i class="fas fa-list-alt"></i>
               <span>Ver Cursos</span>
-            </div>
-            
+            </a>
           </div>
         </section>
       </div>
@@ -168,15 +278,126 @@
   </div>
 
   <script>
-    // Efecto hover en tarjetas
-    document.querySelectorAll('.stat-card, .action-card').forEach(card => {
-      card.addEventListener('mouseenter', function() {
-        this.style.transform = 'translateY(-5px)';
+    // Set active nav tab based on current URL
+    document.addEventListener('DOMContentLoaded', function() {
+      const currentPath = window.location.pathname;
+      
+      // Primero, remover la clase active de TODOS los elementos
+      document.querySelectorAll('.nav-tab').forEach(link => {
+        link.classList.remove('active');
       });
       
-      card.addEventListener('mouseleave', function() {
-        this.style.transform = 'translateY(0)';
+      // Mapeo de rutas relacionadas a sus secciones principales
+      const routeMapping = {
+        'editar_usuario': '/PanelCodiplay/Admin/editar_usuarios',
+        'editar_usuarios': '/PanelCodiplay/Admin/editar_usuarios',
+        'registrar_docentes': '/PanelCodiplay/Admin/registrar_docentes',
+        'listar_cursos': '/PanelCodiplay/Admin/listar_cursos',
+        'editar_curso': '/PanelCodiplay/Admin/listar_cursos',
+        'crear_curso': '/PanelCodiplay/Admin/listar_cursos',
+        'proceso_estudiantes': '/PanelCodiplay/Admin/proceso_estudiantes',
+        'progreso_por_curso': '/PanelCodiplay/Admin/proceso_estudiantes',
+        'crear_curso': '/PanelCodiplay/Admin/proceso_estudiantes',
+        'listar_cursos': '/PanelCodiplay/Admin/proceso_estudiantes',
+        'editar_curso': '/PanelCodiplay/Admin/proceso_estudiantes'
+      };
+      
+      // Determinar la ruta objetivo basada en el path actual
+      let targetRoute = currentPath;
+      
+      // Buscar si el path actual contiene alguna de las rutas mapeadas
+      for (const [key, route] of Object.entries(routeMapping)) {
+        if (currentPath.includes(key)) {
+          targetRoute = route;
+          break;
+        }
+      }
+      
+      // Si estamos en el dashboard exacto, mantenerlo
+      if (currentPath === '/PanelCodiplay' || currentPath === '/PanelCodiplay/') {
+        targetRoute = '/PanelCodiplay';
+      }
+      
+      // Luego, encontrar la mejor coincidencia
+      let bestMatch = null;
+      let bestMatchLength = 0;
+      
+      document.querySelectorAll('.nav-tab').forEach(link => {
+        const href = link.getAttribute('href');
+        if (href) {
+          // Coincidencia exacta tiene prioridad máxima
+          if (targetRoute === href || currentPath === href) {
+            bestMatch = link;
+            bestMatchLength = Infinity;
+          }
+          // Si no hay coincidencia exacta, buscar includes pero priorizar las más largas
+          else if (targetRoute.includes(href) && href.length > bestMatchLength) {
+            bestMatch = link;
+            bestMatchLength = href.length;
+          }
+        }
       });
+      
+      // Aplicar active solo al mejor match
+      if (bestMatch) {
+        bestMatch.classList.add('active');
+        }
+
+      // Theme switch functionality
+      const themeSwitch = document.getElementById('theme-switch');
+      const body = document.body;
+      const switchLabel = document.querySelector('.switch');
+
+      // Load saved theme preference
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'light') {
+        body.classList.add('light-theme');
+        themeSwitch.checked = true;
+        switchLabel.setAttribute('aria-checked', 'true');
+      } else {
+        body.classList.remove('light-theme');
+        themeSwitch.checked = false;
+        switchLabel.setAttribute('aria-checked', 'false');
+      }
+
+      // Handle theme switch
+      themeSwitch.addEventListener('change', function() {
+        if (this.checked) {
+          body.classList.add('light-theme');
+          localStorage.setItem('theme', 'light');
+          switchLabel.setAttribute('aria-checked', 'true');
+        } else {
+          body.classList.remove('light-theme');
+          localStorage.setItem('theme', 'dark');
+          switchLabel.setAttribute('aria-checked', 'false');
+        }
+      });
+
+      // User Profile Menu Toggle
+      const userProfileBtn = document.getElementById('userProfileBtn');
+      const userProfileMenu = document.getElementById('userProfileMenu');
+      
+      if (userProfileBtn && userProfileMenu) {
+        userProfileBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          userProfileBtn.classList.toggle('active');
+        });
+
+        // Cerrar el menú al hacer clic fuera
+        document.addEventListener('click', function(e) {
+          if (!userProfileBtn.contains(e.target)) {
+            userProfileBtn.classList.remove('active');
+          }
+        });
+
+        // Cerrar el menú al hacer clic en un item del menú
+        const menuItems = userProfileMenu.querySelectorAll('.user-menu-item');
+        menuItems.forEach(item => {
+          item.addEventListener('click', function() {
+            userProfileBtn.classList.remove('active');
+          });
+        });
+      }
     });
   </script>
   <script th:src="@{/assets/loader.js}"></script>
