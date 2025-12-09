@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lección 3 - Títulos y Textos Galácticos</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            background: radial-gradient(circle at top, #120b3f 0%, #05020f 45%, #000000 100%);
+            color: #e9f5ff;
+            overflow-x: hidden;
+        }
+
+        .stars {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(255,255,255,0.7) 0, rgba(255,255,255,0) 2px),
+                radial-gradient(circle at 90% 30%, rgba(255,255,255,0.6) 0, rgba(255,255,255,0) 2px),
+                radial-gradient(circle at 30% 80%, rgba(255,255,255,0.5) 0, rgba(255,255,255,0) 2px);
+            background-size: 700px 700px;
+            animation: moveStars2 32s linear infinite;
+        }
+
+        @keyframes moveStars2 {
+            from { background-position: 0 0, 0 0, 0 0; }
+            to { background-position: -700px 700px, 700px 700px, -700px -700px; }
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 30px 20px 50px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 32px;
+            margin: 0 0 10px;
+            background: linear-gradient(90deg, #ffdd59, #ff6b81);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px rgba(255, 219, 88, 0.6);
+        }
+
+        .header p {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .card {
+            position: relative;
+            background: rgba(10, 5, 40, 0.92);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow:
+                0 0 25px rgba(0,0,0,0.8),
+                0 0 40px rgba(255, 219, 88, 0.18);
+            overflow: hidden;
+        }
+
+        .blob {
+            position: absolute;
+            width: 230px;
+            height: 230px;
+            background: radial-gradient(circle, #ffdd59, #ff6b6b);
+            filter: blur(85px);
+            opacity: 0.35;
+            top: -40px;
+            right: -50px;
+            z-index: 0;
+        }
+
+        .blob2 {
+            position: absolute;
+            width: 270px;
+            height: 270px;
+            background: radial-gradient(circle, #1dd1a1, #10ac84);
+            filter: blur(95px);
+            opacity: 0.3;
+            bottom: -70px;
+            left: -40px;
+            z-index: 0;
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #ffeaa7;
+        }
+
+        .info-block {
+            margin-bottom: 18px;
+            font-size: 14px;
+        }
+
+        .info-block strong {
+            color: #ffb142;
+        }
+
+        .steps {
+            display: grid;
+            gap: 15px;
+            margin: 15px 0 20px;
+        }
+
+        .step {
+            background: rgba(20, 10, 60, 0.88);
+            border-radius: 12px;
+            padding: 12px 15px;
+            border-left: 4px solid #ffb142;
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        .step-number {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: #ffb142;
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .step-text {
+            font-size: 14px;
+        }
+
+        .tags-grid {
+            display: grid;
+            gap: 12px;
+            margin: 10px 0 20px;
+        }
+
+        .tag-card {
+            background: rgba(255,255,255,0.06);
+            border-radius: 10px;
+            padding: 10px 12px;
+            border: 1px solid rgba(255,255,255,0.12);
+            font-size: 14px;
+        }
+
+        .tag-card strong {
+            color: #ffeaa7;
+        }
+
+        pre.code-sample {
+            background: rgba(255,219,88,0.06);
+            border-radius: 10px;
+            border: 1px solid rgba(255,219,88,0.35);
+            padding: 10px 12px;
+            font-size: 13px;
+            overflow-x: auto;
+        }
+
+        .lab {
+            margin-top: 15px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 15px;
+            padding: 15px;
+            border: 1px solid rgba(255,219,88,0.3);
+        }
+
+        .lab h3 {
+            margin-top: 0;
+            font-size: 18px;
+            color: #ffeaa7;
+        }
+
+        .lab-description {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .lab-area {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .lab-col {
+            flex: 1 1 260px;
+            min-width: 0;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 210px;
+            border-radius: 10px;
+            border: 2px solid rgba(255,219,88,0.6);
+            background: rgba(0, 0, 0, 0.7);
+            color: #e9f5ff;
+            padding: 10px;
+            font-family: "Courier New", monospace;
+            font-size: 13px;
+            resize: vertical;
+        }
+
+        .preview-box {
+            background: #ffffff;
+            border-radius: 10px;
+            border: 3px solid #ffb142;
+            padding: 10px;
+            min-height: 210px;
+            color: #000;
+            overflow: auto;
+        }
+
+        .buttons {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 999px;
+            padding: 8px 16px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-run {
+            background: linear-gradient(90deg, #ffdd59, #ff6b81);
+            color: #000;
+        }
+
+        .btn-reset {
+            background: rgba(255,255,255,0.1);
+            color: #e9f5ff;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .nav {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .nav a,
+        .nav button {
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .nav-back {
+            background: #445566;
+            color: #fff;
+        }
+
+        .nav-next {
+            background: #00d4ff;
+            color: #000;
+        }
+
+        .nav-module {
+            background: #222f3e;
+            color: #fff;
+        }
+
+        .mascota {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            width: 90px;
+            animation: flotar 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes flotar {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-10px); }
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                padding: 20px 15px 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="stars"></div>
+
+<div class="container">
+    <div class="header">
+        <h1>Lección 3 - Títulos y Textos Galácticos</h1>
+        <p>Aprende a usar etiquetas de título y texto creando tu propia mini historia espacial 🌌</p>
+    </div>
+
+    <div class="card">
+        <div class="blob"></div>
+        <div class="blob2"></div>
+
+        <div class="content">
+            <!-- PANTALLA 1: EXPLICACIÓN -->
+            <div id="pantalla3Explicacion">
+            <h2>Paso a paso de la misión 🛸</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-text">Lee para qué sirven las etiquetas de título (<strong>&lt;h1&gt; – &lt;h3&gt;</strong>) y texto (<strong>&lt;p&gt;</strong>).</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-text">Mira el ejemplo de mini página con 3 títulos y 3 párrafos.</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-text">En la parte de abajo, escribe tu propia historia espacial con 3 títulos y 3 párrafos.</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-text">Haz clic en <strong>"Ver mi historia"</strong> y si está todo bien, verás tu galaxia de textos completada ✅.</div>
+                </div>
+            </div>
+
+            <h2>Etiquetas que vas a usar ⭐</h2>
+            <div class="tags-grid">
+                <div class="tag-card">
+                    <strong>&lt;h1&gt; ... &lt;/h1&gt;</strong> → Título principal de la página. Úsalo para el nombre de tu historia.
+                </div>
+                <div class="tag-card">
+                    <strong>&lt;h2&gt; ... &lt;/h2&gt;</strong> y <strong>&lt;h3&gt; ... &lt;/h3&gt;</strong> → Subtítulos, por ejemplo: "Mis planetas" o "Mis naves".
+                </div>
+                <div class="tag-card">
+                    <strong>&lt;p&gt; ... &lt;/p&gt;</strong> → Párrafos de texto donde cuentas detalles de tu historia.
+                </div>
+            </div>
+
+            <h2>Ejemplo de mini página 📄</h2>
+            <pre class="code-sample">
+&lt;h1&gt;Mi galaxia favorita&lt;/h1&gt;
+&lt;h2&gt;Planetas de colores&lt;/h2&gt;
+&lt;p&gt;Tengo planetas azules, verdes y morados que brillan mucho.&lt;/p&gt;
+&lt;h3&gt;Estrellas bailarinas&lt;/h3&gt;
+&lt;p&gt;Las estrellas de mi galaxia se mueven como si bailaran en el cielo.&lt;/p&gt;
+&lt;p&gt;Cada noche, mi galaxia se llena de luces y aventuras.&lt;/p&gt;
+            </pre>
+
+            <div class="nav" style="margin-top:15px;">
+                <button class="btn btn-run" type="button" onclick="irAMision3()">Siguiente: Ir a la misión ➜</button>
+                <a th:href="@{/PanelControlUsuario/modulo1}" class="nav-module">Volver al módulo</a>
+            </div>
+            </div>
+
+            <!-- PANTALLA 2: MISIÓN -->
+            <div id="pantalla3Mision" style="display:none;">
+            <h2>Tu misión: 3 títulos y 3 párrafos ✍️</h2>
+            <div class="lab">
+                <h3>Escribe tu historia espacial</h3>
+                <p class="lab-description">
+                    Crea una hoja con <strong>3 títulos</strong> (por ejemplo &lt;h1&gt;, &lt;h2&gt;, &lt;h3&gt;) y <strong>3 párrafos</strong> (&lt;p&gt;).
+                    Deben hablar sobre tu galaxia, tus planetas, tus estrellas o tus naves.
+                </p>
+
+                <div class="lab-area">
+                    <div class="lab-col">
+                        <textarea id="codigoHtml" placeholder="Escribe aquí solo la parte del &lt;body&gt; con tus 3 títulos y 3 párrafos..."></textarea>
+
+                        <div class="buttons">
+                            <button class="btn btn-run" onclick="verHistoria()">Ver mi historia 👀</button>
+                            <button class="btn btn-reset" onclick="reiniciarHistoria()">Borrar y volver a intentar</button>
+                        </div>
+
+                        <p id="mensajeValidacion" style="margin-top:8px; font-size:13px;"></p>
+                    </div>
+
+                    <div class="lab-col">
+                        <div class="preview-box" id="vistaPrevia">
+                            <!-- Aquí se verá el resultado -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav">
+                <button class="nav-back" type="button" onclick="volverExplicacion3()">⬅ Volver a la explicación</button>
+                <a th:href="@{/PanelControlUsuario/modulo1}" class="nav-module">Volver al módulo</a>
+                <a th:href="@{/CursoTrilogia1/modulo1/leccion4}" class="nav-next">Siguiente lección (4) ➜</a>
+            </div>
+            </div>
+        
+</div>
+
+<script>
+    function irAMision3() {
+        document.getElementById('pantalla3Explicacion').style.display = 'none';
+        document.getElementById('pantalla3Mision').style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function volverExplicacion3() {
+        document.getElementById('pantalla3Mision').style.display = 'none';
+        document.getElementById('pantalla3Explicacion').style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    const mensajeOk3 = "¡Completado ✅! Tienes 3 títulos y 3 párrafos en tu historia.";
+    const mensajeError3 = "Revisa tu historia: debe tener al menos 3 títulos (h1/h2/h3) y 3 párrafos (&lt;p&gt;).";
+
+    function contarCoincidencias(texto, etiqueta) {
+        const regex = new RegExp("<" + etiqueta + "[\\s>].*?</" + etiqueta + ">", "g");
+        const coincidencias = texto.match(regex);
+        return coincidencias ? coincidencias.length : 0;
+    }
+
+    function esHistoriaValida(html) {
+        const limpio = html.toLowerCase();
+        const totalH1 = contarCoincidencias(limpio, "h1");
+        const totalH2 = contarCoincidencias(limpio, "h2");
+        const totalH3 = contarCoincidencias(limpio, "h3");
+        const totalP = contarCoincidencias(limpio, "p");
+
+        const totalTitulos = totalH1 + totalH2 + totalH3;
+        return totalTitulos >= 3 && totalP >= 3;
+    }
+
+    function verHistoria() {
+        const codigoBody = document.getElementById('codigoHtml').value;
+        const mensaje = document.getElementById('mensajeValidacion');
+        const contenedor = document.getElementById('vistaPrevia');
+
+        contenedor.innerHTML = '';
+        mensaje.textContent = '';
+        mensaje.style.color = '#ff8080';
+
+        if (!esHistoriaValida(codigoBody)) {
+            mensaje.textContent = mensajeError3;
+            return;
+        }
+
+        const docCompleto = `<!DOCTYPE html>
+<html>
+<head>
+    <title>Mi historia espacial</title>
+</head>
+<body>
+${codigoBody}
+</body>
+</html>`;
+
+        const iframe = document.createElement('iframe');
+        iframe.style.width = '100%';
+        iframe.style.height = '260px';
+        iframe.style.border = 'none';
+        contenedor.appendChild(iframe);
+
+        const doc = iframe.contentWindow.document;
+        doc.open();
+        doc.write(docCompleto);
+        doc.close();
+
+        mensaje.textContent = mensajeOk3;
+        mensaje.style.color = '#7CFC00';
+    }
+
+    function reiniciarHistoria() {
+        document.getElementById('codigoHtml').value = "";
+        document.getElementById('mensajeValidacion').textContent = "";
+        document.getElementById('vistaPrevia').innerHTML = "";
+    }
+</script>
+</body>
+</html>

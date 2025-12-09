@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lección 4 - Imágenes Galácticas</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            background: radial-gradient(circle at top, #1b0044 0%, #050014 45%, #000000 100%);
+            color: #e9f5ff;
+            overflow-x: hidden;
+        }
+
+        .stars {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background-image:
+                radial-gradient(circle at 15% 25%, rgba(255,255,255,0.7) 0, rgba(255,255,255,0) 2px),
+                radial-gradient(circle at 80% 40%, rgba(255,255,255,0.6) 0, rgba(255,255,255,0) 2px),
+                radial-gradient(circle at 40% 85%, rgba(255,255,255,0.5) 0, rgba(255,255,255,0) 2px);
+            background-size: 750px 750px;
+            animation: moveStars4 35s linear infinite;
+        }
+
+        @keyframes moveStars4 {
+            from { background-position: 0 0, 0 0, 0 0; }
+            to { background-position: 750px 750px, -750px 750px, 750px -750px; }
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 30px 20px 50px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 32px;
+            margin: 0 0 10px;
+            background: linear-gradient(90deg, #ff9ff3, #54a0ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px rgba(255, 159, 243, 0.6);
+        }
+
+        .header p {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .card {
+            position: relative;
+            background: rgba(15, 5, 60, 0.95);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow:
+                0 0 25px rgba(0,0,0,0.8),
+                0 0 40px rgba(84, 160, 255, 0.2);
+            overflow: hidden;
+        }
+
+        .blob {
+            position: absolute;
+            width: 260px;
+            height: 260px;
+            background: radial-gradient(circle, #ff9ff3, #ff6b6b);
+            filter: blur(90px);
+            opacity: 0.35;
+            top: -50px;
+            right: -40px;
+            z-index: 0;
+        }
+
+        .blob2 {
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            background: radial-gradient(circle, #48dbfb, #0984e3);
+            filter: blur(95px);
+            opacity: 0.3;
+            bottom: -80px;
+            left: -40px;
+            z-index: 0;
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #ff9ff3;
+        }
+
+        .info-block {
+            margin-bottom: 18px;
+            font-size: 14px;
+        }
+
+        .info-block strong {
+            color: #feca57;
+        }
+
+        .steps {
+            display: grid;
+            gap: 15px;
+            margin: 15px 0 20px;
+        }
+
+        .step {
+            background: rgba(30, 10, 80, 0.9);
+            border-radius: 12px;
+            padding: 12px 15px;
+            border-left: 4px solid #ff9ff3;
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        .step-number {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: #ff9ff3;
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .step-text {
+            font-size: 14px;
+        }
+
+        pre.code-sample {
+            background: rgba(84,160,255,0.08);
+            border-radius: 10px;
+            border: 1px solid rgba(84,160,255,0.4);
+            padding: 10px 12px;
+            font-size: 13px;
+            overflow-x: auto;
+        }
+
+        .lab {
+            margin-top: 15px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 15px;
+            padding: 15px;
+            border: 1px solid rgba(255,159,243,0.3);
+        }
+
+        .lab h3 {
+            margin-top: 0;
+            font-size: 18px;
+            color: #ff9ff3;
+        }
+
+        .lab-description {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .lab-area {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .lab-col {
+            flex: 1 1 260px;
+            min-width: 0;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 180px;
+            border-radius: 10px;
+            border: 2px solid rgba(255,159,243,0.6);
+            background: rgba(0, 0, 0, 0.7);
+            color: #e9f5ff;
+            padding: 10px;
+            font-family: "Courier New", monospace;
+            font-size: 13px;
+            resize: vertical;
+        }
+
+        .preview-box {
+            background: #ffffff;
+            border-radius: 10px;
+            border: 3px solid #54a0ff;
+            padding: 10px;
+            min-height: 220px;
+            color: #000;
+            overflow: auto;
+        }
+
+        .galeria-ejemplo {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .galeria-ejemplo img {
+            width: 90px;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 2px solid #ff9ff3;
+        }
+
+        .buttons {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 999px;
+            padding: 8px 16px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-run {
+            background: linear-gradient(90deg, #ff9ff3, #54a0ff);
+            color: #000;
+        }
+
+        .btn-reset {
+            background: rgba(255,255,255,0.1);
+            color: #e9f5ff;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .nav {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .nav a,
+        .nav button {
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .nav-back {
+            background: #445566;
+            color: #fff;
+        }
+
+        .nav-next {
+            background: #00d4ff;
+            color: #000;
+        }
+
+        .nav-module {
+            background: #222f3e;
+            color: #fff;
+        }
+
+        .mascota {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            width: 90px;
+            animation: flotar4 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes flotar4 {
+            0% { transform: translateY(0) scale(1); }
+            100% { transform: translateY(-10px) scale(1.05); }
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                padding: 20px 15px 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="stars"></div>
+
+<div class="container">
+    <div class="header">
+        <h1>Lección 4 - Imágenes Galácticas</h1>
+        <p>Aprende a usar la etiqueta &lt;img&gt; para mostrar tus 3 imágenes favoritas del universo ✨</p>
+    </div>
+
+    <div class="card">
+        <div class="blob"></div>
+        <div class="blob2"></div>
+
+        <div class="content">
+            <!-- PANTALLA 1: EXPLICACIÓN -->
+            <div id="pantalla4Explicacion">
+                <h2>¿Qué hace la etiqueta &lt;img&gt;? 🖼️</h2>
+                <div class="info-block">
+                    <p>
+                        Con <strong>&lt;img&gt;</strong> puedes mostrar imágenes en tu página web: fotos, dibujos, planetas,
+                        naves espaciales y más.
+                    </p>
+                    <p>
+                        Funciona como una <strong>ventana</strong> que muestra una imagen que está guardada en tu
+                        computador o en internet.
+                    </p>
+                </div>
+
+                <h2>Partes importantes de &lt;img&gt;</h2>
+                <div class="info-block">
+                    <p>Ejemplo:</p>
+                    <pre class="code-sample">
+&lt;img src="planeta.png" alt="Planeta morado"&gt;
+                    </pre>
+                    <p>
+                        <strong>src="..."</strong> → Es la <strong>ruta</strong> de la imagen (dónde está guardada).
+                    </p>
+                    <p>
+                        <strong>alt="..."</strong> → Es un <strong>texto alternativo</strong> que describe la imagen
+                        (se usa si la imagen no carga o para lectores de pantalla).
+                    </p>
+                </div>
+
+                <h2>Rutas de imagen 🌌</h2>
+                <div class="info-block">
+                    <p>Algunos ejemplos de rutas:</p>
+                    <ul>
+                        <li><strong>"img/estrella.png"</strong> → imagen dentro de una carpeta llamada <em>img</em>.</li>
+                        <li><strong>"planeta.png"</strong> → imagen en la misma carpeta que tu archivo HTML.</li>
+                        <li><strong>"https://.../galaxia.jpg"</strong> → imagen que viene de internet.</li>
+                    </ul>
+                </div>
+
+                <h2>Ejemplo de galería pequeña 📷</h2>
+                <pre class="code-sample">
+&lt;h2&gt;Mis imágenes favoritas&lt;/h2&gt;
+&lt;img src="img/planeta1.png" alt="Planeta azul"&gt;
+&lt;img src="img/planeta2.png" alt="Planeta verde"&gt;
+&lt;img src="img/planeta3.png" alt="Planeta morado"&gt;
+                </pre>
+
+                <div class="galeria-ejemplo">
+                    <img th:src="@{/assetsCursoTrilogia/bot.png}" alt="Galaxia 1">
+                    <img th:src="@{/assetsCursoTrilogia/bot2.png}" alt="Galaxia 2">
+                    <img th:src="@{/assetsCursoTrilogia/bot3.png}" alt="Galaxia 3">
+                </div>
+
+                <div class="nav" style="margin-top:15px;">
+                    <button class="btn btn-run" type="button" onclick="irAMision4()">Siguiente: Ir a la misión ➜</button>
+                    <a th:href="@{/PanelControlUsuario/modulo1}" class="nav-module">Volver al módulo</a>
+                </div>
+            </div>
+
+            <!-- PANTALLA 2: MISIÓN -->
+            <div id="pantalla4Mision" style="display:none;">
+                <h2>Tu misión: 3 imágenes favoritas ✍️</h2>
+                <div class="lab">
+                    <h3>Crea tu galería espacial</h3>
+                    <p class="lab-description">
+                        Escribe el código HTML para mostrar <strong>3 imágenes favoritas</strong> usando la etiqueta
+                        <strong>&lt;img&gt;</strong>.
+                        Pueden ser planetas, estrellas, naves o lo que más te guste.
+                    </p>
+                    <p class="lab-description">
+                        Puedes usar rutas como <code>img/mi-planeta.png</code> o una dirección de internet
+                        <code>https://...</code>.
+                    </p>
+
+                    <div class="lab-area">
+                        <div class="lab-col">
+                            <textarea id="codigoImg" placeholder="Escribe aquí tus 3 etiquetas &lt;img&gt; con sus rutas y alt..."></textarea>
+
+                            <div class="buttons">
+                                <button class="btn btn-run" onclick="verGaleria()">Ver mi galería 👀</button>
+                                <button class="btn btn-reset" onclick="reiniciarGaleria()">Borrar y volver a intentar</button>
+                            </div>
+
+                            <p id="mensajeValidacionImg" style="margin-top:8px; font-size:13px;"></p>
+                        </div>
+
+                        <div class="lab-col">
+                            <div class="preview-box" id="vistaGaleria">
+                                <!-- Aquí se verá la galería -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nav">
+                    <button class="nav-back" type="button" onclick="volverExplicacion4()">⬅ Volver a la explicación</button>
+                    <a th:href="@{/PanelControlUsuario/modulo1}" class="nav-module">Volver al módulo</a>
+                    <a th:href="@{/CursoTrilogia1/modulo1/leccion5}" class="nav-next">Siguiente lección (5) ➜</a>
+                </div>
+            </div>
+       
+</div>
+
+<script>
+    function irAMision4() {
+        document.getElementById('pantalla4Explicacion').style.display = 'none';
+        document.getElementById('pantalla4Mision').style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function volverExplicacion4() {
+        document.getElementById('pantalla4Mision').style.display = 'none';
+        document.getElementById('pantalla4Explicacion').style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    const mensajeOkImg = "¡Completado ✅! Has creado tu galería con 3 imágenes.";
+    const mensajeErrorImg = "Revisa tu código: debe tener al menos 3 etiquetas &lt;img&gt; correctamente escritas.";
+
+    function contarImgs(html) {
+        const regex = new RegExp("<img[\\s\\S]*?>", "g");
+        const coincidencias = html.match(regex);
+        return coincidencias ? coincidencias.length : 0;
+    }
+
+    function verGaleria() {
+        const codigo = document.getElementById('codigoImg').value;
+        const mensaje = document.getElementById('mensajeValidacionImg');
+        const contenedor = document.getElementById('vistaGaleria');
+
+        contenedor.innerHTML = '';
+        mensaje.textContent = '';
+        mensaje.style.color = '#ff8080';
+
+        if (contarImgs(codigo) < 3) {
+            mensaje.textContent = mensajeErrorImg;
+            return;
+        }
+
+        const docCompleto = `<!DOCTYPE html>
+<html>
+<head>
+    <title>Mi galería espacial</title>
+</head>
+<body>
+${codigo}
+</body>
+</html>`;
+
+        const iframe = document.createElement('iframe');
+        iframe.style.width = '100%';
+        iframe.style.height = '260px';
+        iframe.style.border = 'none';
+        contenedor.appendChild(iframe);
+
+        const doc = iframe.contentWindow.document;
+        doc.open();
+        doc.write(docCompleto);
+        doc.close();
+
+        mensaje.textContent = mensajeOkImg;
+        mensaje.style.color = '#7CFC00';
+    }
+
+    function reiniciarGaleria() {
+        document.getElementById('codigoImg').value = "";
+        document.getElementById('mensajeValidacionImg').textContent = "";
+        document.getElementById('vistaGaleria').innerHTML = "";
+    }
+</script>
+</body>
+</html>

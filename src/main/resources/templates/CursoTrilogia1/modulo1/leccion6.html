@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lección 6 - Enlaces Galácticos</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            background: radial-gradient(circle at top, #190061 0%, #020024 45%, #000000 100%);
+            color: #e9f5ff;
+            overflow-x: hidden;
+        }
+
+        .stars {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background-image:
+                radial-gradient(circle at 20% 15%, rgba(255,255,255,0.8) 0, rgba(255,255,255,0) 3px),
+                radial-gradient(circle at 70% 35%, rgba(0,255,255,0.7) 0, rgba(0,255,255,0) 3px),
+                radial-gradient(circle at 40% 85%, rgba(255,0,128,0.6) 0, rgba(255,0,128,0) 3px);
+            background-size: 900px 900px;
+            animation: moveStars6 30s linear infinite;
+        }
+
+        @keyframes moveStars6 {
+            from { background-position: 0 0, 0 0, 0 0; }
+            to { background-position: -900px 900px, 900px 900px, -900px -900px; }
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 30px 20px 50px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 32px;
+            margin: 0 0 10px;
+            background: linear-gradient(90deg, #48dbfb, #ff9ff3);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 14px rgba(72, 219, 251, 0.7);
+        }
+
+        .header p {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .card {
+            position: relative;
+            background: rgba(5, 5, 40, 0.96);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow:
+                0 0 25px rgba(0,0,0,0.9),
+                0 0 40px rgba(72, 219, 251, 0.25);
+            overflow: hidden;
+        }
+
+        .blob {
+            position: absolute;
+            width: 260px;
+            height: 260px;
+            background: radial-gradient(circle, #48dbfb, #0984e3);
+            filter: blur(95px);
+            opacity: 0.4;
+            top: -50px;
+            right: -40px;
+            z-index: 0;
+        }
+
+        .blob2 {
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            background: radial-gradient(circle, #ff9ff3, #ff7675);
+            filter: blur(95px);
+            opacity: 0.35;
+            bottom: -80px;
+            left: -40px;
+            z-index: 0;
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #48dbfb;
+        }
+
+        .info-block {
+            margin-bottom: 18px;
+            font-size: 14px;
+        }
+
+        .info-block strong {
+            color: #ff9ff3;
+        }
+
+        pre.code-sample {
+            background: rgba(0, 0, 0, 0.55);
+            border-radius: 10px;
+            border: 1px solid rgba(72,219,251,0.4);
+            padding: 10px 12px;
+            font-size: 13px;
+            overflow-x: auto;
+        }
+
+        .steps {
+            display: grid;
+            gap: 15px;
+            margin: 15px 0 20px;
+        }
+
+        .step {
+            background: rgba(15, 25, 80, 0.95);
+            border-radius: 12px;
+            padding: 12px 15px;
+            border-left: 4px solid #ff9ff3;
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        .step-number {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: #ff9ff3;
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .step-text {
+            font-size: 14px;
+        }
+
+        .lab {
+            margin-top: 15px;
+            background: rgba(0,0,0,0.4);
+            border-radius: 15px;
+            padding: 15px;
+            border: 1px solid rgba(72,219,251,0.3);
+        }
+
+        .lab h3 {
+            margin-top: 0;
+            font-size: 18px;
+            color: #48dbfb;
+        }
+
+        .lab-description {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .lab-area {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .lab-col {
+            flex: 1 1 260px;
+            min-width: 0;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 210px;
+            border-radius: 10px;
+            border: 2px solid rgba(72,219,251,0.8);
+            background: rgba(1, 10, 20, 0.9);
+            color: #e9f5ff;
+            padding: 10px;
+            font-family: "Courier New", monospace;
+            font-size: 13px;
+            resize: vertical;
+        }
+
+        .preview-box {
+            background: #020819;
+            border-radius: 10px;
+            border: 3px solid #ff9ff3;
+            padding: 10px;
+            min-height: 220px;
+            color: #e9f5ff;
+            overflow: auto;
+        }
+
+        .buttons {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 999px;
+            padding: 8px 16px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-run {
+            background: linear-gradient(90deg, #48dbfb, #ff9ff3);
+            color: #000;
+        }
+
+        .btn-reset {
+            background: rgba(255,255,255,0.1);
+            color: #e9f5ff;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .nav {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .nav a,
+        .nav button {
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .nav-back {
+            background: #445566;
+            color: #fff;
+        }
+
+        .nav-next {
+            background: #00d4ff;
+            color: #000;
+        }
+
+        .nav-module {
+            background: #222f3e;
+            color: #fff;
+        }
+
+        .mascota {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            width: 90px;
+            animation: flotar6 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes flotar6 {
+            0% { transform: translateY(0) scale(1); }
+            100% { transform: translateY(-10px) scale(1.05); }
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                padding: 20px 15px 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="stars"></div>
+
+<div class="container">
+    <div class="header">
+        <h1>Lección 6 - Enlaces Galácticos</h1>
+        <p>Aprende a crear enlaces y un menú de navegación espacial con &lt;a&gt; y href 🌌</p>
+    </div>
+
+    <div class="card">
+        <div class="blob"></div>
+        <div class="blob2"></div>
+
+        <div class="content">
+            <!-- PANTALLA 1: EXPLICACIÓN -->
+            <div id="pantalla6Explicacion">
+                <h2>¿Qué es un enlace? 🔗</h2>
+                <div class="info-block">
+                    <p>
+                        Un <strong>enlace</strong> es un texto o botón que te lleva a otra parte: otra página, otra sección o
+                        incluso a otro planeta (sitio web).
+                    </p>
+                    <p>
+                        En HTML los enlaces se crean con la etiqueta <strong>&lt;a&gt;</strong> y el atributo
+                        <strong>href</strong>.
+                    </p>
+                </div>
+
+                <h2>Partes de un enlace</h2>
+                <div class="info-block">
+                    <p>Ejemplo:</p>
+                    <pre class="code-sample">
+&lt;a href="https://www.nasa.gov"&gt;Visitar la NASA&lt;/a&gt;
+                    </pre>
+                    <p>
+                        <strong>href="..."</strong> → Es la <strong>dirección</strong> a donde te lleva el enlace.
+                    </p>
+                    <p>
+                        El texto entre <strong>&lt;a&gt;</strong> y <strong>&lt;/a&gt;</strong> es lo que el usuario ve y hace clic.
+                    </p>
+                </div>
+
+                <h2>Menú de navegación 🌠</h2>
+                <div class="info-block">
+                    <p>Podemos crear un menú con varios enlaces, por ejemplo:</p>
+                    <pre class="code-sample">
+&lt;nav&gt;
+  &lt;a href="#inicio"&gt;Inicio&lt;/a&gt;
+  &lt;a href="#planetas"&gt;Planetas&lt;/a&gt;
+  &lt;a href="#naves"&gt;Naves&lt;/a&gt;
+&lt;/nav&gt;
+                    </pre>
+                    <p>
+                        Los menús ayudan a que los visitantes se muevan por tu página como si fuera un mapa estelar.
+                    </p>
+                </div>
+
+                <h2>Paso a paso de la misión 🛰️</h2>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-text">Observa cómo se escribe un enlace con &lt;a&gt; y href.</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-text">Mira el ejemplo de un menú con varios enlaces.</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-text">Luego crearás tu propio menú con enlaces ficticios a secciones de tu galaxia.</div>
+                    </div>
+                </div>
+
+                <div class="nav" style="margin-top:15px;">
+                    <button class="btn btn-run" type="button" onclick="irAMision6()">Siguiente: Ir a la misión ➜</button>
+                    <a th:href="@{/PanelControlUsuario/modulo1}" class="nav-module">Volver al módulo</a>
+                </div>
+            </div>
+
+            <!-- PANTALLA 2: MISIÓN -->
+            <div id="pantalla6Mision" style="display:none;">
+                <h2>Tu misión: menú de tu galaxia ✍️</h2>
+                <div class="lab">
+                    <h3>Crea tu menú de navegación</h3>
+                    <p class="lab-description">
+                        Escribe el código HTML para un <strong>menú</strong> con al menos
+                        <strong>4 enlaces (&lt;a&gt;)</strong>.
+                    </p>
+                    <p class="lab-description">
+                        Los enlaces deben ser ficticios, por ejemplo:
+                        "Inicio", "Mis planetas", "Mis naves", "Contacto con alienígenas".
+                    </p>
+
+                    <div class="lab-area">
+                        <div class="lab-col">
+                            <textarea id="codigoLinks" placeholder="Escribe aquí tu menú con &lt;a&gt; y href (puedes usar #inicio, #planetas, etc.)..."></textarea>
+
+                            <div class="buttons">
+                                <button class="btn btn-run" onclick="verMenu()">Ver mi menú 👀</button>
+                                <button class="btn btn-reset" onclick="reiniciarMenu()">Borrar y volver a intentar</button>
+                            </div>
+
+                            <p id="mensajeValidacionLinks" style="margin-top:8px; font-size:13px;"></p>
+                        </div>
+
+                        <div class="lab-col">
+                            <div class="preview-box" id="vistaMenu">
+                                <!-- Aquí se verá el menú -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nav">
+                    <button class="nav-back" type="button" onclick="volverExplicacion6()">⬅ Volver a la explicación</button>
+                    <a th:href="@{/PanelControlUsuario/modulo1}" class="nav-module">Volver al módulo</a>
+                    <a th:href="@{/CursoTrilogia1/modulo1/leccion7}" class="nav-next">Siguiente lección (7) ➜</a>
+                </div>
+            </div>
+      
+</div>
+
+<script>
+    function irAMision6() {
+        document.getElementById('pantalla6Explicacion').style.display = 'none';
+        document.getElementById('pantalla6Mision').style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function volverExplicacion6() {
+        document.getElementById('pantalla6Mision').style.display = 'none';
+        document.getElementById('pantalla6Explicacion').style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    const mensajeOkLinks = "¡Completado ✅! Tu menú tiene suficientes enlaces galácticos.";
+    const mensajeErrorLinks = "Revisa tu código: debe tener al menos 4 enlaces &lt;a&gt; con atributo href.";
+
+    function contarLinks(html) {
+        const limpio = html.toLowerCase();
+        const regex = /<a[\s\S]*?href=["'][^"']+["'][\s\S]*?>[\s\S]*?<\/a>/g;
+        const coincidencias = limpio.match(regex);
+        return coincidencias ? coincidencias.length : 0;
+    }
+
+    function verMenu() {
+        const codigo = document.getElementById('codigoLinks').value;
+        const mensaje = document.getElementById('mensajeValidacionLinks');
+        const contenedor = document.getElementById('vistaMenu');
+
+        contenedor.innerHTML = '';
+        mensaje.textContent = '';
+        mensaje.style.color = '#ff8080';
+
+        if (contarLinks(codigo) < 4) {
+            mensaje.textContent = mensajeErrorLinks;
+            return;
+        }
+
+        const docCompleto = `<!DOCTYPE html>
+<html>
+<head>
+    <title>Mi menú galáctico</title>
+    <style>
+        body { font-family: Poppins, sans-serif; background:#020819; color:#e9f5ff; padding:20px; }
+        nav a { margin-right:12px; color:#48dbfb; text-decoration:none; font-weight:600; }
+        nav a:hover { color:#ff9ff3; }
+    </style>
+</head>
+<body>
+<nav>
+${codigo}
+</nav>
+</body>
+</html>`;
+
+        const iframe = document.createElement('iframe');
+        iframe.style.width = '100%';
+        iframe.style.height = '260px';
+        iframe.style.border = 'none';
+        contenedor.appendChild(iframe);
+
+        const doc = iframe.contentWindow.document;
+        doc.open();
+        doc.write(docCompleto);
+        doc.close();
+
+        mensaje.textContent = mensajeOkLinks;
+        mensaje.style.color = '#7CFC00';
+    }
+
+    function reiniciarMenu() {
+        document.getElementById('codigoLinks').value = "";
+        document.getElementById('mensajeValidacionLinks').textContent = "";
+        document.getElementById('vistaMenu').innerHTML = "";
+    }
+</script>
+</body>
+</html>
