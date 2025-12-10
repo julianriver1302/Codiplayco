@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lección 2 - Introducción a HTML</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            background: radial-gradient(circle at top, #1b2141 0%, #050816 45%, #000000 100%);
+            color: #e9f5ff;
+            overflow-x: hidden;
+        }
+
+        .stars {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background-image:
+                radial-gradient(circle at 20% 20%, rgba(255,255,255,0.7) 0, rgba(255,255,255,0) 2px),
+                radial-gradient(circle at 80% 30%, rgba(255,255,255,0.6) 0, rgba(255,255,255,0) 2px),
+                radial-gradient(circle at 50% 80%, rgba(255,255,255,0.5) 0, rgba(255,255,255,0) 2px);
+            background-size: 600px 600px;
+            animation: moveStars 30s linear infinite;
+        }
+
+        @keyframes moveStars {
+            from { background-position: 0 0, 0 0, 0 0; }
+            to { background-position: 600px 600px, -600px 600px, 600px -600px; }
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 30px 20px 50px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 32px;
+            margin: 0 0 10px;
+            background: linear-gradient(90deg, #4dfff6, #63a0ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+
+        .header p {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .card {
+            position: relative;
+            background: rgba(5, 8, 22, 0.9);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow:
+                0 0 25px rgba(0,0,0,0.8),
+                0 0 35px rgba(0, 200, 255, 0.2);
+            overflow: hidden;
+        }
+
+        .blob {
+            position: absolute;
+            width: 220px;
+            height: 220px;
+            background: radial-gradient(circle, #00ffe7, #006d6c);
+            filter: blur(80px);
+            opacity: 0.35;
+            top: -40px;
+            right: -40px;
+            z-index: 0;
+        }
+
+        .blob2 {
+            position: absolute;
+            width: 260px;
+            height: 260px;
+            background: radial-gradient(circle, #4da3ff, #1c3aff);
+            filter: blur(90px);
+            opacity: 0.3;
+            bottom: -70px;
+            left: -40px;
+            z-index: 0;
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .steps {
+            display: grid;
+            gap: 15px;
+            margin: 20px 0 25px;
+        }
+
+        .step {
+            background: rgba(10, 15, 46, 0.85);
+            border-radius: 12px;
+            padding: 12px 15px;
+            border-left: 4px solid #00eaff;
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        .step-number {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: #00eaff;
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .step-text {
+            font-size: 14px;
+        }
+
+        .tags-info {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .tag-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            padding: 10px 12px;
+            border: 1px solid rgba(255,255,255,0.08);
+            font-size: 14px;
+        }
+
+        .tag-card strong {
+            color: #76c9ff;
+        }
+
+        pre.code-sample {
+            background: rgba(0,255,255,0.05);
+            border-radius: 10px;
+            border: 1px solid rgba(0,255,255,0.2);
+            padding: 10px 12px;
+            font-size: 13px;
+            overflow-x: auto;
+        }
+
+        .lab {
+            margin-top: 10px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 15px;
+            padding: 15px;
+            border: 1px solid rgba(0,255,255,0.1);
+        }
+
+        .lab h3 {
+            margin-top: 0;
+            font-size: 18px;
+            color: #4dfff6;
+        }
+
+        .lab-description {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .lab-area {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .lab-col {
+            flex: 1 1 260px;
+            min-width: 0;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 200px;
+            border-radius: 10px;
+            border: 2px solid rgba(0,255,255,0.3);
+            background: rgba(0, 0, 0, 0.7);
+            color: #e9f5ff;
+            padding: 10px;
+            font-family: "Courier New", monospace;
+            font-size: 13px;
+            resize: vertical;
+        }
+
+        .preview-box {
+            background: #ffffff;
+            border-radius: 10px;
+            border: 3px solid #4da3ff;
+            padding: 10px;
+            min-height: 200px;
+            color: #000;
+            overflow: auto;
+        }
+
+        .buttons {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 999px;
+            padding: 8px 16px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-run {
+            background: linear-gradient(90deg, #00eaff, #4da3ff);
+            color: #000;
+        }
+
+        .btn-reset {
+            background: rgba(255,255,255,0.1);
+            color: #e9f5ff;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .nav {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .nav a,
+        .nav button {
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .nav-back {
+            background: #445566;
+            color: #fff;
+        }
+
+        .nav-next {
+            background: #00d4ff;
+            color: #000;
+        }
+
+        .nav-module {
+            background: #222f3e;
+            color: #fff;
+        }
+
+        .mascota {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            width: 90px;
+            animation: flotar2 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes flotar2 {
+            0% { transform: translateY(0) rotate(-2deg); }
+            100% { transform: translateY(-8px) rotate(2deg); }
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                padding: 20px 15px 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="stars"></div>
+
+<div class="container">
+    <div class="header">
+        <h1>Lección 2 - Introducción a HTML</h1>
+        <p>Primero lee la explicación, luego realiza tu misión creando tu primera página 🌟</p>
+    </div>
+
+    <div class="card">
+        <div class="blob"></div>
+        <div class="blob2"></div>
+
+        <div class="content">
+            <!-- PANTALLA 1: EXPLICACIÓN -->
+            <div id="pantallaExplicacion">
+            <h2>¿Qué es HTML?</h2>
+            <div class="info-block">
+                <p>
+                    <strong>HTML</strong> significa <strong>HyperText Markup Language</strong>.
+                    Es el lenguaje que usan las páginas web para organizar el contenido:
+                    títulos, textos, imágenes, botones y mucho más.
+                </p>
+                <p>
+                    Piensa que HTML es como el <strong>esqueleto</strong> de tu sitio web.
+                    Le dice al navegador qué partes tiene la página.
+                </p>
+            </div>
+
+            <h2>¿Para qué sirve?</h2>
+            <div class="info-block">
+                <p>Con HTML puedes:</p>
+                <ul>
+                    <li>Crear títulos y textos.</li>
+                    <li>Organizar secciones de tu página.</li>
+                    <li>Preparar todo para luego agregar estilos con CSS.</li>
+                </ul>
+            </div>
+
+            <h2>Estructura básica de una página</h2>
+            <div class="info-block">
+                <p>Así se ve la estructura básica de un documento HTML:</p>
+
+                <pre class="code-sample">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Mi primera página&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;¡Hola, soy [TU NOMBRE]!&lt;/h1&gt;
+    &lt;p&gt;Esta es mi primera página en HTML.&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+                </pre>
+            </div>
+
+            <!-- Botón para pasar a la actividad -->
+            <div class="nav" style="margin-top:15px;">
+                <button class="btn btn-run" type="button" onclick="irAMision()">Siguiente: Ir a la misión ➜</button>
+                <a th:href="@{/PanelControlUsuario/modulo1}" class="nav-module">Volver al módulo</a>
+            </div>
+            </div>
+
+            <!-- PANTALLA 2: ACTIVIDAD -->
+            <div id="pantallaMision" style="display:none;">
+            <h2>Tu misión: crea tu primera página ✍️</h2>
+            <div class="info-block">
+                <p>
+                    En esta misión debes escribir <strong>todo el código HTML</strong> de una página desde cero.
+                </p>
+                <p>
+                    Tu página debe tener:
+                </p>
+                <ul>
+                    <li><strong>&lt;!DOCTYPE html&gt;</strong> al inicio.</li>
+                    <li>Las etiquetas <strong>&lt;html&gt;</strong>, <strong>&lt;head&gt;</strong> y <strong>&lt;body&gt;</strong> bien cerradas.</li>
+                    <li>Un <strong>&lt;h1&gt;</strong> con tu nombre (por ejemplo: "¡Hola, soy Ana!").</li>
+                    <li>Al menos un <strong>&lt;p&gt;</strong> donde cuentes algo sobre ti.</li>
+                </ul>
+                <p>
+                    Cuando tu código esté correcto, verás tu página abajo y aparecerá el mensaje <strong>"¡Completado ✅!"</strong>.
+                </p>
+            </div>
+
+            <div class="lab">
+                <h3>Escribe tu código aquí</h3>
+                <div class="lab-area">
+                    <div class="lab-col">
+                        <textarea id="codigoHtml" placeholder="Escribe aquí tu código HTML desde cero..."></textarea>
+
+                        <div class="buttons">
+                            <button class="btn btn-run" onclick="verPagina()">Ver mi página 👀</button>
+                            <button class="btn btn-reset" onclick="reiniciarEjemplo()">Borrar y volver a intentar</button>
+                        </div>
+
+                        <p id="mensajeValidacion" style="margin-top:8px; font-size:13px;"></p>
+                    </div>
+
+                    <div class="lab-col">
+                        <div class="preview-box" id="vistaPrevia">
+                            <!-- Aquí se verá el resultado -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nav">
+                    <button class="nav-back" type="button" onclick="volverExplicacion2()"> Volver a la explicación</button>
+                    <a th:href="@{/PanelControlUsuario/modulo1}" class="nav-module">Volver al módulo</a>
+                    <a th:href="@{/CursoTrilogia1/modulo1/leccion3}" class="nav-next">Siguiente lección (3) </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function irAMision() {
+        document.getElementById('pantallaExplicacion').style.display = 'none';
+        document.getElementById('pantallaMision').style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function volverExplicacion2() {
+        document.getElementById('pantallaMision').style.display = 'none';
+        document.getElementById('pantallaExplicacion').style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    const mensajeOk = "¡Completado ✅! Tu página tiene la estructura básica correcta.";
+    const mensajeError = "Revisa tu código: debe tener <!DOCTYPE html>, <html>, <head>, <body>, al menos un <h1> y un <p>.";
+
+    function esCodigoValido(html) {
+        const limpio = html.toLowerCase();
+
+        const tieneDoctype = limpio.includes("<!doctype html");
+        const tieneHtml = limpio.includes("<html") && limpio.includes("</html>");
+        const tieneHead = limpio.includes("<head") && limpio.includes("</head>");
+        const tieneBody = limpio.includes("<body") && limpio.includes("</body>");
+        const tieneH1 = limpio.includes("<h1") && limpio.includes("</h1>");
+        const tieneP = limpio.includes("<p") && limpio.includes("</p>");
+
+        return tieneDoctype && tieneHtml && tieneHead && tieneBody && tieneH1 && tieneP;
+    }
+
+    function verPagina() {
+        const codigo = document.getElementById('codigoHtml').value;
+        const mensaje = document.getElementById('mensajeValidacion');
+        const contenedor = document.getElementById('vistaPrevia');
+
+        contenedor.innerHTML = '';
+        mensaje.textContent = '';
+        mensaje.style.color = '#ff8080';
+
+        if (!esCodigoValido(codigo)) {
+            mensaje.textContent = mensajeError;
+            return;
+        }
+
+        const iframe = document.createElement('iframe');
+        iframe.style.width = '100%';
+        iframe.style.height = '260px';
+        iframe.style.border = 'none';
+        contenedor.appendChild(iframe);
+
+        const doc = iframe.contentWindow.document;
+        doc.open();
+        doc.write(codigo);
+        doc.close();
+
+        mensaje.textContent = mensajeOk;
+        mensaje.style.color = '#7CFC00';
+    }
+
+    function reiniciarEjemplo() {
+        document.getElementById('codigoHtml').value = "";
+        document.getElementById('mensajeValidacion').textContent = "";
+        document.getElementById('vistaPrevia').innerHTML = "";
+    }
+</script>
+</body>
+</html>

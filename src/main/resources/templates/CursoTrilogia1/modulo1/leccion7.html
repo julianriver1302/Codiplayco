@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lección 7 - Tablas Galácticas</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            background: radial-gradient(circle at top, #3a0ca3 0%, #240046 45%, #000000 100%);
+            color: #e9f5ff;
+            overflow-x: hidden;
+        }
+
+        .stars {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background-image:
+                radial-gradient(circle at 15% 20%, rgba(255,255,255,0.7) 0, rgba(255,255,255,0) 3px),
+                radial-gradient(circle at 80% 30%, rgba(137,196,244,0.7) 0, rgba(137,196,244,0) 3px),
+                radial-gradient(circle at 35% 80%, rgba(255,159,243,0.6) 0, rgba(255,159,243,0) 3px);
+            background-size: 880px 880px;
+            animation: moveStars7 28s linear infinite;
+        }
+
+        @keyframes moveStars7 {
+            from { background-position: 0 0, 0 0, 0 0; }
+            to { background-position: 880px 880px, -880px 880px, 880px -880px; }
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 30px 20px 50px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 32px;
+            margin: 0 0 10px;
+            background: linear-gradient(90deg, #f72585, #4cc9f0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 14px rgba(247, 37, 133, 0.7);
+        }
+
+        .header p {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .card {
+            position: relative;
+            background: rgba(20, 10, 70, 0.96);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow:
+                0 0 25px rgba(0,0,0,0.9),
+                0 0 40px rgba(76, 201, 240, 0.25);
+            overflow: hidden;
+        }
+
+        .blob {
+            position: absolute;
+            width: 260px;
+            height: 260px;
+            background: radial-gradient(circle, #f72585, #b5179e);
+            filter: blur(95px);
+            opacity: 0.4;
+            top: -50px;
+            right: -40px;
+            z-index: 0;
+        }
+
+        .blob2 {
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            background: radial-gradient(circle, #4cc9f0, #4895ef);
+            filter: blur(95px);
+            opacity: 0.35;
+            bottom: -80px;
+            left: -40px;
+            z-index: 0;
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #f72585;
+        }
+
+        .info-block {
+            margin-bottom: 18px;
+            font-size: 14px;
+        }
+
+        .info-block strong {
+            color: #4cc9f0;
+        }
+
+        pre.code-sample {
+            background: rgba(0, 0, 0, 0.55);
+            border-radius: 10px;
+            border: 1px solid rgba(76,201,240,0.4);
+            padding: 10px 12px;
+            font-size: 13px;
+            overflow-x: auto;
+        }
+
+        .steps {
+            display: grid;
+            gap: 15px;
+            margin: 15px 0 20px;
+        }
+
+        .step {
+            background: rgba(25, 20, 90, 0.95);
+            border-radius: 12px;
+            padding: 12px 15px;
+            border-left: 4px solid #f72585;
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        .step-number {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: #f72585;
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .step-text {
+            font-size: 14px;
+        }
+
+        .lab {
+            margin-top: 15px;
+            background: rgba(0,0,0,0.4);
+            border-radius: 15px;
+            padding: 15px;
+            border: 1px solid rgba(76,201,240,0.3);
+        }
+
+        .lab h3 {
+            margin-top: 0;
+            font-size: 18px;
+            color: #4cc9f0;
+        }
+
+        .lab-description {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .lab-area {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .lab-col {
+            flex: 1 1 260px;
+            min-width: 0;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 210px;
+            border-radius: 10px;
+            border: 2px solid rgba(247,37,133,0.8);
+            background: rgba(1, 10, 20, 0.9);
+            color: #e9f5ff;
+            padding: 10px;
+            font-family: "Courier New", monospace;
+            font-size: 13px;
+            resize: vertical;
+        }
+
+        .preview-box {
+            background: #020819;
+            border-radius: 10px;
+            border: 3px solid #4cc9f0;
+            padding: 10px;
+            min-height: 220px;
+            color: #e9f5ff;
+            overflow: auto;
+        }
+
+        .buttons {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 999px;
+            padding: 8px 16px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-run {
+            background: linear-gradient(90deg, #f72585, #4cc9f0);
+            color: #000;
+        }
+
+        .btn-reset {
+            background: rgba(255,255,255,0.1);
+            color: #e9f5ff;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .nav {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .nav a,
+        .nav button {
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .nav-back {
+            background: #445566;
+            color: #fff;
+        }
+
+        .nav-next {
+            background: #00d4ff;
+            color: #000;
+        }
+
+        .nav-module {
+            background: #222f3e;
+            color: #fff;
+        }
+
+        .mascota {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            width: 90px;
+            animation: flotar7 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes flotar7 {
+            0% { transform: translateY(0) rotate(-3deg); }
+            100% { transform: translateY(-10px) rotate(3deg); }
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                padding: 20px 15px 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="stars"></div>
+
+<div class="container">
+    <div class="header">
+        <h1>Lección 7 - Tablas Galácticas</h1>
+        <p>Crea tablas de calificaciones ficticias usando &lt;table&gt;, &lt;tr&gt; y &lt;td&gt; ⭐</p>
+    </div>
+
+    <div class="card">
+        <div class="blob"></div>
+        <div class="blob2"></div>
+
+        <div class="content">
+            <!-- PANTALLA 1: EXPLICACIÓN -->
+            <div id="pantalla7Explicacion">
+                <h2>¿Qué es una tabla? 📊</h2>
+                <div class="info-block">
+                    <p>
+                        Una <strong>tabla</strong> sirve para organizar información en <strong>filas</strong> y <strong>columnas</strong>,
+                        como una hoja de calificaciones del colegio.
+                    </p>
+                </div>
+
+                <h2>Etiquetas importantes</h2>
+                <div class="info-block">
+                    <ul>
+                        <li><strong>&lt;table&gt;</strong> → Empieza y termina la tabla.</li>
+                        <li><strong>&lt;tr&gt;</strong> → Cada fila de la tabla.</li>
+                        <li><strong>&lt;td&gt;</strong> → Cada casilla (celda) dentro de una fila.</li>
+                    </ul>
+                    <p>Ejemplo sencillo:</p>
+                    <pre class="code-sample">
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Nombre&lt;/td&gt;
+    &lt;td&gt;Nota&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Ana&lt;/td&gt;
+    &lt;td&gt;5.0&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+                    </pre>
+                </div>
+
+                <h2>Paso a paso de la misión 🚀</h2>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-text">Mira el ejemplo de tabla de arriba y fíjate en &lt;table&gt;, &lt;tr&gt; y &lt;td&gt;.</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-text">Piensa en 3 estudiantes (puedes inventar nombres) y sus notas.</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-text">En la misión crearás tu propia tabla de calificaciones galácticas.</div>
+                    </div>
+                </div>
+
+                <div class="nav" style="margin-top:15px;">
+                    <button class="btn btn-run" type="button" onclick="irAMision7()">Siguiente: Ir a la misión ➜</button>
+                    <a th:href="@{/PanelControlUsuario/modulo1}" class="nav-module">Volver al módulo</a>
+                </div>
+            </div>
+
+            <!-- PANTALLA 2: MISIÓN -->
+            <div id="pantalla7Mision" style="display:none;">
+                <h2>Tu misión: tabla de calificaciones ✍️</h2>
+                <div class="lab">
+                    <h3>Construye tu tabla espacial</h3>
+                    <p class="lab-description">
+                        Crea una tabla con <strong>al menos 4 filas</strong>:
+                    </p>
+                    <ul>
+                        <li>Una fila de encabezado con títulos como "Nombre", "Asignatura", "Nota".</li>
+                        <li>Tres filas para 3 estudiantes inventados con sus calificaciones.</li>
+                    </ul>
+                    <p class="lab-description">
+                        Usa solo <strong>&lt;table&gt;</strong>, <strong>&lt;tr&gt;</strong> y <strong>&lt;td&gt;</strong>.
+                    </p>
+
+                    <div class="lab-area">
+                        <div class="lab-col">
+                            <textarea id="codigoTabla" placeholder="Escribe aquí tu tabla con &lt;table&gt;, &lt;tr&gt; y &lt;td&gt;..."></textarea>
+
+                            <div class="buttons">
+                                <button class="btn btn-run" onclick="verTabla()">Ver mi tabla 👀</button>
+                                <button class="btn btn-reset" onclick="reiniciarTabla()">Borrar y volver a intentar</button>
+                            </div>
+
+                            <p id="mensajeValidacionTabla" style="margin-top:8px; font-size:13px;"></p>
+                        </div>
+
+                        <div class="lab-col">
+                            <div class="preview-box" id="vistaTabla">
+                                <!-- Aquí se verá la tabla -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nav">
+                    <button class="nav-back" type="button" onclick="volverExplicacion7()">⬅ Volver a la explicación</button>
+                    <a th:href="@{/PanelControlUsuario/modulo1}" class="nav-module">Volver al módulo</a>
+                    <a th:href="@{/PanelControlUsuario/inicio}" class="nav-next">Terminar módulo ➜</a>
+                </div>
+            </div>
+        </div>
+
+        
+</div>
+
+<script>
+    function irAMision7() {
+        document.getElementById('pantalla7Explicacion').style.display = 'none';
+        document.getElementById('pantalla7Mision').style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function volverExplicacion7() {
+        document.getElementById('pantalla7Mision').style.display = 'none';
+        document.getElementById('pantalla7Explicacion').style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    const mensajeOkTabla = "¡Completado ✅! Tu tabla de calificaciones tiene suficientes filas.";
+    const mensajeErrorTabla = "Revisa tu código: debe tener &lt;table&gt; y al menos 4 filas (&lt;tr&gt;).";
+
+    function contarTablasYFilas(html) {
+        const limpio = html.toLowerCase();
+        const tieneTable = limpio.includes("<table") && limpio.includes("</table>");
+
+        const regexTr = /<tr[\s\S]*?<\/tr>/g;
+        const filas = limpio.match(regexTr);
+        const totalFilas = filas ? filas.length : 0;
+
+        return { tieneTable, totalFilas };
+    }
+
+    function verTabla() {
+        const codigo = document.getElementById('codigoTabla').value;
+        const mensaje = document.getElementById('mensajeValidacionTabla');
+        const contenedor = document.getElementById('vistaTabla');
+
+        contenedor.innerHTML = '';
+        mensaje.textContent = '';
+        mensaje.style.color = '#ff8080';
+
+        const { tieneTable, totalFilas } = contarTablasYFilas(codigo);
+
+        if (!tieneTable || totalFilas < 4) {
+            mensaje.textContent = mensajeErrorTabla;
+            return;
+        }
+
+        const docCompleto = `<!DOCTYPE html>
+<html>
+<head>
+    <title>Mi tabla galáctica</title>
+    <style>
+        body { font-family: Poppins, sans-serif; background:#020819; color:#e9f5ff; padding:20px; }
+        table { border-collapse: collapse; width: 100%; }
+        td { border: 1px solid #4cc9f0; padding: 8px; text-align: center; }
+        tr:nth-child(1) { background:#3a0ca3; font-weight:600; }
+    </style>
+</head>
+<body>
+${codigo}
+</body>
+</html>`;
+
+        const iframe = document.createElement('iframe');
+        iframe.style.width = '100%';
+        iframe.style.height = '260px';
+        iframe.style.border = 'none';
+        contenedor.appendChild(iframe);
+
+        const doc = iframe.contentWindow.document;
+        doc.open();
+        doc.write(docCompleto);
+        doc.close();
+
+        mensaje.textContent = mensajeOkTabla;
+        mensaje.style.color = '#7CFC00';
+    }
+
+    function reiniciarTabla() {
+        document.getElementById('codigoTabla').value = "";
+        document.getElementById('mensajeValidacionTabla').textContent = "";
+        document.getElementById('vistaTabla').innerHTML = "";
+    }
+</script>
+</body>
+</html>

@@ -41,6 +41,46 @@ public class CursoTrilogia1Controller {
 		return "redirect:/CursoTrilogia1/";
 	}
 
+	@GetMapping("/modulo1/leccion2")
+	public String modulo1Leccion2() {
+		return "CursoTrilogia1/modulo1/leccion2";
+	}
+
+	@GetMapping("/modulo1/leccion3")
+	public String modulo1Leccion3() {
+		return "CursoTrilogia1/modulo1/leccion3";
+	}
+
+	@GetMapping("/modulo1/leccion4")
+	public String modulo1Leccion4() {
+		return "CursoTrilogia1/modulo1/leccion4";
+	}
+
+	@GetMapping("/modulo1/leccion5")
+	public String modulo1Leccion5() {
+		return "CursoTrilogia1/modulo1/leccion5";
+	}
+
+	@GetMapping("/modulo1/leccion6")
+	public String modulo1Leccion6() {
+		return "CursoTrilogia1/modulo1/leccion6";
+	}
+
+	@GetMapping("/modulo1/leccion7")
+	public String modulo1Leccion7() {
+		return "CursoTrilogia1/modulo1/leccion7";
+	}
+
+	@GetMapping("/modulo1/leccion8")
+	public String modulo1Leccion8() {
+		return "CursoTrilogia1/modulo1/leccion8";
+	}
+
+	@GetMapping("/modulo1/leccion9")
+	public String modulo1Leccion9() {
+		return "CursoTrilogia1/modulo1/leccion9";
+	}
+
 	@GetMapping("/inicio")
 	public String inicio() {
 		return "redirect:/PanelControlUsuario/inicio";

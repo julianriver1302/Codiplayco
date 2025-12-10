@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lección 5 - Listas Galácticas</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            background: radial-gradient(circle at top, #001f3f 0%, #000814 45%, #000000 100%);
+            color: #e9f5ff;
+            overflow-x: hidden;
+        }
+
+        .stars {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background-image:
+                radial-gradient(circle at 5% 10%, rgba(0,255,255,0.7) 0, rgba(0,255,255,0) 3px),
+                radial-gradient(circle at 80% 20%, rgba(255,0,128,0.7) 0, rgba(255,0,128,0) 3px),
+                radial-gradient(circle at 30% 80%, rgba(0,255,153,0.6) 0, rgba(0,255,153,0) 3px);
+            background-size: 820px 820px;
+            animation: moveStars5 26s linear infinite;
+        }
+
+        @keyframes moveStars5 {
+            from { background-position: 0 0, 0 0, 0 0; }
+            to { background-position: 820px 820px, -820px 820px, 820px -820px; }
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 30px 20px 50px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 32px;
+            margin: 0 0 10px;
+            background: linear-gradient(90deg, #00ffd5, #ff00c3);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 14px rgba(0, 255, 213, 0.7);
+        }
+
+        .header p {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .card {
+            position: relative;
+            background: rgba(3, 8, 30, 0.96);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow:
+                0 0 25px rgba(0,0,0,0.9),
+                0 0 40px rgba(0, 255, 213, 0.25);
+            overflow: hidden;
+        }
+
+        .blob {
+            position: absolute;
+            width: 260px;
+            height: 260px;
+            background: radial-gradient(circle, #00ffd5, #00b894);
+            filter: blur(95px);
+            opacity: 0.4;
+            top: -50px;
+            right: -40px;
+            z-index: 0;
+        }
+
+        .blob2 {
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            background: radial-gradient(circle, #ff00c3, #ff7675);
+            filter: blur(95px);
+            opacity: 0.35;
+            bottom: -80px;
+            left: -40px;
+            z-index: 0;
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #00ffd5;
+        }
+
+        .info-block {
+            margin-bottom: 18px;
+            font-size: 14px;
+        }
+
+        .info-block strong {
+            color: #ff9ff3;
+        }
+
+        .steps {
+            display: grid;
+            gap: 15px;
+            margin: 15px 0 20px;
+        }
+
+        .step {
+            background: rgba(10, 32, 68, 0.95);
+            border-radius: 12px;
+            padding: 12px 15px;
+            border-left: 4px solid #ff00c3;
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        .step-number {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: #ff00c3;
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .step-text {
+            font-size: 14px;
+        }
+
+        pre.code-sample {
+            background: rgba(0, 0, 0, 0.55);
+            border-radius: 10px;
+            border: 1px solid rgba(0, 255, 213, 0.4);
+            padding: 10px 12px;
+            font-size: 13px;
+            overflow-x: auto;
+        }
+
+        .lab {
+            margin-top: 15px;
+            background: rgba(0,0,0,0.4);
+            border-radius: 15px;
+            padding: 15px;
+            border: 1px solid rgba(0, 255, 213, 0.3);
+        }
+
+        .lab h3 {
+            margin-top: 0;
+            font-size: 18px;
+            color: #ff9ff3;
+        }
+
+        .lab-description {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .lab-area {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .lab-col {
+            flex: 1 1 260px;
+            min-width: 0;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 210px;
+            border-radius: 10px;
+            border: 2px solid rgba(0,255,213,0.8);
+            background: rgba(1, 10, 20, 0.9);
+            color: #e9f5ff;
+            padding: 10px;
+            font-family: "Courier New", monospace;
+            font-size: 13px;
+            resize: vertical;
+        }
+
+        .preview-box {
+            background: #020819;
+            border-radius: 10px;
+            border: 3px solid #ff00c3;
+            padding: 10px;
+            min-height: 220px;
+            color: #e9f5ff;
+            overflow: auto;
+        }
+
+        .buttons {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 999px;
+            padding: 8px 16px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-run {
+            background: linear-gradient(90deg, #00ffd5, #ff00c3);
+            color: #000;
+        }
+
+        .btn-reset {
+            background: rgba(255,255,255,0.1);
+            color: #e9f5ff;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .nav {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .nav a,
+        .nav button {
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .nav-back {
+            background: #445566;
+            color: #fff;
+        }
+
+        .nav-next {
+            background: #00d4ff;
+            color: #000;
+        }
+
+        .nav-module {
+            background: #222f3e;
+            color: #fff;
+        }
+
+        .mascota {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            width: 90px;
+            animation: flotar5 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes flotar5 {
+            0% { transform: translateY(0) rotate(-4deg); }
+            100% { transform: translateY(-10px) rotate(4deg); }
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                padding: 20px 15px 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="stars"></div>
+
+<div class="container">
+    <div class="header">
+        <h1>Lección 5 - Listas Galácticas</h1>
+        <p>Aprende a usar listas ordenadas y desordenadas para tus juguetes o películas favoritas 🌠</p>
+    </div>
+
+    <div class="card">
+        <div class="blob"></div>
+        <div class="blob2"></div>
+
+        <div class="content">
+            <!-- PANTALLA 1: EXPLICACIÓN -->
+            <div id="pantalla5Explicacion">
+                <h2>¿Para qué sirven las listas? 📋</h2>
+                <div class="info-block">
+                    <p>
+                        Las listas te ayudan a <strong>organizar información</strong>: juguetes, películas, tareas, planetas
+                        o lo que quieras.
+                    </p>
+                    <p>
+                        En HTML tenemos dos tipos principales:
+                    </p>
+                    <ul>
+                        <li><strong>Listas desordenadas (&lt;ul&gt;)</strong> → con viñetas (•).</li>
+                        <li><strong>Listas ordenadas (&lt;ol&gt;)</strong> → con números (1, 2, 3...).</li>
+                    </ul>
+                </div>
+
+                <h2>Partes de una lista</h2>
+                <div class="info-block">
+                    <p>Ejemplo de lista desordenada:</p>
+                    <pre class="code-sample">
+&lt;ul&gt;
+  &lt;li&gt;Película 1&lt;/li&gt;
+  &lt;li&gt;Película 2&lt;/li&gt;
+  &lt;li&gt;Película 3&lt;/li&gt;
+&lt;/ul&gt;
+                    </pre>
+                    <p>Ejemplo de lista ordenada:</p>
+                    <pre class="code-sample">
+&lt;ol&gt;
+  &lt;li&gt;Juguete favorito 1&lt;/li&gt;
+  &lt;li&gt;Juguete favorito 2&lt;/li&gt;
+  &lt;li&gt;Juguete favorito 3&lt;/li&gt;
+&lt;/ol&gt;
+                    </pre>
+                    <p>
+                        Cada elemento de la lista va dentro de <strong>&lt;li&gt; ... &lt;/li&gt;</strong>.
+                    </p>
+                </div>
+
+                <h2>Paso a paso de la misión 🛸</h2>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-text">Elige si quieres hacer listas de <strong>juguetes</strong> o de <strong>películas</strong>.</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-text">Mira los ejemplos de &lt;ul&gt;, &lt;ol&gt; y &lt;li&gt; que están arriba.</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-text">En la siguiente página escribirás tus propias listas galácticas.</div>
+                    </div>
+                </div>
+
+                <div class="nav" style="margin-top:15px;">
+                    <button class="btn btn-run" type="button" onclick="irAMision5()">Siguiente: Ir a la misión ➜</button>
+                    <a th:href="@{/PanelControlUsuario/modulo1}" class="nav-module">Volver al módulo</a>
+                </div>
+            </div>
+
+            <!-- PANTALLA 2: MISIÓN -->
+            <div id="pantalla5Mision" style="display:none;">
+                <h2>Tu misión: listas de favoritos ✍️</h2>
+                <div class="lab">
+                    <h3>Crea tus listas espaciales</h3>
+                    <p class="lab-description">
+                        Escribe el código HTML para crear:
+                    </p>
+                    <ul>
+                        <li>Una <strong>lista desordenada (&lt;ul&gt;)</strong> con al menos 3 juguetes o películas favoritas.</li>
+                        <li>Una <strong>lista ordenada (&lt;ol&gt;)</strong> con al menos 3 juguetes o películas favoritas.</li>
+                    </ul>
+                    <p class="lab-description">
+                        Puedes mezclar cosas divertidas, por ejemplo:
+                        "Películas del espacio", "Juguetes que brillan", "Juegos galácticos".
+                    </p>
+
+                    <div class="lab-area">
+                        <div class="lab-col">
+                            <textarea id="codigoListas" placeholder="Escribe aquí tus listas con &lt;ul&gt;, &lt;ol&gt; y &lt;li&gt;..."></textarea>
+
+                            <div class="buttons">
+                                <button class="btn btn-run" onclick="verListas()">Ver mis listas 👀</button>
+                                <button class="btn btn-reset" onclick="reiniciarListas()">Borrar y volver a intentar</button>
+                            </div>
+
+                            <p id="mensajeValidacionListas" style="margin-top:8px; font-size:13px;"></p>
+                        </div>
+
+                        <div class="lab-col">
+                            <div class="preview-box" id="vistaListas">
+                                <!-- Aquí se verá el resultado -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nav">
+                    <button class="nav-back" type="button" onclick="volverExplicacion5()">⬅ Volver a la explicación</button>
+                    <a th:href="@{/PanelControlUsuario/modulo1}" class="nav-module">Volver al módulo</a>
+                    <a th:href="@{/CursoTrilogia1/modulo1/leccion6}" class="nav-next">Siguiente lección (6) ➜</a>
+                </div>
+            </div>
+      
+</div>
+
+<script>
+    function irAMision5() {
+        document.getElementById('pantalla5Explicacion').style.display = 'none';
+        document.getElementById('pantalla5Mision').style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function volverExplicacion5() {
+        document.getElementById('pantalla5Mision').style.display = 'none';
+        document.getElementById('pantalla5Explicacion').style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    const mensajeOkListas = "¡Completado ✅! Tienes listas ul y ol con al menos 3 elementos cada una.";
+    const mensajeErrorListas = "Revisa tu código: debe tener al menos un &lt;ul&gt;, un &lt;ol&gt; y 3 &lt;li&gt; dentro de cada una.";
+
+    function contarEtiquetas(html, etiqueta) {
+        const regex = new RegExp("<" + etiqueta + "[\\s>][\\s\\S]*?</" + etiqueta + ">", "g");
+        const coincidencias = html.match(regex);
+        return coincidencias ? coincidencias.length : 0;
+    }
+
+    function esListaValida(html) {
+        const limpio = html.toLowerCase();
+        const totalUl = contarEtiquetas(limpio, "ul");
+        const totalOl = contarEtiquetas(limpio, "ol");
+
+        // Contamos li dentro de ul y ol de forma simple
+        const regexUl = /<ul[\s\S]*?<\/ul>/g;
+        const regexOl = /<ol[\s\S]*?<\/ol>/g;
+        let liEnUl = 0;
+        let liEnOl = 0;
+
+        const bloquesUl = limpio.match(regexUl) || [];
+        bloquesUl.forEach(b => {
+            const lis = b.match(/<li[\s\S]*?<\/li>/g);
+            if (lis) liEnUl += lis.length;
+        });
+
+        const bloquesOl = limpio.match(regexOl) || [];
+        bloquesOl.forEach(b => {
+            const lis = b.match(/<li[\s\S]*?<\/li>/g);
+            if (lis) liEnOl += lis.length;
+        });
+
+        return totalUl >= 1 && totalOl >= 1 && liEnUl >= 3 && liEnOl >= 3;
+    }
+
+    function verListas() {
+        const codigo = document.getElementById('codigoListas').value;
+        const mensaje = document.getElementById('mensajeValidacionListas');
+        const contenedor = document.getElementById('vistaListas');
+
+        contenedor.innerHTML = '';
+        mensaje.textContent = '';
+        mensaje.style.color = '#ff8080';
+
+        if (!esListaValida(codigo)) {
+            mensaje.textContent = mensajeErrorListas;
+            return;
+        }
+
+        const docCompleto = `<!DOCTYPE html>
+<html>
+<head>
+    <title>Mis listas galácticas</title>
+</head>
+<body>
+${codigo}
+</body>
+</html>`;
+
+        const iframe = document.createElement('iframe');
+        iframe.style.width = '100%';
+        iframe.style.height = '260px';
+        iframe.style.border = 'none';
+        contenedor.appendChild(iframe);
+
+        const doc = iframe.contentWindow.document;
+        doc.open();
+        doc.write(docCompleto);
+        doc.close();
+
+        mensaje.textContent = mensajeOkListas;
+        mensaje.style.color = '#7CFC00';
+    }
+
+    function reiniciarListas() {
+        document.getElementById('codigoListas').value = "";
+        document.getElementById('mensajeValidacionListas').textContent = "";
+        document.getElementById('vistaListas').innerHTML = "";
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lección 8 - Formularios Galácticos</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            background: radial-gradient(circle at top, #ff9f1c 0%, #2b2d42 45%, #000000 100%);
+            color: #e9f5ff;
+            overflow-x: hidden;
+        }
+
+        .stars {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(255,255,255,0.7) 0, rgba(255,255,255,0) 3px),
+                radial-gradient(circle at 80% 25%, rgba(255,203,119,0.7) 0, rgba(255,203,119,0) 3px),
+                radial-gradient(circle at 40% 80%, rgba(173,216,230,0.6) 0, rgba(173,216,230,0) 3px);
+            background-size: 880px 880px;
+            animation: moveStars8 28s linear infinite;
+        }
+
+        @keyframes moveStars8 {
+            from { background-position: 0 0, 0 0, 0 0; }
+            to { background-position: 880px 880px, -880px 880px, 880px -880px; }
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 30px 20px 50px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 32px;
+            margin: 0 0 10px;
+            background: linear-gradient(90deg, #ff9f1c, #ff006e);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 14px rgba(255, 159, 28, 0.7);
+        }
+
+        .header p {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .card {
+            position: relative;
+            background: rgba(30, 30, 70, 0.96);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow:
+                0 0 25px rgba(0,0,0,0.9),
+                0 0 40px rgba(255, 159, 28, 0.25);
+            overflow: hidden;
+        }
+
+        .blob {
+            position: absolute;
+            width: 260px;
+            height: 260px;
+            background: radial-gradient(circle, #ff9f1c, #ff006e);
+            filter: blur(95px);
+            opacity: 0.4;
+            top: -50px;
+            right: -40px;
+            z-index: 0;
+        }
+
+        .blob2 {
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            background: radial-gradient(circle, #2ec4b6, #00b4d8);
+            filter: blur(95px);
+            opacity: 0.35;
+            bottom: -80px;
+            left: -40px;
+            z-index: 0;
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #ff9f1c;
+        }
+
+        .info-block {
+            margin-bottom: 18px;
+            font-size: 14px;
+        }
+
+        .info-block strong {
+            color: #ff006e;
+        }
+
+        pre.code-sample {
+            background: rgba(0, 0, 0, 0.55);
+            border-radius: 10px;
+            border: 1px solid rgba(255,159,28,0.4);
+            padding: 10px 12px;
+            font-size: 13px;
+            overflow-x: auto;
+        }
+
+        .steps {
+            display: grid;
+            gap: 15px;
+            margin: 15px 0 20px;
+        }
+
+        .step {
+            background: rgba(40, 40, 90, 0.95);
+            border-radius: 12px;
+            padding: 12px 15px;
+            border-left: 4px solid #ff006e;
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        .step-number {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: #ff006e;
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .step-text {
+            font-size: 14px;
+        }
+
+        .lab {
+            margin-top: 15px;
+            background: rgba(0,0,0,0.4);
+            border-radius: 15px;
+            padding: 15px;
+            border: 1px solid rgba(255,159,28,0.3);
+        }
+
+        .lab h3 {
+            margin-top: 0;
+            font-size: 18px;
+            color: #ff9f1c;
+        }
+
+        .lab-description {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .lab-area {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .lab-col {
+            flex: 1 1 260px;
+            min-width: 0;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 210px;
+            border-radius: 10px;
+            border: 2px solid rgba(255,159,28,0.8);
+            background: rgba(1, 10, 20, 0.9);
+            color: #e9f5ff;
+            padding: 10px;
+            font-family: "Courier New", monospace;
+            font-size: 13px;
+            resize: vertical;
+        }
+
+        .preview-box {
+            background: #020819;
+            border-radius: 10px;
+            border: 3px solid #ff006e;
+            padding: 10px;
+            min-height: 220px;
+            color: #e9f5ff;
+            overflow: auto;
+        }
+
+        .buttons {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 999px;
+            padding: 8px 16px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-run {
+            background: linear-gradient(90deg, #ff9f1c, #ff006e);
+            color: #000;
+        }
+
+        .btn-reset {
+            background: rgba(255,255,255,0.1);
+            color: #e9f5ff;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .nav {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .nav a,
+        .nav button {
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .nav-back {
+            background: #445566;
+            color: #fff;
+        }
+
+        .nav-next {
+            background: #00d4ff;
+            color: #000;
+        }
+
+        .nav-module {
+            background: #222f3e;
+            color: #fff;
+        }
+
+        .mascota {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            width: 90px;
+            animation: flotar8 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes flotar8 {
+            0% { transform: translateY(0) rotate(-3deg); }
+            100% { transform: translateY(-10px) rotate(3deg); }
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                padding: 20px 15px 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="stars"></div>
+
+<div class="container">
+    <div class="header">
+        <h1>Lección 8 - Formularios Galácticos</h1>
+        <p>Crea un formulario simple con tu nombre y edad usando &lt;form&gt;, &lt;label&gt;, &lt;input&gt; y &lt;button&gt; 🚀</p>
+    </div>
+
+    <div class="card">
+        <div class="blob"></div>
+        <div class="blob2"></div>
+
+        <div class="content">
+            <!-- PANTALLA 1: EXPLICACIÓN -->
+            <div id="pantalla8Explicacion">
+                <h2>¿Qué es un formulario? 📝</h2>
+                <div class="info-block">
+                    <p>
+                        Un <strong>formulario</strong> sirve para que los usuarios te envíen información: su nombre,
+                        edad, correo, etc.
+                    </p>
+                </div>
+
+                <h2>Etiquetas importantes</h2>
+                <div class="info-block">
+                    <ul>
+                        <li><strong>&lt;form&gt;</strong> → Contenedor del formulario.</li>
+                        <li><strong>&lt;label&gt;</strong> → Texto que describe cada campo.</li>
+                        <li><strong>&lt;input&gt;</strong> → Lugar donde el usuario escribe (nombre, edad...).</li>
+                        <li><strong>&lt;button&gt;</strong> → Botón para enviar.</li>
+                    </ul>
+                    <p>Ejemplo sencillo:</p>
+                    <pre class="code-sample">
+&lt;form&gt;
+  &lt;label&gt;Nombre:&lt;/label&gt;
+  &lt;input type="text"&gt;
+
+  &lt;label&gt;Edad:&lt;/label&gt;
+  &lt;input type="number"&gt;
+
+  &lt;button type="submit"&gt;Enviar&lt;/button&gt;
+&lt;/form&gt;
+                    </pre>
+                </div>
+
+                <h2>Paso a paso de la misión 🌟</h2>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-text">Mira el ejemplo de formulario de arriba.</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-text">Piensa cómo pedirás el nombre y edad del explorador espacial.</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-text">En la misión crearás tu propio formulario galáctico.</div>
+                    </div>
+                </div>
+
+                <div class="nav" style="margin-top:15px;">
+                    <button class="btn btn-run" type="button" onclick="irAMision8()">Siguiente: Ir a la misión ➜</button>
+                    <a th:href="@{/PanelControlUsuario/modulo1}" class="nav-module">Volver al módulo</a>
+                </div>
+            </div>
+
+            <!-- PANTALLA 2: MISIÓN -->
+            <div id="pantalla8Mision" style="display:none;">
+                <h2>Tu misión: formulario del explorador ✍️</h2>
+                <div class="lab">
+                    <h3>Construye tu formulario</h3>
+                    <p class="lab-description">
+                        Crea un formulario que pida:
+                    </p>
+                    <ul>
+                        <li>Un campo para el <strong>nombre</strong> del explorador.</li>
+                        <li>Un campo para la <strong>edad</strong> del explorador.</li>
+                        <li>Un <strong>botón</strong> para enviar.</li>
+                    </ul>
+                    <p class="lab-description">
+                        Usa <strong>&lt;form&gt;</strong>, <strong>&lt;label&gt;</strong>, <strong>&lt;input&gt;</strong> y
+                        <strong>&lt;button&gt;</strong>.
+                    </p>
+
+                    <div class="lab-area">
+                        <div class="lab-col">
+                            <textarea id="codigoFormulario" placeholder="Escribe aquí tu formulario con &lt;form&gt;, &lt;label&gt;, &lt;input&gt; y &lt;button&gt;..."></textarea>
+
+                            <div class="buttons">
+                                <button class="btn btn-run" onclick="verFormulario()">Ver mi formulario 👀</button>
+                                <button class="btn btn-reset" onclick="reiniciarFormulario()">Borrar y volver a intentar</button>
+                            </div>
+
+                            <p id="mensajeValidacionFormulario" style="margin-top:8px; font-size:13px;"></p>
+                        </div>
+
+                        <div class="lab-col">
+                            <div class="preview-box" id="vistaFormulario">
+                                <!-- Aquí se verá el formulario -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nav">
+                    <button class="nav-back" type="button" onclick="volverExplicacion8()">⬅ Volver a la explicación</button>
+                    <a th:href="@{/PanelControlUsuario/modulo1}" class="nav-module">Volver al módulo</a>
+                    <a th:href="@{/CursoTrilogia1/modulo1/leccion9}" class="nav-next">Proyecto final (9) ➜</a>
+                </div>
+            </div>
+        </div>
+
+       
+</div>
+
+<script>
+    function irAMision8() {
+        document.getElementById('pantalla8Explicacion').style.display = 'none';
+        document.getElementById('pantalla8Mision').style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function volverExplicacion8() {
+        document.getElementById('pantalla8Mision').style.display = 'none';
+        document.getElementById('pantalla8Explicacion').style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    const mensajeOkFormulario = "¡Completado ✅! Tu formulario tiene nombre, edad y botón.";
+    const mensajeErrorFormulario = "Revisa tu código: debe tener &lt;form&gt;, al menos dos &lt;label&gt;, dos &lt;input&gt; y un &lt;button&gt;.";
+
+    function contarCoincidencias(html, etiqueta) {
+        const regex = new RegExp("<" + etiqueta + "[\\s>][\\s\\S]*?>", "g");
+        const coincidencias = html.match(regex);
+        return coincidencias ? coincidencias.length : 0;
+    }
+
+    function esFormularioValido(html) {
+        const limpio = html.toLowerCase();
+        const tieneForm = limpio.includes("<form") && limpio.includes("</form>");
+        const totalLabel = contarCoincidencias(limpio, "label");
+        const totalInput = contarCoincidencias(limpio, "input");
+        const totalButton = contarCoincidencias(limpio, "button");
+
+        return tieneForm && totalLabel >= 2 && totalInput >= 2 && totalButton >= 1;
+    }
+
+    function verFormulario() {
+        const codigo = document.getElementById('codigoFormulario').value;
+        const mensaje = document.getElementById('mensajeValidacionFormulario');
+        const contenedor = document.getElementById('vistaFormulario');
+
+        contenedor.innerHTML = '';
+        mensaje.textContent = '';
+        mensaje.style.color = '#ff8080';
+
+        if (!esFormularioValido(codigo)) {
+            mensaje.textContent = mensajeErrorFormulario;
+            return;
+        }
+
+        const docCompleto = `<!DOCTYPE html>
+<html>
+<head>
+    <title>Mi formulario galáctico</title>
+    <style>
+        body { font-family: Poppins, sans-serif; background:#020819; color:#e9f5ff; padding:20px; }
+        form { display:flex; flex-direction:column; gap:10px; max-width:320px; }
+        label { font-weight:600; }
+        input { padding:6px; border-radius:6px; border:1px solid #ff9f1c; }
+        button { padding:8px 12px; border-radius:999px; border:none; background:#ff006e; color:#000; font-weight:600; cursor:pointer; }
+    </style>
+</head>
+<body>
+${codigo}
+<script>
+  const f = document.querySelector('form');
+  if (f) {
+    f.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const inputs = f.querySelectorAll('input');
+      inputs.forEach(i => i.value = '');
+    });
+  }
+<\/script>
+</body>
+</html>`;
+
+        const iframe = document.createElement('iframe');
+        iframe.style.width = '100%';
+        iframe.style.height = '260px';
+        iframe.style.border = 'none';
+        contenedor.appendChild(iframe);
+
+        const doc = iframe.contentWindow.document;
+        doc.open();
+        doc.write(docCompleto);
+        doc.close();
+
+        mensaje.textContent = mensajeOkFormulario;
+        mensaje.style.color = '#7CFC00';
+    }
+
+    function reiniciarFormulario() {
+        document.getElementById('codigoFormulario').value = "";
+        document.getElementById('mensajeValidacionFormulario').textContent = "";
+        document.getElementById('vistaFormulario').innerHTML = "";
+    }
+</script>
+</body>
+</html>

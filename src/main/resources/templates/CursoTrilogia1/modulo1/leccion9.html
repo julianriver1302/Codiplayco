@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lección 9 - Mi Página Personal Galáctica</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(circle at top, #050816 0%, #020617 45%, #000000 100%);
+      color: #e9f5ff;
+      overflow-x: hidden;
+    }
+    .stars {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background-image:
+        radial-gradient(circle at 15% 20%, rgba(255,255,255,0.8) 0, rgba(255,255,255,0) 3px),
+        radial-gradient(circle at 80% 30%, rgba(56,189,248,0.7) 0, rgba(56,189,248,0) 3px),
+        radial-gradient(circle at 40% 80%, rgba(244,114,182,0.7) 0, rgba(244,114,182,0) 3px),
+        radial-gradient(circle at 60% 60%, rgba(94,234,212,0.7) 0, rgba(94,234,212,0) 3px);
+      background-size: 900px 900px;
+      animation: moveStars9 30s linear infinite;
+    }
+    @keyframes moveStars9 {
+      from { background-position: 0 0, 0 0, 0 0, 0 0; }
+      to   { background-position: 900px 900px, -900px 900px, 900px -900px, -900px -900px; }
+    }
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 30px 20px 50px;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+    .header h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 32px;
+      margin: 0 0 10px;
+      background: linear-gradient(90deg, #38bdf8, #a855f7);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 10px rgba(56,189,248,0.7);
+    }
+    .header p {
+      margin: 0;
+      font-size: 16px;
+    }
+    .card {
+      position: relative;
+      background: rgba(10,15,35,0.95);
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow:
+        0 0 30px rgba(0,0,0,0.9),
+        0 0 40px rgba(56,189,248,0.25);
+      overflow: hidden;
+    }
+    .blob {
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      background: radial-gradient(circle, #3b82f6, #0ea5e9);
+      filter: blur(95px);
+      opacity: 0.45;
+      top: -50px;
+      right: -40px;
+      z-index: 0;
+    }
+    .blob2 {
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle, #a855f7, #ec4899);
+      filter: blur(95px);
+      opacity: 0.4;
+      bottom: -80px;
+      left: -40px;
+      z-index: 0;
+    }
+    .content { position: relative; z-index: 2; }
+    h2 { margin-top: 0; color: #38bdf8; }
+    .info-block { margin-bottom: 18px; font-size: 14px; }
+
+    .lab {
+      margin-top: 15px;
+      background: rgba(15,23,42,0.9);
+      border-radius: 15px;
+      padding: 15px;
+      border: 1px solid rgba(56,189,248,0.3);
+    }
+    .lab h3 { margin-top: 0; font-size: 18px; color: #f472b6; }
+    .lab-description { font-size: 14px; margin-bottom: 10px; }
+    .lab-area { display: flex; flex-wrap: wrap; gap: 15px; }
+    .lab-col { flex: 1 1 260px; min-width: 0; }
+
+    textarea {
+      width: 100%;
+      min-height: 240px;
+      border-radius: 10px;
+      border: 2px solid rgba(56,189,248,0.8);
+      background: rgba(15,23,42,0.95);
+      color: #e9f5ff;
+      padding: 10px;
+      font-family: "Courier New", monospace;
+      font-size: 13px;
+      resize: vertical;
+    }
+    .preview-box {
+      background: #020617;
+      border-radius: 10px;
+      border: 3px solid #f472b6;
+      padding: 10px;
+      min-height: 240px;
+      color: #e9f5ff;
+      overflow: auto;
+    }
+    .buttons {
+      margin-top: 10px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      border: none;
+      border-radius: 999px;
+      padding: 8px 16px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .btn-run {
+      background: linear-gradient(90deg, #38bdf8, #a855f7);
+      color: #000;
+    }
+    .btn-reset {
+      background: rgba(255,255,255,0.08);
+      color: #e9f5ff;
+      border: 1px solid rgba(148,163,184,0.7);
+    }
+    .nav {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .nav a,
+    .nav button {
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .nav-back { background: #475569; color: #fff; }
+    .nav-next { background: #06d6a0; color: #000; }
+    .nav-module { background: #0f172a; color: #fff; }
+
+    .mascota {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      width: 100px;
+      animation: flotar9 3s ease-in-out infinite alternate;
+    }
+    @keyframes flotar9 {
+      0% { transform: translateY(0) scale(1); }
+      100% { transform: translateY(-10px) scale(1.05); }
+    }
+    @media (max-width: 700px) {
+      .container { padding: 20px 15px 40px; }
+    }
+  </style>
+</head>
+<body>
+<div class="stars"></div>
+<div class="container">
+  <div class="header">
+    <h1>Lección 9 - Mi Página Personal Galáctica</h1>
+    <p>Proyecto final: combina texto, imágenes y enlaces en una sola página especial ✨</p>
+  </div>
+  <div class="card">
+    <div class="blob"></div>
+    <div class="blob2"></div>
+    <div class="content">
+      <!-- PANTALLA 1: EXPLICACIÓN -->
+      <div id="pantalla9Explicacion">
+        <h2>¿Qué harás en este proyecto? 🎉</h2>
+        <div class="info-block">
+          <p>Vas a crear una <strong>mini página personal</strong> con:</p>
+          <ul>
+            <li>Un <strong>título</strong> con tu nombre.</li>
+            <li>Un <strong>párrafo</strong> hablando de ti.</li>
+            <li>Al menos <strong>una imagen</strong> que te guste.</li>
+            <li>Al menos <strong>un enlace</strong> a algo que te encante.</li>
+          </ul>
+        </div>
+
+        <h2>Ejemplo de mini página</h2>
+        <div class="info-block">
+<pre class="code-sample">
+&lt;h1&gt;Hola, soy Luna&lt;/h1&gt;
+&lt;p&gt;Me encanta el espacio y los gatos.&lt;/p&gt;
+
+&lt;img src="https://example.com/gato-espacial.png" alt="Gato espacial"&gt;
+
+&lt;a href="https://www.nasa.gov"&gt;Visitar la NASA&lt;/a&gt;
+</pre>
+        </div>
+
+        <h2>Plan de tu página 🧠</h2>
+        <div class="info-block">
+          <p>Puedes imaginar o dibujar cómo será tu página:</p>
+          <ul>
+            <li>¿Qué título tendrá?</li>
+            <li>¿Qué imagen vas a usar?</li>
+            <li>¿Qué enlace vas a poner?</li>
+          </ul>
+        </div>
+
+        <div class="nav" style="margin-top:15px;">
+          <button class="btn btn-run" type="button" onclick="irAMision9()">Siguiente: Crear mi página ➜</button>
+          <a th:href="@{/PanelControlUsuario/modulo1}" class="nav-module">Volver al módulo</a>
+        </div>
+      </div>
+
+      <!-- PANTALLA 2: MISIÓN -->
+      <div id="pantalla9Mision" style="display:none;">
+        <h2>Tu misión: diseña tu mini página 🌈</h2>
+        <div class="lab">
+          <h3>Construye tu página como tú quieras</h3>
+          <p class="lab-description">
+            Tu página debe tener <strong>como mínimo</strong>:
+          </p>
+          <ul>
+            <li>Un <strong>&lt;h1&gt;</strong> con tu nombre.</li>
+            <li>Un <strong>&lt;p&gt;</strong> contando algo sobre ti.</li>
+            <li>Al menos <strong>una &lt;img&gt;</strong> con <strong>src</strong> y <strong>alt</strong>.</li>
+            <li>Al menos <strong>un enlace &lt;a&gt;</strong> con <strong>href</strong>.</li>
+          </ul>
+
+          <div class="lab-area">
+            <div class="lab-col">
+              <textarea id="codigoPagina" placeholder="Escribe aquí tu mini página personal usando h1, p, img y a..."></textarea>
+
+              <div class="buttons">
+                <button class="btn btn-run" onclick="verPaginaPersonal()">Ver mi página 👀</button>
+                <button class="btn btn-reset" onclick="reiniciarPaginaPersonal()">Borrar y volver a intentar</button>
+              </div>
+
+              <p id="mensajeValidacionPagina" style="margin-top:8px; font-size:13px;"></p>
+            </div>
+
+            <div class="lab-col">
+              <div class="preview-box" id="vistaPagina">
+                <!-- Aquí se verá la mini página -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="nav">
+          <button class="nav-back" type="button" onclick="volverExplicacion9()">⬅ Volver a la explicación</button>
+          <a th:href="@{/PanelControlUsuario/modulo1}" class="nav-module">Volver al módulo</a>
+          <a th:href="@{/PanelControlUsuario/inicio}" class="nav-next">Terminar módulo ➜</a>
+        </div>
+      </div>
+    </div>
+
+    
+</div>
+
+<script>
+  function irAMision9() {
+    document.getElementById('pantalla9Explicacion').style.display = 'none';
+    document.getElementById('pantalla9Mision').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function volverExplicacion9() {
+    document.getElementById('pantalla9Mision').style.display = 'none';
+    document.getElementById('pantalla9Explicacion').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  const mensajeOkPagina = "¡Proyecto completado ✅! Tu página tiene título, texto, imagen y enlace.";
+  const mensajeErrorPagina = "Revisa tu código: necesitas al menos un &lt;h1&gt;, un &lt;p&gt;, una &lt;img&gt; con src y alt, y un &lt;a&gt; con href.";
+
+  function esProyectoValido(html) {
+    const limpio = html.toLowerCase();
+    const tieneH1 = limpio.includes("<h1") && limpio.includes("</h1>");
+    const tieneP = limpio.includes("<p") && limpio.includes("</p>");
+    const tieneImg = limpio.includes("<img") && limpio.includes("src=") && limpio.includes("alt=");
+    const regexA = /<a[\s\S]*?href=["'][^"']+["'][\s\S]*?>[\s\S]*?<\/a>/g;
+    const enlaces = limpio.match(regexA);
+    const tieneA = !!enlaces && enlaces.length >= 1;
+    return tieneH1 && tieneP && tieneImg && tieneA;
+  }
+
+  function verPaginaPersonal() {
+    const codigo = document.getElementById('codigoPagina').value;
+    const mensaje = document.getElementById('mensajeValidacionPagina');
+    const contenedor = document.getElementById('vistaPagina');
+
+    contenedor.innerHTML = '';
+    mensaje.textContent = '';
+    mensaje.style.color = '#ff8080';
+
+    if (!esProyectoValido(codigo)) {
+      mensaje.textContent = mensajeErrorPagina;
+      return;
+    }
+
+    const docCompleto = `<!DOCTYPE html>
+<html>
+<head>
+  <title>Mi mini página personal</title>
+  <style>
+    body { font-family: Poppins, sans-serif; background:#f8f9fa; color:#2b2d42; padding:20px; }
+    h1 { color:#ff006e; }
+    a { color:#3a86ff; text-decoration:none; font-weight:600; }
+    a:hover { text-decoration:underline; }
+    img { max-width:100%; border-radius:10px; margin-top:10px; }
+  </style>
+</head>
+<body>
+${codigo}
+</body>
+</html>`;
+
+    const iframe = document.createElement('iframe');
+    iframe.style.width = '100%';
+    iframe.style.height = '260px';
+    iframe.style.border = 'none';
+    contenedor.appendChild(iframe);
+
+    const doc = iframe.contentWindow.document;
+    doc.open();
+    doc.write(docCompleto);
+    doc.close();
+
+    mensaje.textContent = mensajeOkPagina;
+    mensaje.style.color = '#10b981';
+  }
+
+  function reiniciarPaginaPersonal() {
+    document.getElementById('codigoPagina').value = "";
+    document.getElementById('mensajeValidacionPagina').textContent = "";
+    document.getElementById('vistaPagina').innerHTML = "";
+  }
+</script>
+</body>
+</html>
