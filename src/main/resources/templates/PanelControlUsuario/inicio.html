@@ -79,6 +79,9 @@
 
 			<!-- HEADER -->
 			<header class="top-header">
+				<button class="mobile-nav-toggle" type="button">
+					<i class="fa-solid fa-bars"></i>
+				</button>
 				<div class="welcome-section">
 					<h1>
 						Bienvenido
@@ -109,7 +112,6 @@
 						</div>
 						<span class="username"
 							th:text="${usuario != null} ? ${usuario.nombre} : 'Usuario'">Usuario</span>
-						<i class="fa-solid fa-chevron-down" style="font-size: 12px; margin-left: 4px;"></i>
 					</div>
 					<div class="user-menu" id="user-menu" style="display: none;">
 						<a th:href="@{/PanelControlUsuario/editar-perfil}"><i class="fa-solid fa-user-pen"></i> Editar perfil</a>
@@ -127,8 +129,7 @@
 					<!-- Tarjeta 1 - Módulo 1 -->
 					<div class="course-card active-card">
 						<div class="card-header">
-							<span class="badge">Nuevo</span>
-							<span class="progress-text">0 / 285</span>
+							<span class="progress-text" id="mod1-progress-text">0 / 9</span>
 						</div>
 						<div class="card-icon-container">
 							<div class="icon-circle">
@@ -136,39 +137,37 @@
 							</div>
 						</div>
 						<h3>Módulo 1</h3>
-						<p class="lessons-info">Completado 0 de 4 lecciones</p>
+						<p class="lessons-info" id="mod1-lessons-text">Completado 0 de 9 lecciones</p>
 						<div class="progress-bar-bg">
-							<div class="progress-bar-fill" style="width: 0%;"></div>
+							<div class="progress-bar-fill" id="mod1-progress-bar" style="width: 0%;"></div>
 						</div>
 						<a th:href="@{/PanelControlUsuario/modulo1}" class="btn-continue">
 							<i class="fa-solid fa-play-circle"></i> Continuar
 						</a>
 					</div>
 
-					<!-- Tarjeta 2 - Módulo 2 -->
-					<div class="course-card locked-card">
+					<!-- Tarjeta 2 - Módulo 2 (DESBLOQUEADO) -->
+					<div class="course-card">
 						<div class="card-header">
-							
-							<span class="progress-text">0 / 30</span>
+							<span class="progress-text" id="mod2-progress-text">0 / 6</span>
 						</div>
 						<div class="card-icon-container">
 							<div class="icon-circle">
 								<i class="fa-solid fa-rocket rocket-icon"></i>
-								<div class="lock-overlay"><i class="fa-solid fa-lock"></i></div>
 							</div>
 						</div>
 						<h3>Módulo 2</h3>
-						<p class="lessons-info">Completado 0 de 4 lecciones</p>
-						<button class="btn-locked" type="button">
-							<i class="fa-solid fa-lock"></i> Bloqueado
-						</button>
+						<p class="lessons-info" id="mod2-lessons-text">Completado 0 de 6 lecciones</p>
+						<a th:href="@{/PanelControlUsuario/modulo2}" class="btn-continue">
+							<i class="fa-solid fa-play-circle"></i> Continuar
+						</a>
 					</div>
 
 					<!-- Tarjeta 3 - Módulo 3 -->
 					<div class="course-card locked-card">
 						<div class="card-header">
-							<span class="badge">Nuevo</span>
-							<span class="progress-text">0 / 285</span>
+
+							<span class="progress-text" id="mod3-progress-text">0 / 10</span>
 						</div>
 						<div class="card-icon-container">
 							<div class="icon-circle">
@@ -177,7 +176,7 @@
 							</div>
 						</div>
 						<h3>Módulo 3</h3>
-						<p class="lessons-info">Completado 0 de 4 lecciones</p>
+						<p class="lessons-info" id="mod3-lessons-text">Completado 0 de 10 lecciones</p>
 						<button class="btn-locked" type="button">
 							<i class="fa-solid fa-lock"></i> Bloqueado
 						</button>
@@ -186,8 +185,7 @@
 					<!-- Tarjeta 4 - Módulo 4 -->
 					<div class="course-card locked-card">
 						<div class="card-header">
-							<span class="badge">Nuevo</span>
-							<span class="progress-text">0 / 30</span>
+							<span class="progress-text" id="mod4-progress-text">0 / 15</span>
 						</div>
 						<div class="card-icon-container">
 							<div class="icon-circle">
@@ -196,7 +194,7 @@
 							</div>
 						</div>
 						<h3>Módulo 4</h3>
-						<p class="lessons-info">Completado 0 de 4 lecciones</p>
+						<p class="lessons-info" id="mod4-lessons-text">Completado 0 de 15 lecciones</p>
 						<button class="btn-locked" type="button">
 							<i class="fa-solid fa-lock"></i> Bloqueado
 						</button>

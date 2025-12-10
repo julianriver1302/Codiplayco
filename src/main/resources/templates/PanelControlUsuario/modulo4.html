@@ -20,6 +20,9 @@
       <!-- Columna derecha (contenido del curso) -->
       <div class="right-panel">
         <h1>Módulo 4 - Canvas</h1>
+        <p class="lessons-info" style="margin-top: 8px; margin-bottom: 16px; font-size: 14px; color: var(--text-secondary);">
+          Este módulo tiene <strong>15 lecciones</strong>.
+        </p>
         <p class="subtitulo">
           Plan de Clases Clase Tema Descripción de la clase Actividad en casa
         </p>
@@ -29,7 +32,7 @@
             <h3>Introducción a Canvas Dibujar en HTML5 con canva></h3>
             <p>Hacer su primer dibujo de líneas</p>
           </div>
-         <a th:href="@{/}" class="card-button">Iniciar</a>
+         <a th:href="@{/}" class="card-button lesson-btn" data-lesson="1">Iniciar</a>
         </div>
 
         <div class="card">
@@ -37,7 +40,7 @@
             <h3>Crear Animaciones Simples Mover objetos con JavaScript</h3>
             <p> Hacer un círculo que se mueva</p>
           </div>
-         <a th:href="@{/}" class="card-button">Iniciar</a>
+         <a th:href="@{/}" class="card-button lesson-btn" data-lesson="2">Iniciar</a>
       </div>
 
          <div class="card">
@@ -45,7 +48,7 @@
             <h3> Audio y Video Insertar audio y video.</h3>
             <p> Agregar un video favorito (enlace)</p>
           </div>
-         <a th:href="@{/}" class="card-button">Iniciar</a>
+         <a th:href="@{/}" class="card-button lesson-btn" data-lesson="3">Iniciar</a>
         </div>
 
          <div class="card">
@@ -53,7 +56,7 @@
             <h3>Juego: Adivina el Número Juego simple usando JS.</h3>
             <p> Personalizar mensaje de ganador</p>
           </div>
-         <a th:href="@{/}" class="card-button">Iniciar</a>
+         <a th:href="@{/}" class="card-button lesson-btn" data-lesson="4">Iniciar</a>
         </div>
 
 
@@ -62,7 +65,7 @@
             <h3>Validar Formularios Revisar si los campos están llenos.</h3>
             <p>  Crear un formulario validado</p>
           </div>
-         <a th:href="@{/}" class="card-button">Iniciar</a>
+         <a th:href="@{/}" class="card-button lesson-btn" data-lesson="5">Iniciar</a>
         </div>
 
         <div class="card">
@@ -70,7 +73,7 @@
             <h3>Cambiar Colores con Botones Botones que cambian color de fondo.</h3>
             <p>Hacer 3 botones de color</p>
           </div>
-         <a th:href="@{/}" class="card-button">Iniciar</a>
+         <a th:href="@{/}" class="card-button lesson-btn" data-lesson="6">Iniciar</a>
         </div>
 
           <div class="card">
@@ -78,7 +81,7 @@
             <h3>Temporizadores y Relojes setTimeout, setInterval</h3>
             <p>Crear un reloj que muestre la hora</p>
           </div>
-         <a th:href="@{/}" class="card-button">Iniciar</a>
+         <a th:href="@{/}" class="card-button lesson-btn" data-lesson="7">Iniciar</a>
         </div>
 
         <div class="card">
@@ -86,7 +89,7 @@
             <h3>Crear una Calculadora Completa Con operaciones básicas</h3>
             <p>Decorarla con CSS</p>
           </div>
-         <a th:href="@{/}" class="card-button">Iniciar</a>
+         <a th:href="@{/}" class="card-button lesson-btn" data-lesson="8">Iniciar</a>
         </div>
 
          <div class="card">
@@ -94,7 +97,7 @@
             <h3>Integrar Audio a Botones Sonidos al presionar</h3>
             <p>Crear botones con sonido.</p>
           </div>
-         <a th:href="@{/}" class="card-button">Iniciar</a>
+         <a th:href="@{/}" class="card-button lesson-btn" data-lesson="9">Iniciar</a>
         </div>
 
         
@@ -103,7 +106,7 @@
             <h3>Crear un Memorama (Juego de Cartas) Juego simple de memoria</h3>
             <p> Personalizar imágenes..</p>
           </div>
-         <a th:href="@{/}" class="card-button">Iniciar</a>
+         <a th:href="@{/}" class="card-button lesson-btn" data-lesson="10">Iniciar</a>
         </div>
 
         <div class="card">
@@ -111,7 +114,7 @@
             <h3>Proyecto: Juego de Preguntas Con preguntas y puntajes</h3>
             <p>Crear sus propias preguntas</p>
           </div>
-         <a th:href="@{/}" class="card-button">Iniciar</a>
+         <a th:href="@{/}" class="card-button lesson-btn" data-lesson="11">Iniciar</a>
         </div>
 
         <div class="card">
@@ -119,7 +122,7 @@
             <h3> Optimizar y Revisar Código Limpiar errores y mejorar páginas</h3>
             <p> Revisar su proyecto.</p>
           </div>
-         <a th:href="@{/}" class="card-button">Iniciar</a>
+         <a th:href="@{/}" class="card-button lesson-btn" data-lesson="12">Iniciar</a>
         </div>
 
          <div class="card">
@@ -127,7 +130,7 @@
             <h3>Presentación de Proyectos Cada niño mostrará su página/juego</h3>
             <p> Ver los proyectos de los compañeros</p>
           </div>
-         <a th:href="@{/}" class="card-button">Iniciar</a>
+         <a th:href="@{/}" class="card-button lesson-btn" data-lesson="13">Iniciar</a>
         </div>
 
            <div class="card">
@@ -135,7 +138,7 @@
             <h3> Publicar en la Plataforma Guardar y compartir su trabajo en la plataforma</h3>
             <p> Compartir su enlace con familiares</p>
           </div>
-         <a th:href="@{/}" class="card-button">Iniciar</a>
+         <a th:href="@{/}" class="card-button lesson-btn" data-lesson="14">Iniciar</a>
         </div>
 
           <div class="card">
@@ -143,9 +146,32 @@
             <h3> Retroalimentación y Certificación Entrega de diplomas virtuales</h3>
             <p>Descargar su diploma y compartirlo</p>
           </div>
-         <a th:href="@{/}" class="card-button">Iniciar</a>
+         <a th:href="@{/}" class="card-button lesson-btn" data-lesson="15">Iniciar</a>
         </div>
 
     </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const LESSON_KEY = 'modulo4_maxLesson';
+      const buttons = Array.from(document.querySelectorAll('.lesson-btn'));
+      if (buttons.length === 0) return;
+
+      let maxCompleted = parseInt(localStorage.getItem(LESSON_KEY) || '0', 10);
+      if (isNaN(maxCompleted)) maxCompleted = 0;
+
+      buttons.forEach(btn => {
+        btn.addEventListener('click', function () {
+          const n = parseInt(this.dataset.lesson || '0', 10);
+          if (!n) return;
+          if (n > maxCompleted) {
+            maxCompleted = n;
+            localStorage.setItem(LESSON_KEY, String(maxCompleted));
+          }
+        });
+      });
+    });
+  </script>
   </body>
 </html>

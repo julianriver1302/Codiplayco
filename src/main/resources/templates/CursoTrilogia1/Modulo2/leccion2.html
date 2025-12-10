@@ -1515,7 +1515,17 @@ body {
                     if (sectionId > currentSection) {
                         for (var i = 1; i < sectionId; i++) {
                             if (sectionsRequiringExercise.indexOf(i) !== -1 && !inArray(completedSections, i)) {
-                                alert('Primero completa los ejercicios anteriores antes de pasar a esta parte de la lección.');
+                                if (window.Swal) {
+                                    Swal.fire({
+                                        icon: 'info',
+                                        title: '✨ ¡Un momento, explorador! ',
+                                        text: 'Primero completa los ejercicios anteriores antes de pasar a esta parte de la lección.',
+                                        confirmButtonText: 'Entendido',
+                                        confirmButtonColor: '#0ea5e9'
+                                    });
+                                } else {
+                                    alert('Primero completa los ejercicios anteriores antes de pasar a esta parte de la lección.');
+                                }
                                 return;
                             }
                         }
@@ -1534,7 +1544,17 @@ body {
 
                     // Solo validamos las secciones que tienen reto.
                     if (sectionsRequiringExercise.indexOf(from) !== -1 && !inArray(completedSections, from)) {
-                        alert('Primero completa el ejercicio de esta parte de la lección (usa el botón de Ejecutar o la actividad interactiva).');
+                        if (window.Swal) {
+                            Swal.fire({
+                                icon: 'info',
+                                title: '🧪 Termina tu reto primero',
+                                text: 'Primero completa el ejercicio de esta parte de la lección (usa el botón de Ejecutar o la actividad interactiva).',
+                                confirmButtonText: 'Voy a intentarlo',
+                                confirmButtonColor: '#22c55e'
+                            });
+                        } else {
+                            alert('Primero completa el ejercicio de esta parte de la lección (usa el botón de Ejecutar o la actividad interactiva).');
+                        }
                         return;
                     }
 
@@ -1545,7 +1565,24 @@ body {
             var exitButton = document.getElementById('exit-button');
             if (exitButton) {
                 exitButton.addEventListener('click', function () {
-                    alert('¡Has salido de la lección! (Aquí podrías redirigir a otra página).');
+                    if (window.Swal) {
+                        Swal.fire({
+                            icon: 'question',
+                            title: '¿Salir de la lección?',
+                            text: 'Puedes volver cuando quieras para seguir practicando colores.',
+                            confirmButtonText: 'Salir',
+                            showCancelButton: true,
+                            cancelButtonText: 'Quedarme aquí',
+                            confirmButtonColor: '#ef4444',
+                            cancelButtonColor: '#0ea5e9'
+                        }).then(function(result) {
+                            if (result.isConfirmed) {
+                                window.location.href = '/PanelControlUsuario/modulo2';
+                            }
+                        });
+                    } else {
+                        alert('¡Has salido de la lección! (Aquí podrías redirigir a otra página).');
+                    }
                 });
             }
         }
@@ -1562,5 +1599,9 @@ body {
         });
     })();
 </script>
+
+<!-- SweetAlert2 para alertas lindas y consistentes con la lección 1 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </body>
 </html>

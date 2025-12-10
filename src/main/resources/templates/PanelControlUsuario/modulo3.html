@@ -20,6 +20,9 @@
       <!-- Columna derecha (contenido del curso) -->
       <div class="right-panel">
         <h1>Módulo 3 - JavaScript</h1>
+        <p class="lessons-info" style="margin-top: 8px; margin-bottom: 16px; font-size: 14px; color: var(--text-secondary);">
+          Este módulo tiene <strong>10 lecciones</strong>.
+        </p>
         <p class="subtitulo">
           Plan de Clases Clase Tema Descripción de la clase Actividad en casa
         </p>
@@ -29,7 +32,7 @@
             <h3>Introducción a JavaScript ¿Qué es JavaScript? ¿Para qué sirve? </h3>
             <p>Escribir su primer alert(). Escribir un mensaje de bienvenida</p>
           </div>
-         <a th:href="@{/}" class="card-button">Iniciar</a>
+         <a th:href="@{/}" class="card-button lesson-btn" data-lesson="1">Iniciar</a>
         </div>
 
         <div class="card">
@@ -37,7 +40,7 @@
             <h3>Variables y Tipos de Datos </h3>
             <p>Crear variables con let y const. Tipos: número, texto, booleano. Crear variables de su nombre y edad.</p>
           </div>
-         <a th:href="@{/}" class="card-button">Iniciar</a>
+         <a th:href="@{/}" class="card-button lesson-btn" data-lesson="2">Iniciar</a>
         </div>
 
 
@@ -46,7 +49,7 @@
             <h3>Operadores Matemáticos Sumar, restar, multiplicar y dividir variables </h3>
             <p>Hacer una calculadora simple.</p>
           </div>
-         <a th:href="@{/}" class="card-button">Iniciar</a>
+         <a th:href="@{/}" class="card-button lesson-btn" data-lesson="3">Iniciar</a>
         </div>
 
 
@@ -55,7 +58,7 @@
             <h3>Funciones Básicas Crear funciones que muestren mensajes </h3>
             <p>Hacer una función que salude.</p>
           </div>
-         <a th:href="@{/}" class="card-button">Iniciar</a>
+         <a th:href="@{/}" class="card-button lesson-btn" data-lesson="4">Iniciar</a>
       </div>
 
         <div class="card">
@@ -63,7 +66,7 @@
             <h3>Eventos en HTML onclick, onmouseover, onmouseout</h3>
             <p>Crear un botón que cambie de color.</p>
           </div>
-         <a th:href="@{/}" class="card-button">Iniciar</a>
+         <a th:href="@{/}" class="card-button lesson-btn" data-lesson="5">Iniciar</a>
         </div>
 
         <div class="card">
@@ -71,7 +74,7 @@
             <h3>Condicionales if-else Decisiones en JS</h3>
             <p> Crear una función que pregunte su edad.</p>
           </div>
-         <a th:href="@{/}" class="card-button">Iniciar</a>
+         <a th:href="@{/}" class="card-button lesson-btn" data-lesson="6">Iniciar</a>
          </div>
        
           <div class="card">
@@ -79,7 +82,7 @@
             <h3>Ciclos for y while Repetir acciones</h3>
             <p>Crear una cuenta regresiva</p>
           </div>
-         <a th:href="@{/}" class="card-button">Iniciar</a>
+         <a th:href="@{/}" class="card-button lesson-btn" data-lesson="7">Iniciar</a>
         </div>
 
           <div class="card">
@@ -87,7 +90,7 @@
             <h3> Manipular HTML con JS document.getElementById() y innerHTML.</h3>
             <p>Cambiar el texto de un título al hacer clic</p>
           </div>
-         <a th:href="@{/}" class="card-button">Iniciar</a>
+         <a th:href="@{/}" class="card-button lesson-btn" data-lesson="8">Iniciar</a>
         </div>
 
         <div class="card">
@@ -95,7 +98,7 @@
             <h3>Crear Efectos Visuales Mostrar/ocultar imágenes o texto</h3>
             <p> Crear una imagen que desaparezca al tocarla</p>
           </div>
-         <a th:href="@{/}" class="card-button">Iniciar</a>
+         <a th:href="@{/}" class="card-button lesson-btn" data-lesson="9">Iniciar</a>
         </div>
 
          <div class="card">
@@ -103,8 +106,31 @@
             <h3>Proyecto: Página Interactiva Combinar HTML, CSS y JS en una página.</h3>
             <p> Personalizar con colores y efectos</p>
           </div>
-         <a th:href="@{/}" class="card-button">Iniciar</a>
+         <a th:href="@{/}" class="card-button lesson-btn" data-lesson="10">Iniciar</a>
         </div>
     </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const LESSON_KEY = 'modulo3_maxLesson';
+      const buttons = Array.from(document.querySelectorAll('.lesson-btn'));
+      if (buttons.length === 0) return;
+
+      let maxCompleted = parseInt(localStorage.getItem(LESSON_KEY) || '0', 10);
+      if (isNaN(maxCompleted)) maxCompleted = 0;
+
+      buttons.forEach(btn => {
+        btn.addEventListener('click', function () {
+          const n = parseInt(this.dataset.lesson || '0', 10);
+          if (!n) return;
+          if (n > maxCompleted) {
+            maxCompleted = n;
+            localStorage.setItem(LESSON_KEY, String(maxCompleted));
+          }
+        });
+      });
+    });
+  </script>
   </body>
 </html>
