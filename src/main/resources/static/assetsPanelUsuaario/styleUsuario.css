@@ -67,8 +67,9 @@ body.dark-mode {
 body {
     background: linear-gradient(135deg, var(--bg-body-gradient-start), var(--bg-body-gradient-end));
     color: var(--text-main); /* Texto base usa el color principal del tema (claro/oscuro) */
-    height: 100vh;
-    overflow: hidden;
+    min-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .dashboard-container {
@@ -84,6 +85,25 @@ body {
     flex-direction: column;
     padding: 30px 20px;
     border-right: 1px solid var(--border-light);
+}
+
+/* Botón hamburguesa (solo visible en móvil mediante media query) */
+.mobile-nav-toggle {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    border: none;
+    background: var(--bg-panel);
+    color: var(--text-main);
+    box-shadow: var(--shadow-card);
+    cursor: pointer;
+}
+
+.mobile-nav-toggle i {
+    font-size: 18px;
 }
 
 .logo-container {
@@ -793,4 +813,40 @@ button {
     color: var(--text-secondary);
     font-size: 14px;
     margin-top: 8px;
+}
+
+/* --- RESPONSIVE PANEL USUARIO (MÓVIL) --- */
+@media (max-width: 900px) {
+    .dashboard-container {
+        position: relative;
+        height: auto;
+        min-height: 100vh;
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 1000;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        box-shadow: 0 10px 30px rgba(15,23,42,0.35);
+    }
+
+    .sidebar.sidebar--open {
+        transform: translateX(0);
+    }
+
+    .main-content {
+        padding: 20px 16px;
+    }
+
+    .top-header {
+        gap: 12px;
+    }
+
+    .mobile-nav-toggle {
+        display: inline-flex;
+    }
 }
