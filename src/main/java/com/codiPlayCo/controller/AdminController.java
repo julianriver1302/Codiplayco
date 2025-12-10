@@ -39,50 +39,51 @@ public class AdminController {
 	@GetMapping("/PanelCodiplay")
 	public String panelPrincipal(Model model) {
 		try {
-			// Método más directo: contar todos los usuarios y restar ADMIN y DOCENTE
-			List<Usuario> todosUsuarios = usuarioServiceImplement.findAll();
-			long totalUsuarios = todosUsuarios.size();
+			// Contar todos los estudiantes registrados (con rol USUARIO o rol ID = 3)
+			// Intentar primero con el método findByRol que usa JOIN
+			List<Usuario> estudiantesPorNombre = usuarioServiceImplement.findByRol("USUARIO");
 			
-			// Contar ADMIN
-			List<Usuario> admins = usuarioServiceImplement.findByRol("ADMIN");
-			long totalAdmins = admins.size();
-			
-			// Contar DOCENTE
-			List<Usuario> docentes = usuarioServiceImplement.findByRol("DOCENTE");
-			long totalDocentes = docentes.size();
-			
-			// Los estudiantes son el resto
-			long totalEstudiantes = totalUsuarios - totalAdmins - totalDocentes;
-			
-			// Logging para debug
-			System.out.println("=== CONTEO DE ESTUDIANTES ===");
-			System.out.println("Total usuarios: " + totalUsuarios);
-			System.out.println("Total ADMIN: " + totalAdmins);
-			System.out.println("Total DOCENTE: " + totalDocentes);
-			System.out.println("Total ESTUDIANTES (USUARIO): " + totalEstudiantes);
-			
-			// Si el resultado es 0 o negativo, intentar método alternativo
-			if (totalEstudiantes <= 0) {
-				System.out.println("Intentando método alternativo...");
-				// Buscar directamente por nombre USUARIO
-				List<Usuario> estudiantesDirecto = usuarioServiceImplement.findByRol("USUARIO");
-				if (!estudiantesDirecto.isEmpty()) {
-					totalEstudiantes = estudiantesDirecto.size();
-					System.out.println("Encontrados por método directo: " + totalEstudiantes);
-				} else {
-					// Último recurso: contar por ID del rol = 3
-					totalEstudiantes = todosUsuarios.stream()
-						.filter(u -> u.getRol() != null && u.getRol().getId() != null && u.getRol().getId().equals(3))
-						.count();
-					System.out.println("Encontrados por ID de rol (3): " + totalEstudiantes);
-				}
+			// Si no encuentra por nombre "USUARIO", intentar con "ESTUDIANTE"
+			if (estudiantesPorNombre.isEmpty()) {
+				estudiantesPorNombre = usuarioServiceImplement.findByRol("ESTUDIANTE");
 			}
 			
+			// Si aún no encuentra, usar método alternativo filtrando por ID de rol
+			long totalEstudiantes = estudiantesPorNombre.size();
+			
+			if (totalEstudiantes == 0) {
+				// Método alternativo: filtrar todos los usuarios por rol ID = 3
+				List<Usuario> todosUsuarios = usuarioServiceImplement.findAll();
+				totalEstudiantes = todosUsuarios.stream()
+					.filter(u -> u.getRol() != null && u.getRol().getId() != null && u.getRol().getId().equals(3))
+					.count();
+			}
+			
+			// Contar cursos activos
+			List<Curso> cursosActivos = cursoServiceImplement.findCursosActivos();
+			long totalCursosActivos = cursosActivos.size();
+			
+			// Contar docentes activos
+			List<Usuario> docentesActivos = usuarioServiceImplement.findDocentesActivos();
+			long totalDocentesActivos = docentesActivos.size();
+			
+			// Logging para debug
+			System.out.println("=== CONTEO DE ESTUDIANTES REGISTRADOS ===");
+			System.out.println("Total estudiantes encontrados: " + totalEstudiantes);
+			System.out.println("=== CONTEO DE CURSOS ACTIVOS ===");
+			System.out.println("Total cursos activos encontrados: " + totalCursosActivos);
+			System.out.println("=== CONTEO DE DOCENTES ACTIVOS ===");
+			System.out.println("Total docentes activos encontrados: " + totalDocentesActivos);
+			
 			model.addAttribute("totalEstudiantes", totalEstudiantes);
+			model.addAttribute("totalCursosActivos", totalCursosActivos);
+			model.addAttribute("totalDocentesActivos", totalDocentesActivos);
 		} catch (Exception e) {
-			System.err.println("Error al contar estudiantes: " + e.getMessage());
+			System.err.println("Error al contar estudiantes, cursos o docentes: " + e.getMessage());
 			e.printStackTrace();
 			model.addAttribute("totalEstudiantes", 0);
+			model.addAttribute("totalCursosActivos", 0);
+			model.addAttribute("totalDocentesActivos", 0);
 		}
 		return "Admin/PanelCodiplay";
 	}
