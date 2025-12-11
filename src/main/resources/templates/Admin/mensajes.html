@@ -95,8 +95,9 @@
               <p>Administrador</p>
             </div>
             <i class="fas fa-chevron-down user-profile-arrow"></i>
-            <div class="user-submenu" id="userProfileMenu">
-              <a th:href="@{/logout}" class="submenu-item">
+            <!-- Menú desplegable -->
+            <div class="user-profile-menu" id="userProfileMenu">
+              <a th:href="@{/logout}" class="user-menu-item">
                 <i class="fas fa-sign-out-alt"></i>
                 <span>Cerrar Sesión</span>
               </a>
@@ -428,54 +429,134 @@
         return false;
       }
     });
+  </script>
 
-    // Toggle theme switch
-    const themeSwitch = document.getElementById('theme-switch');
-    const switchLabel = document.querySelector('.switch');
-    
-    // Aplicar tema guardado
-    (function() {
-      const theme = localStorage.getItem('theme');
-      if (theme === 'dark-mode') {
-        document.body.classList.add('dark-mode');
-        if (themeSwitch) themeSwitch.checked = true;
-        if (switchLabel) switchLabel.setAttribute('aria-checked', 'true');
-      }
-    })();
-    
-    if (themeSwitch) {
-      themeSwitch.addEventListener('change', function() {
-        const isDark = this.checked;
-        if (isDark) {
-          document.body.classList.add('dark-mode');
-          localStorage.setItem('theme', 'dark-mode');
-        } else {
-          document.body.classList.remove('dark-mode');
-          localStorage.setItem('theme', 'light-mode');
-        }
-        if (switchLabel) {
-          switchLabel.setAttribute('aria-checked', isDark ? 'true' : 'false');
-        }
-      });
-    }
-
-    // User profile menu toggle
-    const userProfileBtn = document.getElementById('userProfileBtn');
-    const userProfileMenu = document.getElementById('userProfileMenu');
-    
-    if (userProfileBtn && userProfileMenu) {
-      userProfileBtn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        userProfileMenu.classList.toggle('show');
+  <script>
+    // Set active nav tab and handle theme/profile like PanelCodiplay
+    document.addEventListener('DOMContentLoaded', function() {
+      const currentPath = window.location.pathname;
+      
+      // Remover la clase active de todos los tabs
+      document.querySelectorAll('.nav-tab').forEach(link => {
+        link.classList.remove('active');
       });
       
-      document.addEventListener('click', function(e) {
-        if (!userProfileBtn.contains(e.target) && !userProfileMenu.contains(e.target)) {
-          userProfileMenu.classList.remove('show');
+      // Mapeo de rutas relacionadas a sus secciones principales
+      const routeMapping = {
+        'editar_usuario': '/PanelCodiplay/Admin/editar_usuarios',
+        'editar_usuarios': '/PanelCodiplay/Admin/editar_usuarios',
+        'registrar_docentes': '/PanelCodiplay/Admin/registrar_docentes',
+        'listar_cursos': '/PanelCodiplay/Admin/listar_cursos',
+        'editar_curso': '/PanelCodiplay/Admin/listar_cursos',
+        'crear_curso': '/PanelCodiplay/Admin/listar_cursos',
+        'proceso_estudiantes': '/PanelCodiplay/Admin/proceso_estudiantes',
+        'progreso_por_curso': '/PanelCodiplay/Admin/proceso_estudiantes',
+        'crear_curso': '/PanelCodiplay/Admin/proceso_estudiantes',
+        'listar_cursos': '/PanelCodiplay/Admin/proceso_estudiantes',
+        'editar_curso': '/PanelCodiplay/Admin/proceso_estudiantes'
+      };
+      
+      // Determinar la ruta objetivo basada en el path actual
+      let targetRoute = currentPath;
+      
+      // Buscar si el path actual contiene alguna de las rutas mapeadas
+      for (const [key, route] of Object.entries(routeMapping)) {
+        if (currentPath.includes(key)) {
+          targetRoute = route;
+          break;
+        }
+      }
+      
+      // Si estamos en el dashboard exacto, mantenerlo
+      if (currentPath === '/PanelCodiplay' || currentPath === '/PanelCodiplay/') {
+        targetRoute = '/PanelCodiplay';
+      }
+      
+      // Encontrar la mejor coincidencia
+      let bestMatch = null;
+      let bestMatchLength = 0;
+      
+      document.querySelectorAll('.nav-tab').forEach(link => {
+        const href = link.getAttribute('href');
+        if (href) {
+          // Coincidencia exacta tiene prioridad máxima
+          if (targetRoute === href || currentPath === href) {
+            bestMatch = link;
+            bestMatchLength = Infinity;
+          }
+          // Si no hay coincidencia exacta, buscar includes pero priorizar las más largas
+          else if (targetRoute.includes(href) && href.length > bestMatchLength) {
+            bestMatch = link;
+            bestMatchLength = href.length;
+          }
         }
       });
-    }
+      
+      // Aplicar active solo al mejor match
+      if (bestMatch) {
+        bestMatch.classList.add('active');
+      }
+
+      // Theme switch functionality (igual que PanelCodiplay)
+      const themeSwitch = document.getElementById('theme-switch');
+      const body = document.body;
+      const switchLabel = document.querySelector('.switch');
+
+      // Cargar preferencia guardada
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'light') {
+        body.classList.add('light-theme');
+        if (themeSwitch) themeSwitch.checked = true;
+        if (switchLabel) switchLabel.setAttribute('aria-checked', 'true');
+      } else {
+        body.classList.remove('light-theme');
+        if (themeSwitch) themeSwitch.checked = false;
+        if (switchLabel) switchLabel.setAttribute('aria-checked', 'false');
+      }
+
+      // Manejar cambios del switch
+      if (themeSwitch) {
+        themeSwitch.addEventListener('change', function() {
+          if (this.checked) {
+            body.classList.add('light-theme');
+            localStorage.setItem('theme', 'light');
+            if (switchLabel) switchLabel.setAttribute('aria-checked', 'true');
+          } else {
+            body.classList.remove('light-theme');
+            localStorage.setItem('theme', 'dark');
+            if (switchLabel) switchLabel.setAttribute('aria-checked', 'false');
+          }
+        });
+      }
+
+      // User Profile Menu Toggle (igual que PanelCodiplay)
+      const userProfileBtn = document.getElementById('userProfileBtn');
+      const userProfileMenu = document.getElementById('userProfileMenu');
+      
+      if (userProfileBtn && userProfileMenu) {
+        userProfileBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          userProfileBtn.classList.toggle('active');
+        });
+
+        // Cerrar el menú al hacer clic fuera
+        document.addEventListener('click', function(e) {
+          if (!userProfileBtn.contains(e.target)) {
+            userProfileBtn.classList.remove('active');
+          }
+        });
+
+        // Cerrar el menú al hacer clic en un item del menú
+        const menuItems = userProfileMenu.querySelectorAll('.user-menu-item');
+        menuItems.forEach(item => {
+          item.addEventListener('click', function() {
+            userProfileBtn.classList.remove('active');
+          });
+        });
+      }
+    });
   </script>
+  <script th:src="@{/assets/loader.js}"></script>
 </body>
 </html>
 

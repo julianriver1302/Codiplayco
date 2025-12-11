@@ -14,6 +14,7 @@ import com.codiPlayCo.service.AsignacionDocenteServiceImplement;
 import com.codiPlayCo.service.CursoServiceImplement;
 import com.codiPlayCo.service.UsuarioServiceImplement;
 import com.codiPlayCo.service.RolService;
+import com.codiPlayCo.service.EmailService;
 import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
@@ -27,6 +28,9 @@ public class AdminController {
 	private final UsuarioServiceImplement usuarioServiceImplement;
 	private final RolService rolService;
 	private final IRolRepository iRolRepository;
+	
+	@Autowired
+	private EmailService emailService;
 
 	public AdminController(CursoServiceImplement cursoServiceImplement, UsuarioServiceImplement usuarioServiceImplement,
 			RolService rolService, IRolRepository rolRepository) {
@@ -538,5 +542,36 @@ public class AdminController {
 		return "Admin/mensajes";
 	}
 	
+	@PostMapping("/Admin/enviar-mensaje")
+	public String enviarMensaje(@RequestParam("correos") String correos,
+			@RequestParam("mensaje") String mensaje,
+			RedirectAttributes redirectAttributes) {
+		try {
+			if (correos == null || correos.trim().isEmpty()) {
+				redirectAttributes.addFlashAttribute("error", "Debes agregar al menos un correo electrónico.");
+				return "redirect:/PanelCodiplay/Admin/proceso_estudiantes";
+			}
+			if (mensaje == null || mensaje.trim().isEmpty()) {
+				redirectAttributes.addFlashAttribute("error", "El mensaje no puede estar vacío.");
+				return "redirect:/PanelCodiplay/Admin/proceso_estudiantes";
+			}
+			
+			String[] listaCorreos = correos.split(",");
+			String asunto = "Mensaje de CodiPlayCo";
+			
+			for (String correo : listaCorreos) {
+				String correoLimpio = correo.trim();
+				if (!correoLimpio.isEmpty()) {
+					emailService.enviarCorreo(correoLimpio, asunto, mensaje);
+				}
+			}
+			
+			redirectAttributes.addFlashAttribute("success", "Mensaje enviado correctamente a los usuarios seleccionados.");
+		} catch (Exception e) {
+			redirectAttributes.addFlashAttribute("error", "Ocurrió un error al enviar los mensajes.");
+		}
+		
+		return "redirect:/PanelCodiplay/Admin/proceso_estudiantes";
+	}
 	
 }

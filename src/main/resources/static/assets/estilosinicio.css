@@ -116,7 +116,7 @@ body::before {
     color: #fff;
     font-weight: 600;
     font-size: 0.95rem;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    text-shadow: 1px 1px 6px #000a;
 }
 
 .input-mail:focus::placeholder, .input-pwd:focus::placeholder {
@@ -295,8 +295,23 @@ body::before {
         max-width: 95%;
         margin: 0 auto;
     }
-}
 
+    /* Ajustes específicos para la página de login en móvil */
+    .page-login .logo-corner {
+        top: 0.75rem !important;
+        left: 50% !important;
+        transform: translateX(-50%);
+    }
+
+    .page-login .logo-corner img.logo-animate {
+        height: 6rem;
+    }
+
+    .page-login .main-center-absolute .form {
+        /* bajar un poco el formulario para dejar espacio al logo */
+        top: 55%;
+    }
+}
 @media (max-width: 480px) {
     .input-container input {
         padding: 0.8rem 0.9rem;

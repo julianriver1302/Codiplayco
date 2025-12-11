@@ -90,7 +90,32 @@
 		</main>
 	</div>
 
-	<script th:src="@{assets/script.js}"></script>
+	<script>
+		// Inicializar menú hamburguesa directamente en esta página
+		document.addEventListener('DOMContentLoaded', function () {
+			const navToggle = document.getElementById('nav-toggle');
+			const mobileMenu = document.getElementById('mobile-menu');
+
+			if (!navToggle || !mobileMenu) {
+				return;
+			}
+
+			navToggle.addEventListener('click', () => {
+				navToggle.classList.toggle('active');
+				mobileMenu.classList.toggle('active');
+				// Bloquear scroll cuando el menú está abierto
+				document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : 'auto';
+			});
+
+			mobileMenu.addEventListener('click', (e) => {
+				if (e.target.closest('.nav-link-glass')) {
+					navToggle.classList.remove('active');
+					mobileMenu.classList.remove('active');
+					document.body.style.overflow = 'auto';
+				}
+			});
+		});
+	</script>
 
 </body>
 

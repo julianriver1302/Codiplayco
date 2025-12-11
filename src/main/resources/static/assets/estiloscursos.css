@@ -501,26 +501,43 @@ body::before {
   margin-bottom: 3rem;
 } 
 .content-title {
-  color: #fff;
-  font-weight: 700;
-  display: block;
-  margin-bottom: 0.5em;
+color: #fff;
+font-weight: 700;
+display: block;
+margin-bottom: 0.5em;
 }
 .dificultad {
-  margin-top: 10px !important;
-  font-weight: bold !important;
-  color: #fff !important;
+margin-top: 10px !important;
+font-weight: bold !important;
+color: #fff !important;
 }
 .estrellas {
-  font-size: 1.2em !important;
-  display: inline-block !important;
-  vertical-align: middle !important;
+font-size: 1.2em !important;
+display: inline-block !important;
+vertical-align: middle !important;
+}
+.estrella {
+display: inline-block;
+margin-right: 2px;
+transition: transform 0.2s ease, text-shadow 0.2s ease, color 0.2s ease;
+}
+.estrella-filled {
+color: #facc15; /* amarillo dorado */
+text-shadow: 0 0 6px rgba(250, 204, 21, 0.7), 0 0 14px rgba(250, 204, 21, 0.4);
+}
+.estrella-empty {
+color: #4b5563; /* gris azulado */
+opacity: 0.5;
+}
+.estrellas .estrella-filled:hover {
+transform: scale(1.1) translateY(-1px);
+text-shadow: 0 0 10px rgba(250, 204, 21, 1), 0 0 20px rgba(250, 204, 21, 0.8);
 }
 .botones {
-  display: flex !important;
-  gap: 12px !important;
-  justify-content: center !important;
-  margin-top: 12px !important;
+display: flex !important;
+gap: 12px !important;
+justify-content: center !important;
+margin-top: 12px !important;
 }
 @media (max-width: 700px) {
   .slider {

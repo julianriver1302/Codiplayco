@@ -68,7 +68,11 @@
 						<span class="content-title" th:text="${curso.dirigido}">Descripción curso</span>
 						<div class="dificultad">
 							Dificultad:<br>
-							<span class="estrellas" th:text="${curso.dificultad}">⭐⭐⭐</span>
+							<span class="estrellas">
+								<span th:each="i : ${#numbers.sequence(1,5)}"
+								      th:text="${(i <= (curso.dificultad != null ? curso.dificultad : 0))} ? '★' : '☆'"
+								      th:class="${(i <= (curso.dificultad != null ? curso.dificultad : 0))} ? 'estrella estrella-filled' : 'estrella estrella-empty'">★</span>
+							</span>
 						</div>
 						<span class="content-title"
 							th:text="${#strings.concat('$', #numbers.formatDecimal(curso.precio, 0, 'POINT', 0, 'POINT'))}">Precio
