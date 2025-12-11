@@ -281,13 +281,35 @@
 
 /* ====== ESTANDARIZACIÓN DE INPUT-CONTAINER PARA FORMULARIOS PRINCIPALES ====== */
 
+.input-container.submit {
+	position: relative;
+	display: block;
+	padding: 18px 32px;
+	background: linear-gradient(135deg, #00d4ff 0%, #00ff88 50%, #00d4ff 100%);
+	background-size: 200% 200%;
+	color: #000;
+	text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+	font-size: 1.4rem;
+	font-weight: 900;
+	letter-spacing: 0.08em;
+	line-height: 1.4rem;
+	width: 100%;
+	max-width: 800px;
+	text-transform: uppercase;
+	overflow: hidden;
+	border-radius: 50px;
+	box-shadow: 0 4px 20px rgba(0, 212, 255, 0.4), 0 0 40px rgba(0, 255, 136, 0.2);
+	border: 3px solid rgba(255, 255, 255, 0.8);
+	transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	animation: gradientShift 3s ease infinite;
+	margin: 20px auto 0;
+}
+
 .input-container {
 
 	position: relative;
 
 	margin-bottom: 1.5rem;
-
-	width: 100%;
 
 }
 
@@ -301,13 +323,13 @@
 
 	width: 100%;
 
-	max-width: 400px;
+	max-width: 100%;
 
-	padding: 1rem 1.2rem;
+	padding: 1.2rem 1.5rem;
 
-	font-size: 1rem;
+	font-size: 1.1rem;
 
-	line-height: 1.5rem;
+	line-height: 1.6rem;
 
 	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.08);
 
@@ -325,86 +347,90 @@
 
 	border-color: #00d4ff;
 
-	box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
+			box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
 
-	transform: translateY(-1px);
+			transform: translateY(-1px);
 
-}
+		}
 
-.input-container label {
+		.input-container label {
 
-	display: block;
+			display: block;
 
-	margin-bottom: 0.5rem;
+			margin-bottom: 0.5rem;
 
-	color: #fff;
+			color: #fff;
 
-	font-weight: 600;
+			font-weight: 600;
 
-	font-size: 0.95rem;
+			font-size: 1.05rem;
 
-	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+			text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 
-}
+		}
 
-/* Responsive design para formularios */
+		/* Responsive design para formularios */
 
-@media (max-width: 768px) {
+		@media (max-width: 768px) {
 
-	.input-container input {
+			.form {
 
-		max-width: 100%;
+				padding: 1.5rem;
 
-		width: 100%;
+				max-width: 95%;
 
-		padding: 0.9rem 1rem;
+				margin: 0 auto;
 
-		font-size: 0.95rem;
+			}
 
-	}
+			#form-registro {
 
-	.form {
+				grid-template-columns: 1fr;
 
-		padding: 1.5rem;
+				gap: 1rem;
 
-		max-width: 95%;
+			}
 
-		margin: 0 auto;
+			.input-container input {
 
-	}
+				padding: 0.9rem 1rem;
 
-	#modal-metodo-pago .modal {
+				font-size: 0.95rem;
 
-		max-width: 98vw;
+			}
 
-		padding: 18px 4vw 18px 4vw;
+		}
 
-	}
+		@media (max-width: 480px) {
+			.input-container input {
+				padding: 0.8rem 0.9rem;
+				font-size: 0.9rem;
+			}
 
-}
+			.form {
+				padding: 1rem;
+				max-width: 100%;
 
-@media (max-width: 480px) {
+			}
 
-	.input-container input {
+		}
 
-		padding: 0.8rem 0.9rem;
+		/* ====== FIN ESTILOS ORIGINALES DEL MODAL DE MÉTODO DE PAGO ====== */
 
-		font-size: 0.9rem;
 
-	}
+		/* Fondo borroso al abrir */
 
-	.form {
+		.modal-overlay {
 
-		padding: 1rem;
+			position: fixed;
 
-		max-width: 100%;
+			top: 0;
 
-	}
+			left: 0;
 
-}
+			width: 100%;
 
-/* ====== FIN ESTILOS ORIGINALES DEL MODAL DE MÉTODO DE PAGO ====== */
-
+			height: 100%;
 
 /* Fondo borroso al abrir */
 
@@ -575,21 +601,6 @@
 
 
 .pay-btn:hover {
-
 	transform: scale(1.05);
-
 	box-shadow: 0px 0px 25px #00eaff;
-
-}
-
-
-
-.error-text {
-
-	color: #ff4d4d;
-
-	margin-top: 10px;
-
-	text-align: center;
-
 }
