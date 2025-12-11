@@ -53,126 +53,285 @@
        
     </div>
         <main class="container mx-auto px-6 py-8">
-            <div class="faq-hero">
-                <div class="relative z-10">
-                    <span class="material-icons card-icon">help</span>
-                    <h1 class="text-4xl md:text-5xl font-bold mb-4" style="color:#111">Preguntas Frecuentes</h1>
-                    <p class="text-xl mb-6 opacity-90" style="color:#222">Resuelve todas tus dudas sobre CodiPlayCo</p>
+            <div class="faq-grid">
+                <!-- Tarjeta 1 -->
+                <div class="faq-card" data-category="general">
+                    <div class="faq-card-inner">
+                        <div class="faq-card-front">
+                            <div class="faq-icon-wrapper">
+                                <span class="material-icons faq-card-icon">question_answer</span>
+                                <div class="icon-glow"></div>
+                            </div>
+                            <h3 class="faq-card-title">¿Qué es CodiPlay?</h3>
+                            <p class="faq-card-preview">Plataforma interactiva para niños...</p>
+                            <div class="faq-card-hover">
+                                <span class="material-icons">expand_more</span>
+                            </div>
+                        </div>
+                        <div class="faq-card-back">
+                            <div class="faq-back-content">
+                                <p>CodiPlay es una plataforma interactiva diseñada para que niños y niñas entre 7 y 12 años aprendan a programar de manera divertida, a través de juegos, retos, cursos interactivos y actividades guiadas.</p>
+                                <button class="faq-back-btn" onclick="this.closest('.faq-card').classList.toggle('flipped')">
+                                    <span class="material-icons">close</span>
+                                    Cerrar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 2 -->
+                <div class="faq-card" data-category="courses">
+                    <div class="faq-card-inner">
+                        <div class="faq-card-front">
+                            <div class="faq-icon-wrapper">
+                                <span class="material-icons faq-card-icon">school</span>
+                                <div class="icon-glow"></div>
+                            </div>
+                            <h3 class="faq-card-title">¿Qué cursos ofrecen?</h3>
+                            <p class="faq-card-preview">HTML, CSS, JavaScript y más...</p>
+                            <div class="faq-card-hover">
+                                <span class="material-icons">expand_more</span>
+                            </div>
+                        </div>
+                        <div class="faq-card-back">
+                            <div class="faq-back-content">
+                                <ul class="feature-list-modern">
+                                    <li><span class="material-icons">code</span>Introducción a HTML, CSS y JAVASCRIPT</li>
+                                    <li><span class="material-icons">emoji_events</span>Retos mensuales de programación</li>
+                                    <li><span class="material-icons">games</span>Scratch para principiantes</li>
+                                </ul>
+                                <button class="faq-back-btn" onclick="this.closest('.faq-card').classList.toggle('flipped')">
+                                    <span class="material-icons">close</span>
+                                    Cerrar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 3 -->
+                <div class="faq-card" data-category="platform">
+                    <div class="faq-card-inner">
+                        <div class="faq-card-front">
+                            <div class="faq-icon-wrapper">
+                                <span class="material-icons faq-card-icon">devices</span>
+                                <div class="icon-glow"></div>
+                            </div>
+                            <h3 class="faq-card-title">¿Cómo funciona la plataforma?</h3>
+                            <p class="faq-card-preview">Acceso desde cualquier dispositivo...</p>
+                            <div class="faq-card-hover">
+                                <span class="material-icons">expand_more</span>
+                            </div>
+                        </div>
+                        <div class="faq-card-back">
+                            <div class="faq-back-content">
+                                <p>Los niños acceden a su cuenta desde cualquier dispositivo con internet. Pueden avanzar en los cursos a su ritmo, resolver retos y acumular logros. Cuentan con una clase semanal para explicación del tema. Los padres o docentes pueden hacer seguimiento del progreso desde su panel de control.</p>
+                                <button class="faq-back-btn" onclick="this.closest('.faq-card').classList.toggle('flipped')">
+                                    <span class="material-icons">close</span>
+                                    Cerrar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 4 -->
+                <div class="faq-card" data-category="requirements">
+                    <div class="faq-card-inner">
+                        <div class="faq-card-front">
+                            <div class="faq-icon-wrapper">
+                                <span class="material-icons faq-card-icon">emoji_people</span>
+                                <div class="icon-glow"></div>
+                            </div>
+                            <h3 class="faq-card-title">¿Necesito conocimientos previos?</h3>
+                            <p class="faq-card-preview">No, es para principiantes...</p>
+                            <div class="faq-card-hover">
+                                <span class="material-icons">expand_more</span>
+                            </div>
+                        </div>
+                        <div class="faq-card-back">
+                            <div class="faq-back-content">
+                                <p>No. Nuestros cursos están pensados para niños sin experiencia previa en programación, con guías interactivas paso a paso y actividades didácticas.</p>
+                                <button class="faq-back-btn" onclick="this.closest('.faq-card').classList.toggle('flipped')">
+                                    <span class="material-icons">close</span>
+                                    Cerrar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 5 -->
+                <div class="faq-card" data-category="pricing">
+                    <div class="faq-card-inner">
+                        <div class="faq-card-front">
+                            <div class="faq-icon-wrapper">
+                                <span class="material-icons faq-card-icon">attach_money</span>
+                                <div class="icon-glow"></div>
+                            </div>
+                            <h3 class="faq-card-title">¿Cuánto cuesta CodiPlay?</h3>
+                            <p class="faq-card-preview">Planes accesibles para todos...</p>
+                            <div class="faq-card-hover">
+                                <span class="material-icons">expand_more</span>
+                            </div>
+                        </div>
+                        <div class="faq-card-back">
+                            <div class="faq-back-content">
+                                <p>Ofrecemos una clase gratuita con acceso a nuestra plataforma para que tanto niños como adultos prueben nuestro sistema de aprendizaje, y un plan premium desde $39.900 COP mensual, dependiendo del curso con acceso total a todos nuestros retos, insignias y torneos.</p>
+                                <button class="faq-back-btn" onclick="this.closest('.faq-card').classList.toggle('flipped')">
+                                    <span class="material-icons">close</span>
+                                    Cerrar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 6 -->
+                <div class="faq-card" data-category="payment">
+                    <div class="faq-card-inner">
+                        <div class="faq-card-front">
+                            <div class="faq-icon-wrapper">
+                                <span class="material-icons faq-card-icon">credit_card</span>
+                                <div class="icon-glow"></div>
+                            </div>
+                            <h3 class="faq-card-title">¿Qué métodos de pago aceptan?</h3>
+                            <p class="faq-card-preview">Múltiples opciones de pago...</p>
+                            <div class="faq-card-hover">
+                                <span class="material-icons">expand_more</span>
+                            </div>
+                        </div>
+                        <div class="faq-card-back">
+                            <div class="faq-back-content">
+                                <ul class="feature-list-modern">
+                                    <li><span class="material-icons">credit_card</span>Tarjeta de crédito o débito</li>
+                                    <li><span class="material-icons">phone_android</span>Nequi y Daviplata</li>
+                                    <li><span class="material-icons">account_balance</span>Transferencia bancaria</li>
+                                </ul>
+                                <button class="faq-back-btn" onclick="this.closest('.faq-card').classList.toggle('flipped')">
+                                    <span class="material-icons">close</span>
+                                    Cerrar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 7 -->
+                <div class="faq-card" data-category="safety">
+                    <div class="faq-card-inner">
+                        <div class="faq-card-front">
+                            <div class="faq-icon-wrapper">
+                                <span class="material-icons faq-card-icon">security</span>
+                                <div class="icon-glow"></div>
+                            </div>
+                            <h3 class="faq-card-title">¿Es seguro para los niños?</h3>
+                            <p class="faq-card-preview">Protección y supervisión garantizada...</p>
+                            <div class="faq-card-hover">
+                                <span class="material-icons">expand_more</span>
+                            </div>
+                        </div>
+                        <div class="faq-card-back">
+                            <div class="faq-back-content">
+                                <p>Sí. CodiPlay cuenta con medidas de seguridad para proteger la información de los niños y supervisión de foros y retos. Cumplimos con las normativas de protección de datos para menores en Colombia.</p>
+                                <button class="faq-back-btn" onclick="this.closest('.faq-card').classList.toggle('flipped')">
+                                    <span class="material-icons">close</span>
+                                    Cerrar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 8 -->
+                <div class="faq-card" data-category="devices">
+                    <div class="faq-card-inner">
+                        <div class="faq-card-front">
+                            <div class="faq-icon-wrapper">
+                                <span class="material-icons faq-card-icon">tablet_mac</span>
+                                <div class="icon-glow"></div>
+                            </div>
+                            <h3 class="faq-card-title">¿Desde qué dispositivos se puede acceder?</h3>
+                            <p class="faq-card-preview">Múltiples dispositivos compatibles...</p>
+                            <div class="faq-card-hover">
+                                <span class="material-icons">expand_more</span>
+                            </div>
+                        </div>
+                        <div class="faq-card-back">
+                            <div class="faq-back-content">
+                                <ul class="feature-list-modern">
+                                    <li><span class="material-icons">computer</span>Computadoras de escritorio o portátiles</li>
+                                    <li><span class="material-icons">smartphone</span>Teléfonos Android y iPhone</li>
+                                    <li><span class="material-icons">tablet</span>Tablets con navegador actualizado</li>
+                                </ul>
+                                <button class="faq-back-btn" onclick="this.closest('.faq-card').classList.toggle('flipped')">
+                                    <span class="material-icons">close</span>
+                                    Cerrar
+                                </button>
+                <!-- Tarjeta 9 -->
+                <div class="faq-card" data-category="support">
+                    <div class="faq-card-inner">
+                        <div class="faq-card-front">
+                            <div class="faq-icon-wrapper">
+                                <span class="material-icons faq-card-icon">support_agent</span>
+                                <div class="icon-glow"></div>
+                            </div>
+                            <h3 class="faq-card-title">¿Hay soporte técnico o ayuda disponible?</h3>
+                            <p class="faq-card-preview">Vías de contacto y horarios de atención...</p>
+                            <div class="faq-card-hover">
+                                <span class="material-icons">expand_more</span>
+                            </div>
+                        </div>
+                        <div class="faq-card-back">
+                            <div class="faq-back-content">
+                                <p>Sí, ofrecemos múltiples canales de comunicación para ayudarte con cualquier duda o problema técnico:</p>
+                                <ul class="feature-list-modern">
+                                    <li><span class="material-icons">email</span>Correo electrónico: soporte@codiplay.co</li>
+                                    <li><span class="material-icons">phone</span>WhatsApp oficial: +57 315 000 0000</li>
+                                </ul>
+                                <p class="support-hours">Horario de atención: lunes a sábado de 8:00 a.m. a 7:00 p.m.</p>
+                                <button class="faq-back-btn" onclick="this.closest('.faq-card').classList.toggle('flipped')">
+                                    <span class="material-icons">close</span>
+                                    Cerrar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 10 -->
+                <div class="faq-card" data-category="institutions">
+                    <div class="faq-card-inner">
+                        <div class="faq-card-front">
+                            <div class="faq-icon-wrapper">
+                                <span class="material-icons faq-card-icon">groups</span>
+                                <div class="icon-glow"></div>
+                            </div>
+                            <h3 class="faq-card-title">¿Cómo puedo inscribir a mi colegio?</h3>
+                            <p class="faq-card-preview">Planes institucionales personalizados...</p>
+                            <div class="faq-card-hover">
+                                <span class="material-icons">expand_more</span>
+                            </div>
+                        </div>
+                        <div class="faq-card-back">
+                            <div class="faq-back-content">
+                                <p>Contáctanos a través del correo alianzas@codiplay.co y uno de nuestros asesores se comunicará contigo para ofrecerte un plan institucional personalizado.</p>
+                                <button class="faq-back-btn" onclick="this.closest('.faq-card').classList.toggle('flipped')">
+                                    <span class="material-icons">close</span>
+                                    Cerrar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="faq-list">
-                <!-- Ejemplo de bloque FAQ -->
-                <div class="faq-item">
-                    <button class="faq-question" aria-expanded="false">
-                        <span class="material-icons faq-icon">question_answer</span>
-                        ¿Qué es CodiPlay?
-                    </button>
-                    <div class="faq-answer">
-                        <p>CodiPlay es una plataforma interactiva diseñada para que niños y niñas entre 7 y 12 años aprendan a programar de manera divertida, a través de juegos, retos, cursos interactivos y actividades guiadas.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-question" aria-expanded="false">
-                        <span class="material-icons faq-icon">school</span>
-                        ¿Qué cursos ofrecen?
-                    </button>
-                    <div class="faq-answer">
-                        <ul class="feature-list">
-                            <li>Introducción a HTML, CSS y JAVASCRIPT: Aprende a construir páginas web sencillas y juegos en línea.</li>
-                            <li>Retos mensuales de programación: Actividades interactivas para ganar medallas y recompensas.</li>
-                            <li>Scratch para principiantes: Crea videojuegos y animaciones.</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-question" aria-expanded="false">
-                        <span class="material-icons faq-icon">devices</span>
-                        ¿Cómo funciona la plataforma?
-                    </button>
-                    <div class="faq-answer">
-                        <p>Los niños acceden a su cuenta desde cualquier dispositivo con internet. Pueden avanzar en los cursos a su ritmo, resolver retos y acumular logros. Cuentan con una clase semanal para explicación del tema. Los padres o docentes pueden hacer seguimiento del progreso desde su panel de control.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-question" aria-expanded="false">
-                        <span class="material-icons faq-icon">emoji_people</span>
-                        ¿Necesito conocimientos previos para usar CodiPlay?
-                    </button>
-                    <div class="faq-answer">
-                        <p>No. Nuestros cursos están pensados para niños sin experiencia previa en programación, con guías interactivas paso a paso y actividades didácticas.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-question" aria-expanded="false">
-                        <span class="material-icons faq-icon">attach_money</span>
-                        ¿Cuánto cuesta CodiPlay?
-                    </button>
-                    <div class="faq-answer">
-                        <p>Ofrecemos una clase gratuita con acceso a nuestra plataforma para que tanto niños como adultos prueben nuestro sistema de aprendizaje, y un plan premium desde $39.900 COP mensual, dependiendo del curso con acceso total a todos nuestros retos, insignias y torneos.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-question" aria-expanded="false">
-                        <span class="material-icons faq-icon">credit_card</span>
-                        ¿Qué métodos de pago aceptan?
-                    </button>
-                    <div class="faq-answer">
-                        <ul class="feature-list">
-                            <li>Tarjeta de crédito o débito.</li>
-                            <li>Nequi y Daviplata</li>
-                            <li>Transferencia bancaria.</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-question" aria-expanded="false">
-                        <span class="material-icons faq-icon">security</span>
-                        ¿Es seguro para los niños?
-                    </button>
-                    <div class="faq-answer">
-                        <p>Sí. CodiPlay cuenta con medidas de seguridad para proteger la información de los niños y supervisión de foros y retos. Cumplimos con las normativas de protección de datos para menores en Colombia.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-question" aria-expanded="false">
-                        <span class="material-icons faq-icon">tablet_mac</span>
-                        ¿Desde qué dispositivos se puede acceder?
-                    </button>
-                    <div class="faq-answer">
-                        <ul class="feature-list">
-                            <li>Computadoras de escritorio o portátiles.</li>
-                            <li>Teléfonos inteligentes Android y iPhone.</li>
-                            <li>Tablets con navegador actualizado.</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-question" aria-expanded="false">
-                        <span class="material-icons faq-icon">support_agent</span>
-                        ¿Hay soporte técnico o ayuda disponible?
-                    </button>
-                    <div class="faq-answer">
-                        <ul class="feature-list">
-                            <li>Correo electrónico: soporte@codiplay.co</li>
-                            <li>WhatsApp oficial: +57 315 000 0000</li>
-                        </ul>
-                        <p>Horario: lunes a sábado de 8:00 a.m. a 7:00 p.m.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-question" aria-expanded="false">
-                        <span class="material-icons faq-icon">groups</span>
-                        ¿Cómo puedo inscribir a mi colegio o institución?
-                    </button>
-                    <div class="faq-answer">
-                        <p>Contáctanos a través del correo alianzas@codiplay.co y uno de nuestros asesores se comunicará contigo para ofrecerte un plan institucional personalizado.</p>
-                    </div>
-                </div>
-            </div>
+            
+           
         </main>
         <footer class="footer-legible text-center py-8">
             <div class="footer-copyright mb-2">
-                © 2025 <span class="font-bold">CodiPlayCo</span>. Hecho para pequeños programadores.
+                2025 <span class="font-bold">CodiPlayCo</span>. Hecho para pequeños programadores.
             </div>
             <div class="footer-social flex justify-center items-center gap-8 mt-2 flex-wrap">
                 <span class="footer-social-label">Síguenos:</span>
@@ -192,19 +351,52 @@
     
 </body>
 <script>
-// Acordeón simple para FAQ
-const faqQuestions = document.querySelectorAll('.faq-question');
-faqQuestions.forEach(btn => {
-  btn.addEventListener('click', function() {
-    const expanded = this.getAttribute('aria-expanded') === 'true';
-    document.querySelectorAll('.faq-question').forEach(b => b.setAttribute('aria-expanded', 'false'));
-    document.querySelectorAll('.faq-answer').forEach(a => a.style.maxHeight = null);
-    if (!expanded) {
-      this.setAttribute('aria-expanded', 'true');
-      const answer = this.nextElementSibling;
-      answer.style.maxHeight = answer.scrollHeight + 'px';
-    }
-  });
+// Sistema de tarjetas interactivas FAQ
+document.addEventListener('DOMContentLoaded', function() {
+    const faqCards = document.querySelectorAll('.faq-card');
+    
+    // Animación de entrada para las tarjetas
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+    
+    faqCards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(30px)';
+        card.style.transition = `all 0.6s cubic-bezier(0.4, 0, 0.2, 1) ${index * 0.1}s`;
+        observer.observe(card);
+        
+        // Agregar evento click para hacer flip
+        card.addEventListener('click', function(e) {
+            // Evitar que el botón de cierre también haga flip
+            if (!e.target.closest('.faq-back-btn')) {
+                this.classList.toggle('flipped');
+            }
+        });
+        
+        // Efecto de hover en las tarjetas
+        card.addEventListener('mouseenter', function() {
+            if (!this.classList.contains('flipped')) {
+                this.style.transform = 'translateY(-8px) scale(1.02)';
+            }
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            if (!this.classList.contains('flipped')) {
+                this.style.transform = 'translateY(0) scale(1)';
+            }
+        });
+    });
 });
 </script>
 </html>
