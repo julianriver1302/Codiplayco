@@ -396,12 +396,15 @@ public class AdminController {
 			// Obtener todos los usuarios
 			List<Usuario> todosUsuarios = usuarioServiceImplement.findAll();
 			
-			// Filtrar solo docentes y usuarios (rol USUARIO), excluyendo administradores
+			// Filtrar solo docentes y usuarios (rol USUARIO - ID 3, que incluye usuarios que se inscriben y pagan cursos)
+			// Excluyendo administradores
 			List<Usuario> usuariosFiltrados = todosUsuarios.stream()
 				.filter(usuario -> usuario.getRol() != null)
 				.filter(usuario -> {
 					String nombreRol = usuario.getRol().getNombre().toUpperCase();
-					return nombreRol.equals("DOCENTE") || nombreRol.equals("USUARIO");
+					Integer rolId = usuario.getRol().getId();
+					// Incluir DOCENTE y USUARIO (rol ID 3 - usuarios que se inscriben y pagan cursos)
+					return nombreRol.equals("DOCENTE") || nombreRol.equals("USUARIO") || (rolId != null && rolId.equals(3));
 				})
 				.toList();
 			
@@ -412,7 +415,7 @@ public class AdminController {
 			model.addAttribute("roles", roles);
 			
 			System.out.println("Total usuarios: " + todosUsuarios.size());
-			System.out.println("Usuarios filtrados (Docentes y Usuarios): " + usuariosFiltrados.size());
+			System.out.println("Usuarios filtrados (Docentes y Usuarios/Estudiantes - rol ID 3): " + usuariosFiltrados.size());
 		} catch (Exception e) {
 			System.err.println("Error al cargar usuarios: " + e.getMessage());
 			e.printStackTrace();
@@ -517,8 +520,22 @@ public class AdminController {
 	}
 
 	@GetMapping("/Admin/proceso_estudiantes")
-	public String proceso_estudiantes() {
-		return "Admin/proceso_estudiantes";
+	public String proceso_estudiantes(Model model) {
+		try {
+			// Obtener todos los usuarios con rol ID 3 (USUARIO - usuarios que se inscriben y pagan cursos)
+			List<Usuario> todosUsuarios = usuarioServiceImplement.findAll();
+			List<Usuario> usuariosInscritos = todosUsuarios.stream()
+				.filter(usuario -> usuario.getRol() != null && usuario.getRol().getId() != null && usuario.getRol().getId().equals(3))
+				.filter(usuario -> usuario.getEmail() != null && !usuario.getEmail().isEmpty())
+				.toList();
+			
+			model.addAttribute("usuariosInscritos", usuariosInscritos);
+		} catch (Exception e) {
+			System.err.println("Error al cargar usuarios inscritos: " + e.getMessage());
+			e.printStackTrace();
+			model.addAttribute("usuariosInscritos", List.of());
+		}
+		return "Admin/mensajes";
 	}
 	
 	
