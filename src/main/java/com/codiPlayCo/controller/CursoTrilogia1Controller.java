@@ -12,33 +12,12 @@ public class CursoTrilogia1Controller {
 
 	@GetMapping("/")
 	public String index() {
-		return "CursoTrilogia1/index";
+		return "redirect:/CursoTrilogia1/modulo1/leccion1";
 	}
 
-	@GetMapping("/index")
-	public String cursoIndex() {
-		return "/CursoTrilogia1/index";
-	}
-
-	@GetMapping("/internet")
-	public String internet() {
-		return "/CursoTrilogia1/internet";
-	}
-
-	@GetMapping("/paginas-web")
-	public String paginasWeb() {
-
-		return "/CursoTrilogia1/paginas-web";
-	}
-
-	@GetMapping("/pagina")
-	public String pagina() {
-		return "/CursoTrilogia1/pagina";
-	}
-
-	@GetMapping("/home")
-	public String home() {
-		return "redirect:/CursoTrilogia1/";
+	@GetMapping("/modulo1/leccion1")
+	public String modulo1Leccion1() {
+		return "CursoTrilogia1/modulo1/leccion1";
 	}
 
 	@GetMapping("/modulo1/leccion2")
@@ -79,10 +58,5 @@ public class CursoTrilogia1Controller {
 	@GetMapping("/modulo1/leccion9")
 	public String modulo1Leccion9() {
 		return "CursoTrilogia1/modulo1/leccion9";
-	}
-
-	@GetMapping("/inicio")
-	public String inicio() {
-		return "redirect:/PanelControlUsuario/inicio";
 	}
 }

@@ -91,34 +91,4 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => btn.style.transform = "translateX(0)", 200);
         });
     });
-
-    // --- PROGRESO DE MÓDULOS (lecciones completadas / totales) ---
-    const modulesConfig = {
-        1: { key: 'modulo1_maxLesson', total: 9 },
-        2: { key: 'modulo2_maxLesson', total: 6 },
-        3: { key: 'modulo3_maxLesson', total: 10 },
-        4: { key: 'modulo4_maxLesson', total: 15 }
-    };
-
-    Object.entries(modulesConfig).forEach(([num, cfg]) => {
-        const maxFromStorage = parseInt(localStorage.getItem(cfg.key) || '0', 10);
-        const completed = isNaN(maxFromStorage) ? 0 : Math.min(maxFromStorage, cfg.total);
-
-        const progressText = document.getElementById(`mod${num}-progress-text`);
-        const lessonsText = document.getElementById(`mod${num}-lessons-text`);
-        const progressBar = document.getElementById(`mod${num}-progress-bar`);
-
-        if (progressText) {
-            progressText.textContent = `${completed} / ${cfg.total}`;
-        }
-
-        if (lessonsText) {
-            lessonsText.textContent = `Completado ${completed} de ${cfg.total} lecciones`;
-        }
-
-        if (progressBar) {
-            const percent = cfg.total > 0 ? (completed / cfg.total) * 100 : 0;
-            progressBar.style.width = `${percent}%`;
-        }
-    });
 });

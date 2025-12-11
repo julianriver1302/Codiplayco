@@ -129,7 +129,8 @@
 					<!-- Tarjeta 1 - Módulo 1 -->
 					<div class="course-card active-card">
 						<div class="card-header">
-							<span class="progress-text" id="mod1-progress-text">0 / 9</span>
+							<span class="progress-text" id="mod1-progress-text"
+								th:text="${mod1Completadas} + ' / ' + ${mod1Total}">0 / 9</span>
 						</div>
 						<div class="card-icon-container">
 							<div class="icon-circle">
@@ -137,7 +138,10 @@
 							</div>
 						</div>
 						<h3>Módulo 1</h3>
-						<p class="lessons-info" id="mod1-lessons-text">Completado 0 de 9 lecciones</p>
+						<p class="lessons-info" id="mod1-lessons-text"
+							th:text="'Completado ' + ${mod1Completadas} + ' de ' + ${mod1Total} + ' lecciones'">
+							Completado 0 de 9 lecciones
+						</p>
 						<div class="progress-bar-bg">
 							<div class="progress-bar-fill" id="mod1-progress-bar" style="width: 0%;"></div>
 						</div>
@@ -149,7 +153,8 @@
 					<!-- Tarjeta 2 - Módulo 2 (DESBLOQUEADO) -->
 					<div class="course-card">
 						<div class="card-header">
-							<span class="progress-text" id="mod2-progress-text">0 / 6</span>
+							<span class="progress-text" id="mod2-progress-text"
+								th:text="${mod2Completadas} + ' / ' + ${mod2Total}">0 / 6</span>
 						</div>
 						<div class="card-icon-container">
 							<div class="icon-circle">
@@ -157,7 +162,10 @@
 							</div>
 						</div>
 						<h3>Módulo 2</h3>
-						<p class="lessons-info" id="mod2-lessons-text">Completado 0 de 6 lecciones</p>
+						<p class="lessons-info" id="mod2-lessons-text"
+							th:text="'Completado ' + ${mod2Completadas} + ' de ' + ${mod2Total} + ' lecciones'">
+							Completado 0 de 6 lecciones
+						</p>
 						<a th:href="@{/PanelControlUsuario/modulo2}" class="btn-continue">
 							<i class="fa-solid fa-play-circle"></i> Continuar
 						</a>
@@ -166,8 +174,8 @@
 					<!-- Tarjeta 3 - Módulo 3 -->
 					<div class="course-card locked-card">
 						<div class="card-header">
-
-							<span class="progress-text" id="mod3-progress-text">0 / 10</span>
+							<span class="progress-text" id="mod3-progress-text"
+								th:text="${mod3Completadas} + ' / ' + ${mod3Total}">0 / 10</span>
 						</div>
 						<div class="card-icon-container">
 							<div class="icon-circle">
@@ -176,7 +184,10 @@
 							</div>
 						</div>
 						<h3>Módulo 3</h3>
-						<p class="lessons-info" id="mod3-lessons-text">Completado 0 de 10 lecciones</p>
+						<p class="lessons-info" id="mod3-lessons-text"
+							th:text="'Completado ' + ${mod3Completadas} + ' de ' + ${mod3Total} + ' lecciones'">
+							Completado 0 de 10 lecciones
+						</p>
 						<button class="btn-locked" type="button">
 							<i class="fa-solid fa-lock"></i> Bloqueado
 						</button>
@@ -185,7 +196,8 @@
 					<!-- Tarjeta 4 - Módulo 4 -->
 					<div class="course-card locked-card">
 						<div class="card-header">
-							<span class="progress-text" id="mod4-progress-text">0 / 15</span>
+							<span class="progress-text" id="mod4-progress-text"
+								th:text="${mod4Completadas} + ' / ' + ${mod4Total}">0 / 15</span>
 						</div>
 						<div class="card-icon-container">
 							<div class="icon-circle">
@@ -194,7 +206,10 @@
 							</div>
 						</div>
 						<h3>Módulo 4</h3>
-						<p class="lessons-info" id="mod4-lessons-text">Completado 0 de 15 lecciones</p>
+						<p class="lessons-info" id="mod4-lessons-text"
+							th:text="'Completado ' + ${mod4Completadas} + ' de ' + ${mod4Total} + ' lecciones'">
+							Completado 0 de 15 lecciones
+						</p>
 						<button class="btn-locked" type="button">
 							<i class="fa-solid fa-lock"></i> Bloqueado
 						</button>

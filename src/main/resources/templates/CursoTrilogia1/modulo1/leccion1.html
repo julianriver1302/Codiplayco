@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lección 1 - ¿Qué es Internet?</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            background: radial-gradient(circle at top, #1b2141 0%, #050816 45%, #000000 100%);
+            color: #e9f5ff;
+            overflow-x: hidden;
+            user-select: none;
+        }
+
+        .stars {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background-image:
+                radial-gradient(circle at 20% 20%, rgba(255,255,255,0.7) 0, rgba(255,255,255,0) 2px),
+                radial-gradient(circle at 80% 30%, rgba(255,255,255,0.6) 0, rgba(255,255,255,0) 2px),
+                radial-gradient(circle at 50% 80%, rgba(255,255,255,0.5) 0, rgba(255,255,255,0) 2px);
+            background-size: 600px 600px;
+            animation: moveStars 30s linear infinite;
+        }
+
+        @keyframes moveStars {
+            from { background-position: 0 0, 0 0, 0 0; }
+            to { background-position: 600px 600px, -600px 600px, 600px -600px; }
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 30px 20px 50px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 32px;
+            margin: 0 0 10px;
+            background: linear-gradient(90deg, #4dfff6, #63a0ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+
+        .header p { margin: 0; font-size: 16px; color: #a0b0d0; }
+
+        .card {
+            position: relative;
+            background: rgba(5, 8, 22, 0.9);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 0 25px rgba(0,0,0,0.8), 0 0 35px rgba(0, 200, 255, 0.1);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .blob {
+            position: absolute;
+            width: 220px;
+            height: 220px;
+            background: radial-gradient(circle, #00ffe7, #006d6c);
+            filter: blur(80px);
+            opacity: 0.25;
+            top: -40px;
+            right: -40px;
+            z-index: 0;
+        }
+        .blob2 {
+            position: absolute;
+            width: 260px;
+            height: 260px;
+            background: radial-gradient(circle, #ff00ff, #1c3aff);
+            filter: blur(90px);
+            opacity: 0.2;
+            bottom: -70px;
+            left: -40px;
+            z-index: 0;
+        }
+
+        .content { position: relative; z-index: 2; }
+
+        h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: #4dfff6;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(77, 255, 246, 0.3);
+            padding-bottom: 10px;
+            text-align: center;
+        }
+
+        .concept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .concept-item {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        .concept-item:hover {
+            transform: translateY(-5px);
+            border-color: #4dfff6;
+            background: rgba(0, 234, 255, 0.05);
+        }
+
+        .concept-icon { font-size: 3rem; margin-bottom: 10px; display: block; animation: floatIcon 3s ease-in-out infinite; }
+        .concept-title { font-weight: 700; color: #fff; margin-bottom: 5px; font-size: 1.1rem; font-family: 'Orbitron', sans-serif;}
+        .concept-analogy { color: #f9d71c; font-size: 0.9rem; font-weight: 600; text-transform: uppercase; margin-bottom: 10px; display: block; }
+        .concept-desc { font-size: 0.9rem; color: #cbd5e1; line-height: 1.5; }
+
+        .pizza-timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+        .timeline-step {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 12px;
+            transition: 0.3s;
+        }
+        .timeline-step:hover { border-color: #4dfff6; background: rgba(0, 234, 255, 0.05); }
+
+        .step-num {
+            background: #4dfff6;
+            color: #000;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .step-emoji { font-size: 1.5rem; }
+        .step-info strong { display: block; color: #fff; margin-bottom: 3px; }
+        .step-info p { margin: 0; font-size: 0.9rem; color: #cbd5e1; }
+
+        .activity-box {
+            background: rgba(0, 234, 255, 0.05);
+            border: 2px dashed #4dfff6;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .paint-container {
+            margin-top: 20px;
+            background: rgba(15,23,42,0.9);
+            border-radius: 15px;
+            border: 1px solid rgba(148,163,184,0.5);
+            padding: 16px;
+        }
+
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 12px;
+            justify-content: center;
+        }
+
+        .tool-btn {
+            background: rgba(15,23,42,0.9);
+            border: 1px solid rgba(148,163,184,0.7);
+            color: #e5e7eb;
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-size: 13px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .tool-btn.active {
+            background: #22d3ee;
+            border-color: #22d3ee;
+            color: #0f172a;
+            box-shadow: 0 0 12px rgba(34,211,238,0.7);
+            font-weight: bold;
+        }
+
+        .tool-btn:hover { transform: translateY(-1px); }
+
+        .canvas-wrapper {
+            margin-top: 10px;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #ffffff;
+            height: 400px;
+            position: relative;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.1);
+            cursor: crosshair;
+            touch-action: none;
+        }
+
+        .canvas-wrapper canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        .checklist {
+            text-align: left;
+            display: inline-block;
+            margin: 20px 0;
+            color: #e9f5ff;
+            list-style: none;
+            padding: 0;
+        }
+        .checklist li { margin-bottom: 12px; display: flex; align-items: center; gap: 10px;}
+        .checklist i { color: #39ff14; font-size: 1.2rem; }
+
+        /* Controles adicionales del canvas */
+        .canvas-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 10px;
+        }
+
+        .color-picker-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .color-picker-label {
+            color: #fff;
+            font-size: 14px;
+        }
+
+        input[type="color"] {
+            width: 40px;
+            height: 40px;
+            border: 2px solid #4dfff6;
+            border-radius: 50%;
+            cursor: pointer;
+            background: transparent;
+        }
+
+        input[type="range"] {
+            width: 100px;
+            accent-color: #22d3ee;
+        }
+
+        .preview-container {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            display: none;
+        }
+
+        .preview-container.show {
+            display: block;
+        }
+
+        .preview-img {
+            max-width: 250px;
+            border-radius: 8px;
+            border: 2px solid #4dfff6;
+            margin-top: 10px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 50px;
+            padding: 12px 30px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-next {
+            background: linear-gradient(90deg, #00eaff, #4da3ff);
+            color: #000;
+            box-shadow: 0 0 15px rgba(0, 234, 255, 0.3);
+        }
+        .btn-next:hover { transform: scale(1.05); box-shadow: 0 0 25px rgba(0, 234, 255, 0.6); }
+
+        .btn-prev {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .btn-prev:hover { background: rgba(255,255,255,0.2); }
+
+        .btn-save {
+            background: linear-gradient(90deg, #39ff14, #00eaff);
+            color: #000;
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.3);
+        }
+
+        @keyframes floatIcon {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="stars"></div>
+
+    <div class="container">
+        <div class="header">
+            <h1>Lección 1: ¿Qué es el Internet?</h1>
+            <p>Descubre los secretos de la red más grande del universo 🌍✨</p>
+        </div>
+
+        <div class="card">
+            <div class="blob"></div>
+            <div class="blob2"></div>
+
+            <div class="content">
+                <!-- PASO 1 -->
+                <div id="paso1" style="display:block; animation: fadeIn 0.5s;">
+                    <h2>🎯 Parte 1: El Mapa del Tesoro</h2>
+                    <p style="text-align:center; margin-bottom:30px; color:#cbd5e1;">
+                        Para entender Internet, imaginemos que es una ciudad gigante:
+                    </p>
+                    <div class="concept-grid">
+                        <div class="concept-item">
+                            <span class="concept-icon">🛣️</span>
+                            <div class="concept-title">Internet</div>
+                            <span class="concept-analogy">La Carretera Global</span>
+                            <p class="concept-desc">Son los cables y señales invisibles que conectan a todas las computadoras del mundo.</p>
+                        </div>
+                        <div class="concept-item">
+                            <span class="concept-icon">🏠</span>
+                            <div class="concept-title">Página Web</div>
+                            <span class="concept-analogy">El Edificio</span>
+                            <p class="concept-desc">Un lugar específico con información (fotos, videos) que vive en esas carreteras.</p>
+                        </div>
+                        <div class="concept-item">
+                            <span class="concept-icon">🏦</span>
+                            <div class="concept-title">Servidor</div>
+                            <span class="concept-analogy">El Bibliotecario</span>
+                            <p class="concept-desc">Una computadora especial que guarda las páginas y te las entrega cuando las pides.</p>
+                        </div>
+                        <div class="concept-item">
+                            <span class="concept-icon">🚗</span>
+                            <div class="concept-title">Navegador</div>
+                            <span class="concept-analogy">Tu Vehículo</span>
+                            <p class="concept-desc">El programa (Chrome, Edge) que usas para viajar por las carreteras de Internet.</p>
+                        </div>
+                    </div>
+                    <div class="nav-buttons">
+                        <a th:href="@{/PanelControlUsuario/modulo1}" class="btn btn-prev">Volver al Menú</a>
+                        <button class="btn btn-next" onclick="irAPaso2()">Siguiente: Ejemplo Visual ➜</button>
+                    </div>
+                </div>
+
+                <!-- PASO 2 -->
+                <div id="paso2" style="display:none; animation: fadeIn 0.5s;">
+                    <h2>🍕 Parte 2: El Pedido Web</h2>
+                    <p style="text-align:center; margin-bottom:30px; color:#cbd5e1;">
+                        Visitar una web es exactamente igual a pedir una pizza a domicilio:
+                    </p>
+                    <div class="pizza-timeline">
+                        <div class="timeline-step">
+                            <div class="step-num">1</div>
+                            <div class="step-emoji">🧑‍💻</div>
+                            <div class="step-info">
+                                <strong>Tú haces el pedido</strong>
+                                <p>Escribes la dirección (URL) de tu juego favorito en el navegador.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-step">
+                            <div class="step-num">2</div>
+                            <div class="step-emoji">➡️☁️</div>
+                            <div class="step-info">
+                                <strong>Viaje por la Carretera</strong>
+                                <p>Tu pedido viaja por los cables de Internet hasta llegar a la Nube.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-step">
+                            <div class="step-num">3</div>
+                            <div class="step-emoji">🖥️</div>
+                            <div class="step-info">
+                                <strong>El Servidor Cocina</strong>
+                                <p>El Servidor busca los archivos de tu juego (prepara la pizza).</p>
+                            </div>
+                        </div>
+                        <div class="timeline-step">
+                            <div class="step-num">4</div>
+                            <div class="step-emoji">⬅️📦</div>
+                            <div class="step-info">
+                                <strong>Entrega Express</strong>
+                                <p>El Servidor envía la página de vuelta a tu casa por Internet.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-step">
+                            <div class="step-num">5</div>
+                            <div class="step-emoji">🎉</div>
+                            <div class="step-info">
+                                <strong>¡A Disfrutar!</strong>
+                                <p>Tu Navegador recibe los datos y te muestra el juego en pantalla.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="nav-buttons">
+                        <button class="btn btn-prev" onclick="irAPaso1()">Anterior</button>
+                        <button class="btn btn-next" onclick="irAPaso3()">Siguiente: Misión Creativa ➜</button>
+                    </div>
+                </div>
+
+                <!-- PASO 3: PAINT -->
+                <div id="paso3" style="display:none; animation: fadeIn 0.5s;">
+                    <h2>🎨 Parte 3: Diseña tu Propia Web</h2>
+                    <div class="activity-box">
+                        <p style="font-size:1.1rem; margin-bottom:20px; color:#e9f5ff;">
+                            ¡Ahora te toca a ti! Usa las herramientas de dibujo para crear <strong>tu página web soñada</strong> aquí mismo.
+                        </p>
+                        
+                        <div style="background:rgba(0,0,0,0.3); padding:20px; border-radius:15px; display:inline-block; text-align:left; max-width:480px;">
+                            <strong style="color:#4dfff6; display:block; margin-bottom:15px; font-family:'Orbitron', sans-serif;">Ideas para tu dibujo:</strong>
+                            <ul class="checklist">
+                                <li><i class="fas fa-check-circle"></i> Un nombre genial (Ej: "El Castillo de Ana").</li>
+                                <li><i class="fas fa-check-circle"></i> Un fondo de tu color favorito.</li>
+                                <li><i class="fas fa-check-circle"></i> Botones grandes para jugar o leer.</li>
+                                <li><i class="fas fa-check-circle"></i> ¡Dibujos de lo que más te guste!</li>
+                            </ul>
+                        </div>
+
+                        <div class="paint-container">
+                            <div class="toolbar">
+                                <button class="tool-btn active" id="btnBrush" type="button" onclick="activarPincel()">
+                                    <i class="fas fa-paint-brush"></i> Pincel
+                                </button>
+                                <button class="tool-btn" id="btnEraser" type="button" onclick="activarBorrador()">
+                                    <i class="fas fa-eraser"></i> Borrador
+                                </button>
+                                <button class="tool-btn" type="button" onclick="dibujarForma('cuadrado')">
+                                    <i class="fas fa-square"></i> Cuadrado
+                                </button>
+                                <button class="tool-btn" type="button" onclick="dibujarForma('circulo')">
+                                    <i class="fas fa-circle"></i> Círculo
+                                </button>
+                                <button class="tool-btn" type="button" onclick="dibujarForma('linea')">
+                                    <i class="fas fa-slash"></i> Línea
+                                </button>
+                            </div>
+
+                            <div class="canvas-controls">
+                                <div class="color-picker-container">
+                                    <span class="color-picker-label">Color:</span>
+                                    <input type="color" id="colorPicker" value="#000000">
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <span style="color: #fff; font-size: 14px;">Grosor:</span>
+                                    <input type="range" id="sizePicker" min="1" max="50" value="5">
+                                    <span id="sizeValue" style="color: #22d3ee; font-size: 14px;">5</span>
+                                </div>
+                                <button class="tool-btn" type="button" onclick="limpiarCanvas()" style="background:#ef4444; border-color:#ef4444;">
+                                    <i class="fas fa-trash"></i> Limpiar
+                                </button>
+                                <button class="tool-btn" type="button" onclick="guardarDibujo()" style="background:#22d3ee; border-color:#22d3ee;">
+                                    <i class="fas fa-eye"></i> Previsualizar
+                                </button>
+                                <button class="tool-btn" type="button" onclick="guardarCanvas()" style="background:#10b981; border-color:#10b981;">
+                                    <i class="fas fa-download"></i> Descargar
+                                </button>
+                            </div>
+
+                            <div class="canvas-wrapper">
+                                <canvas id="canvas"></canvas>
+                            </div>
+
+                            <div id="imagenGuardada" class="preview-container"></div>
+                        </div>
+
+                        <p style="font-size:0.9rem; color:#a0b0d0; margin-top:18px;">Cuando estés feliz con tu dibujo, guárdalo con el botón "Descargar".</p>
+                    </div>
+
+                    <div class="nav-buttons">
+                        <button class="btn btn-prev" onclick="irAPaso2()">
+                            <i class="fas fa-arrow-left"></i> Anterior
+                        </button>
+                        <button class="btn btn-save" onclick="guardarCanvas()">
+                            <i class="fas fa-download"></i> Descargar Dibujo
+                        </button>
+						<a th:href="@{/PanelControlUsuario/modulo1}" class="btn btn-next" style="background: linear-gradient(90deg, #39ff14, #00eaff); color:#000;">
+						    <i class="fas fa-flag-checkered"></i> ¡He Terminado mi Lección! ➜
+						</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+		// Navegación entre pasos
+		        function irAPaso1() {
+		            ocultarTodo();
+		            document.getElementById('paso1').style.display = 'block';
+		            window.scrollTo(0, 0);
+		        }
+
+		        function irAPaso2() {
+		            ocultarTodo();
+		            document.getElementById('paso2').style.display = 'block';
+		            window.scrollTo(0, 0);
+		        }
+
+		        function irAPaso3() {
+		            ocultarTodo();
+		            const paso3 = document.getElementById('paso3');
+		            paso3.style.display = 'block';
+		            
+		            // CORRECCIÓN 1: Asegurar que el canvas se inicialice al entrar al paso 3
+		            setTimeout(() => {
+		                resizeCanvas();
+		            }, 100);
+		            
+		            window.scrollTo(0, 0);
+		        }
+
+		        function ocultarTodo() {
+		            ['paso1', 'paso2', 'paso3'].forEach(id => {
+		                const el = document.getElementById(id);
+		                if (el) el.style.display = 'none';
+		            });
+		        }
+
+		        // Tabla de dibujo - CÓDIGO FUNCIONAL CORREGIDO
+		        const canvas = document.getElementById('canvas');
+		        const ctx = canvas.getContext('2d');
+		        let dibujando = false;
+		        let herramienta = 'pincel';
+		        let color = document.getElementById('colorPicker').value;
+		        let grosor = document.getElementById('sizePicker').value;
+		        let inicioX, inicioY;
+		        let imagenTemp;
+
+		        // Redimensionar canvas al tamaño del contenedor y asegurar fondo blanco
+		        function resizeCanvas() {
+		            const container = document.querySelector('.canvas-wrapper');
+		            if (!container || !canvas) return;
+
+		            const width = container.clientWidth;
+		            const height = container.clientHeight;
+
+		            // Crear una imagen temporal de lo que ya está dibujado
+		            let imagenDataUrl = null;
+		            if (canvas.width > 0 && canvas.height > 0) {
+		                // Intentamos obtener la imagen solo si ya tiene un tamaño
+		                try {
+		                    imagenDataUrl = canvas.toDataURL();
+		                } catch (e) {
+		                    console.error("Error al obtener DataURL:", e);
+		                }
+		            }
+
+		            // Redimensionar
+		            canvas.width = width;
+		            canvas.height = height;
+
+		            // Asegurar el fondo BLANCO primero
+		            ctx.fillStyle = '#ffffff';
+		            ctx.fillRect(0, 0, width, height);
+
+		            // Restaurar propiedades
+		            ctx.lineCap = 'round';
+		            ctx.lineJoin = 'round';
+		            ctx.strokeStyle = color;
+		            ctx.lineWidth = grosor;
+
+		            // Restaurar el contenido si existía
+		            if (imagenDataUrl) {
+		                const img = new Image();
+		                img.onload = function() {
+		                    ctx.drawImage(img, 0, 0, width, height);
+		                };
+		                img.src = imagenDataUrl;
+		            }
+		        }
+
+		        // Llamar a resizeCanvas al cargar la página y al redimensionar la ventana
+		        window.addEventListener('load', resizeCanvas);
+		        window.addEventListener('resize', resizeCanvas);
+
+		        // Event listeners para controles
+		        document.getElementById('colorPicker').addEventListener('input', (e) => {
+		            color = e.target.value;
+		        });
+
+		        document.getElementById('sizePicker').addEventListener('input', (e) => {
+		            grosor = e.target.value;
+		            document.getElementById('sizeValue').textContent = grosor;
+		        });
+
+		        function activarPincel() { 
+		            herramienta = 'pincel'; 
+		            actualizarBotonesActivos();
+		        }
+
+		        function activarBorrador() { 
+		            herramienta = 'borrador'; 
+		            actualizarBotonesActivos();
+		        }
+
+		        function dibujarForma(tipo) { 
+		            herramienta = tipo; 
+		            actualizarBotonesActivos();
+		        }
+
+		        function actualizarBotonesActivos() {
+		            // Quitar clase active de todos los botones
+		            document.querySelectorAll('.tool-btn').forEach(btn => {
+		                btn.classList.remove('active');
+		            });
+		            
+		            // Agregar clase active al botón correspondiente
+		            switch(herramienta) {
+		                case 'pincel':
+		                    document.getElementById('btnBrush').classList.add('active');
+		                    break;
+		                case 'borrador':
+		                    document.getElementById('btnEraser').classList.add('active');
+		                    break;
+		                // Se asume que los otros botones de forma se activan en 'mousedown' y se desactivan en 'mouseup'
+		                // o se manejan de forma diferente para la experiencia de usuario.
+		                // Por simplicidad, solo activaremos los botones de pincel/borrador para el estado.
+		            }
+		            // Nota: Para los botones de forma, se recomienda un manejo de clase 'active' más elaborado si quieres que se mantengan 'presionados'
+		            // mientras se dibuja la forma, pero para un editor básico, esta es suficiente.
+		        }
+
+		        // Eventos del canvas
+		        canvas.addEventListener('mousedown', (e) => {
+		            dibujando = true;
+		            const rect = canvas.getBoundingClientRect();
+		            inicioX = e.clientX - rect.left;
+		            inicioY = e.clientY - rect.top;
+		            // Guardar imagen antes de empezar a dibujar la forma o línea (para previsualización)
+		            imagenTemp = ctx.getImageData(0, 0, canvas.width, canvas.height);
+		            if (herramienta === 'pincel' || herramienta === 'borrador') {
+		                ctx.beginPath();
+		                ctx.moveTo(inicioX, inicioY);
+		            }
+		        });
+
+		        canvas.addEventListener('mousemove', (e) => {
+		            if (!dibujando) return;
+		            const rect = canvas.getBoundingClientRect();
+		            const currentX = e.clientX - rect.left;
+		            const currentY = e.clientY - rect.top;
+
+		            if (herramienta === 'pincel' || herramienta === 'borrador') {
+		                ctx.lineTo(currentX, currentY);
+		                // Aseguramos el color correcto para el pincel/borrador
+		                ctx.strokeStyle = herramienta === 'borrador' ? "#ffffff" : color;
+		                ctx.lineWidth = grosor;
+		                ctx.lineCap = 'round';
+		                ctx.stroke();
+		            } else {
+		                // Dibujar formas temporalmente
+		                ctx.putImageData(imagenTemp, 0, 0); // Restaurar imagen original
+		                ctx.lineWidth = grosor;
+		                ctx.strokeStyle = color;
+		                ctx.beginPath();
+
+		                if (herramienta === 'cuadrado') {
+		                    ctx.rect(inicioX, inicioY, currentX - inicioX, currentY - inicioY);
+		                    ctx.stroke();
+		                } else if (herramienta === 'circulo') {
+		                    const radio = Math.sqrt(Math.pow(currentX - inicioX, 2) + Math.pow(currentY - inicioY, 2));
+		                    ctx.arc(inicioX, inicioY, radio, 0, 2 * Math.PI);
+		                    ctx.stroke();
+		                } else if (herramienta === 'linea') {
+		                    ctx.moveTo(inicioX, inicioY);
+		                    ctx.lineTo(currentX, currentY);
+		                    ctx.stroke();
+		                }
+		            }
+		        });
+
+		        canvas.addEventListener('mouseup', (e) => {
+		            if (!dibujando) return;
+		            
+		            // Si estamos dibujando formas, el mousemove ya hizo el trabajo, solo necesitamos restablecer el estado.
+		            // Si estamos usando pincel/borrador, terminamos el trazo.
+		            
+		            dibujando = false;
+		            
+		            // Después de dibujar una forma, volvemos automáticamente al pincel para una mejor experiencia de usuario.
+		            if (herramienta !== 'pincel' && herramienta !== 'borrador') {
+		                activarPincel();
+		            }
+		        });
+
+		        canvas.addEventListener('mouseleave', () => {
+		            if (dibujando && herramienta !== 'pincel' && herramienta !== 'borrador') {
+		                // Si se está dibujando una forma y se sale del canvas, se finaliza el trazo con la última posición.
+		                const rect = canvas.getBoundingClientRect();
+		                const endX = canvas.width;
+		                const endY = canvas.height;
+		                
+		                // Repetimos el logic de mousemove final pero sin poner la imagenTemp (ya que lo hizo mousemove)
+		            }
+		            dibujando = false;
+		        });
+
+		        // Soporte táctil para móviles
+		        canvas.addEventListener('touchstart', (e) => {
+		            e.preventDefault();
+		            const touch = e.touches[0];
+		            const mouseEvent = new MouseEvent('mousedown', {
+		                clientX: touch.clientX,
+		                clientY: touch.clientY,
+		                bubbles: true // Es importante para que se propague
+		            });
+		            canvas.dispatchEvent(mouseEvent);
+		        }, { passive: false });
+
+		        canvas.addEventListener('touchmove', (e) => {
+		            e.preventDefault();
+		            const touch = e.touches[0];
+		            const mouseEvent = new MouseEvent('mousemove', {
+		                clientX: touch.clientX,
+		                clientY: touch.clientY,
+		                bubbles: true
+		            });
+		            canvas.dispatchEvent(mouseEvent);
+		        }, { passive: false });
+
+		        canvas.addEventListener('touchend', () => {
+		            const mouseEvent = new MouseEvent('mouseup', { bubbles: true });
+		            canvas.dispatchEvent(mouseEvent);
+		        });
+
+		        function limpiarCanvas() {
+		            if (confirm('¿Estás seguro de que quieres borrar todo tu dibujo?')) {
+		                ctx.clearRect(0, 0, canvas.width, canvas.height);
+		                // CORRECCIÓN 3: Reasegurar fondo blanco después de limpiar
+		                ctx.fillStyle = '#ffffff';
+		                ctx.fillRect(0, 0, canvas.width, canvas.height);
+		                document.getElementById('imagenGuardada').innerHTML = '';
+		                document.getElementById('imagenGuardada').classList.remove('show');
+		            }
+		        }
+		        
+		        function guardarDibujo() {
+		            const imagen = canvas.toDataURL("image/png");
+		            const preview = document.getElementById('imagenGuardada');
+		            preview.innerHTML = `
+		                <p style="color: #4dfff6; font-weight: bold; margin-bottom: 10px;">👇 Así se ve tu dibujo:</p>
+		                <img src="${imagen}" class="preview-img">
+		                <p style="color: #cbd5e1; font-size: 0.8rem; margin-top: 10px;">¡Se ve genial! Ahora puedes descargarlo.</p>
+		            `;
+		            preview.classList.add('show');
+		        }
+
+		        function guardarCanvas() {
+		            const dataURL = canvas.toDataURL('image/png');
+		            const a = document.createElement('a');
+		            a.href = dataURL;
+		            a.download = 'mi-pagina-web-ideal.png';
+		            document.body.appendChild(a);
+		            a.click();
+		            document.body.removeChild(a);
+		        }
+    </script>
+</body>
+</html>

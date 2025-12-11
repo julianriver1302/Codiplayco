@@ -22,6 +22,8 @@ import com.codiPlayCo.repository.ForoRepository;
 import com.codiPlayCo.repository.ForoRespuestaRepository;
 import com.codiPlayCo.repository.MensajeRepository;
 import com.codiPlayCo.model.Mensaje;
+import com.codiPlayCo.model.UsuarioModuloProgreso;
+import com.codiPlayCo.repository.UsuarioModuloProgresoRepository;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -43,17 +45,39 @@ public class PanelControlUsuarioController {
 	@Autowired
 	private MensajeRepository mensajeRepository;
 
+	@Autowired
+	private UsuarioModuloProgresoRepository usuarioModuloProgresoRepository;
+
 	@GetMapping("/PanelControlUsuario/inicio")
 	public String inicio(HttpSession session, Model model) {
 		Integer idUsuario = (Integer) session.getAttribute("idUsuario");
+
+		int[] totales = { 0, 9, 6, 10, 15 }; // índice = número de módulo
+		int[] completadas = { 0, 0, 0, 0, 0 };
 
 		if (idUsuario != null) {
 			Optional<Usuario> usuarioOpt = usuarioService.findById(idUsuario);
 			if (usuarioOpt.isPresent()) {
 				Usuario usuario = usuarioOpt.get();
 				model.addAttribute("usuario", usuario);
+
+				List<UsuarioModuloProgreso> progresos = usuarioModuloProgresoRepository.findByUsuarioId(usuario.getId());
+				for (UsuarioModuloProgreso p : progresos) {
+					Integer modulo = p.getModulo();
+					Integer maxLeccion = p.getMaxLeccion();
+					if (modulo != null && modulo >= 1 && modulo < totales.length && maxLeccion != null) {
+						int capped = Math.min(maxLeccion, totales[modulo]);
+						completadas[modulo] = Math.max(completadas[modulo], capped);
+					}
+				}
 			}
 		}
+
+		for (int modulo = 1; modulo <= 4; modulo++) {
+			model.addAttribute("mod" + modulo + "Completadas", completadas[modulo]);
+			model.addAttribute("mod" + modulo + "Total", totales[modulo]);
+		}
+
 		return "PanelControlUsuario/inicio";
 	}
 
@@ -257,9 +281,44 @@ public class PanelControlUsuarioController {
 		usuarioService.findById(idUsuario).ifPresent(u -> {
 			u.setMod2L1Completada(true);
 			usuarioService.save(u);
+			actualizarProgresoModulo(u.getId(), 2, 1);
 		});
 
 		return "redirect:/PanelControlUsuario/modulo2";
+	}
+
+	@PostMapping("/PanelControlUsuario/modulo1/leccion1/completar-desde-index")
+	public String completarModulo1DesdeIndex(HttpSession session) {
+		Integer idUsuario = (Integer) session.getAttribute("idUsuario");
+		if (idUsuario == null) {
+			return "redirect:/login";
+		}
+
+		actualizarProgresoModulo(idUsuario, 1, 1);
+		return "redirect:/CursoTrilogia1/";
+	}
+
+	private void actualizarProgresoModulo(Integer idUsuario, int modulo, int leccion) {
+		if (idUsuario == null) {
+			return;
+		}
+		usuarioService.findById(idUsuario).ifPresent(usuario -> {
+			UsuarioModuloProgreso progreso = usuarioModuloProgresoRepository
+					.findByUsuarioIdAndModulo(usuario.getId(), modulo)
+					.orElseGet(() -> {
+						UsuarioModuloProgreso nuevo = new UsuarioModuloProgreso();
+						nuevo.setUsuario(usuario);
+						nuevo.setModulo(modulo);
+						nuevo.setMaxLeccion(0);
+						return nuevo;
+					});
+
+			Integer actual = progreso.getMaxLeccion();
+			if (actual == null || leccion > actual) {
+				progreso.setMaxLeccion(leccion);
+				usuarioModuloProgresoRepository.save(progreso);
+			}
+		});
 	}
 
 	@GetMapping("/PanelControlUsuario/modulo3")
