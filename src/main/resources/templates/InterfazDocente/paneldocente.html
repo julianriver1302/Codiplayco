@@ -11,52 +11,79 @@
 </head>
 
 <body>
-	<nav>
-		<div class="nav-logo">
-			<img th:src="@{/assetsDocente/img/ChatGPT Image 4 jul 2025, 02_22_14 p.m..png}" alt="CodiPlayCo Logo" />
-		</div>
-		<button class="toggle-mode-btn" title="Cambiar modo"
-			style="margin:0 auto 0.5rem auto; display:block; background:#fff2; border:none; color:#fff; font-size:1.7rem; border-radius:50%; width:44px; height:44px; box-shadow:0 2px 8px #0002; cursor:pointer; transition:background 0.2s, color 0.2s; display:flex; align-items:center; justify-content:center;"><i
-				class="fa-solid fa-moon"></i></button>
-		<a th:href="@{/InterfazDocente/paneldocente}"><span class="nav-icon"><i
-					class="fa-solid fa-house"></i></span>Inicio</a>
-		<a th:href="@{/InterfazDocente/mis-cursos}"><span class="nav-icon"><i class="fa-solid fa-book"></i></span>Mis
-			Cursos</a>
-		<a th:href="@{/InterfazDocente/tareas}"><span class="nav-icon"><i
-					class="fa-solid fa-clipboard-list"></i></span>Tareas</a>
-		<a th:href="@{/InterfazDocente/foros}"><span class="nav-icon"><i
-					class="fa-solid fa-comments"></i></span>Foros</a>
-		<a th:href="@{/InterfazDocente/mensajes}"><span class="nav-icon"><i
-					class="fa-solid fa-envelope"></i></span>Mensajes</a>
-		
-	</nav>
-
-	<div class="main-layout">
-		<header>
-			<div class="header-logo-title">
-				<!-- Logo eliminado -->
-				<h1 class="titulo-blanco"><span class="panel-icon"><i
-							class="fa-solid fa-chalkboard-user"></i></span>Panel del Docente</h1>
+	<!-- Top Navigation Bar -->
+	<nav class="top-nav">
+		<div class="top-nav-container">
+			<!-- Logo y Brand -->
+			<div class="top-nav-brand">
+				<div class="top-nav-logo">
+					<img th:src="@{/assetsDocente/img/ChatGPT Image 4 jul 2025, 02_22_14 p.m..png}" alt="CodiPlayCo Mascot" class="top-nav-logo-img" />
+				</div>
+				<div class="top-nav-brand-text">
+					<h1 class="top-nav-brand-title">CodiPlayCo</h1>
+					<p class="top-nav-brand-subtitle">Aprende programando</p>
+				</div>
 			</div>
-			<div class="topbar-right">
-				<!-- Botón de modo oscuro eliminado del header -->
-				<div class="notificaciones" title="Notificaciones"><i class="fa-solid fa-bell"></i></div>
-				<div class="perfil">
-					<i class="fa-solid fa-user"></i>
-					<span th:if="${docente != null}" th:text="${docente.nombre}">Docente</span>
-					<span th:if="${docente == null}">Docente</span>
-					<div class="submenu">
-						<p th:if="${docente != null}"><strong>Nombre:</strong> <span th:text="${docente.nombre + ' ' + docente.apellido}">Nombre Completo</span></p>
-						<p th:if="${docente == null}"><strong>Nombre:</strong> No disponible</p>
-						<p><strong>Rol:</strong> Docente</p>
 
-							<a th:href="@{/InterfazDocente/logout}" style="color: inherit; text-decoration: none;">
-								<button><i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión</button>
-							</a>
+			<!-- Navigation Links -->
+			<div class="top-nav-links">
+				<a th:href="@{/InterfazDocente/paneldocente}" class="top-nav-link active">
+					<i class="fa-solid fa-house"></i>
+					<span>Inicio</span>
+				</a>
+				<a th:href="@{/InterfazDocente/mis-cursos}" class="top-nav-link">
+					<i class="fa-solid fa-book"></i>
+					<span>Mis Cursos</span>
+				</a>
+				<a th:href="@{/InterfazDocente/tareas}" class="top-nav-link">
+					<i class="fa-solid fa-clipboard-list"></i>
+					<span>Tareas</span>
+				</a>
+			<a th:href="@{/InterfazDocente/foros}" class="top-nav-link">
+				<i class="fa-solid fa-comments"></i>
+				<span>Foros</span>
+			</a>
+			<a th:href="@{/InterfazDocente/mensajes}" class="top-nav-link">
+				<i class="fa-solid fa-envelope"></i>
+				<span>Mensajes</span>
+			</a>
+		</div>
+
+			<!-- Right Actions -->
+			<div class="top-nav-actions">
+				<label aria-checked="false" role="switch" class="switch" title="Cambiar modo claro/oscuro">
+					<input type="checkbox" id="themeSwitch" />
+					<span class="slider">
+						<span class="slider-inner"></span>
+					</span>
+				</label>
+				<div class="top-nav-profile" id="userProfileBtn">
+					<div class="top-nav-profile-info">
+						<span class="top-nav-profile-name" th:if="${docente != null}" th:text="${docente.nombre}">Docente</span>
+						<span class="top-nav-profile-name" th:if="${docente == null}">Docente</span>
+						<span class="top-nav-profile-role">Docente</span>
+					</div>
+					<div class="top-nav-profile-avatar">
+						<i class="fa-solid fa-user"></i>
+					</div>
+					<div class="top-nav-submenu" id="userProfileMenu">
+						<div class="submenu-header">
+							<p th:if="${docente != null}"><strong>Nombre:</strong> <span th:text="${docente.nombre + ' ' + docente.apellido}">Nombre Completo</span></p>
+							<p th:if="${docente == null}"><strong>Nombre:</strong> No disponible</p>
+							<p><strong>Rol:</strong> Docente</p>
+						</div>
+						<div class="submenu-divider"></div>
+						<a th:href="@{/InterfazDocente/logout}" class="submenu-logout-btn">
+							<i class="fa-solid fa-right-from-bracket"></i>
+							<span>Cerrar Sesión</span>
+						</a>
 					</div>
 				</div>
 			</div>
-		</header>
+		</div>
+	</nav>
+
+	<div class="main-layout">
 		<script>
 			// Mantener modo oscuro con localStorage
 			function setDarkMode(enabled) {
@@ -81,20 +108,74 @@
 					}
 				}
 			})();
-			// Alternar icono luna/sol y modo oscuro
-			const btn = document.querySelector('.toggle-mode-btn');
-			if (btn) btn.addEventListener('click', function () {
-				const icon = btn.querySelector('i');
-				const isDark = !document.body.classList.contains('dark-mode');
-				setDarkMode(isDark);
-				if (isDark) {
-					icon.classList.remove('fa-moon');
-					icon.classList.add('fa-sun');
+			// Switch de modo oscuro/claro
+			const themeSwitch = document.getElementById('themeSwitch');
+			const switchLabel = document.querySelector('.switch');
+			
+			// Aplicar estado inicial del switch según el tema
+			(function () {
+				const theme = localStorage.getItem('theme');
+				if (theme === 'dark-mode') {
+					document.body.classList.add('dark-mode');
+					if (themeSwitch) {
+						themeSwitch.checked = true;
+						if (switchLabel) switchLabel.setAttribute('aria-checked', 'true');
+					}
 				} else {
-					icon.classList.remove('fa-sun');
-					icon.classList.add('fa-moon');
+					if (themeSwitch) {
+						themeSwitch.checked = false;
+						if (switchLabel) switchLabel.setAttribute('aria-checked', 'false');
+					}
+				}
+			})();
+			
+			// Event listener para el switch
+			if (themeSwitch) {
+				themeSwitch.addEventListener('change', function () {
+					const isDark = this.checked;
+					setDarkMode(isDark);
+					if (switchLabel) {
+						switchLabel.setAttribute('aria-checked', isDark ? 'true' : 'false');
+					}
+				});
+			}
+			
+			// Marcar link activo según la URL
+			const currentPath = window.location.pathname;
+			const navLinks = document.querySelectorAll('.top-nav-link');
+			navLinks.forEach(link => {
+				link.classList.remove('active');
+				if (link.getAttribute('href') && currentPath.includes(link.getAttribute('href').replace('@{', '').replace('}', ''))) {
+					link.classList.add('active');
 				}
 			});
+			
+			// User Profile Menu Toggle
+			const userProfileBtn = document.getElementById('userProfileBtn');
+			const userProfileMenu = document.getElementById('userProfileMenu');
+			
+			if (userProfileBtn && userProfileMenu) {
+				// Toggle menu on click
+				userProfileBtn.addEventListener('click', function(e) {
+					e.stopPropagation();
+					userProfileMenu.classList.toggle('show');
+				});
+				
+				// Close menu when clicking outside
+				document.addEventListener('click', function(e) {
+					if (!userProfileBtn.contains(e.target) && !userProfileMenu.contains(e.target)) {
+						userProfileMenu.classList.remove('show');
+					}
+				});
+				
+				// Close menu when clicking on logout button
+				const logoutBtn = userProfileMenu.querySelector('.submenu-logout-btn');
+				if (logoutBtn) {
+					logoutBtn.addEventListener('click', function() {
+						userProfileMenu.classList.remove('show');
+					});
+				}
+			}
 		</script>
 		
 		<div class="container">
@@ -106,11 +187,12 @@
 								 th:src="@{'/uploads/avatars/' + ${docente.avatar}}" alt="Foto docente" class="avatar-preview" />
 							<i th:unless="${docente != null and docente.avatar != null and !#strings.isEmpty(docente.avatar)}" class="fa-solid fa-user-circle"></i>
 						</div>
-						<div class="panel-bienvenida-texto">
-							<div class="panel-bienvenida-titulo">Bienvenido a CodiPlayCo</div>
-							<div class="panel-bienvenida-nombre" th:if="${docente != null}" th:text="${docente.nombre + ' ' + docente.apellido}">NOMBRE DOCENTE</div>
-							<div class="panel-bienvenida-nombre" th:if="${docente == null}">Docente</div>
-						</div>
+					<div class="panel-bienvenida-texto">
+						<p class="panel-bienvenida-saludo">¡Hola de nuevo!</p>
+						<div class="panel-bienvenida-titulo">Bienvenido a CodiPlayCo</div>
+						<div class="panel-bienvenida-nombre" th:if="${docente != null}" th:text="${docente.nombre + ' ' + docente.apellido}">NOMBRE DOCENTE</div>
+						<div class="panel-bienvenida-nombre" th:if="${docente == null}">Docente</div>
+					</div>
 					</div>
 					<div class="panel-bienvenida-botimg bot-animado">
 						<img th:src="@{/assetsDocente/img/02baebb1-f087-4bee-bbdf-0af4f44d7563-removebg-preview.png}" alt="Docente Bot" />
@@ -120,7 +202,10 @@
 			
 			<div class="panel-bienvenida-datos">
 
-			    <h3 class="datos-titulo">Datos del Docente</h3>
+			    <h3 class="datos-titulo">
+					<i class="fa-solid fa-user"></i>
+					<span>Datos del Docente</span>
+				</h3>
 
 			    <!-- Error -->
 			    <div th:if="${error != null}" class="error-message">
@@ -159,15 +244,19 @@
 			        <!-- SUBIR IMAGEN -->
 			        <div class="subir-imagen">
 
-			            <label class="subir-imagen-label">Subir imagen:</label>
+			            <label class="subir-imagen-label">
+						<i class="fa-solid fa-upload"></i>
+						<span>Subir imagen de perfil:</span>
+					</label>
 
 			            <form th:action="@{/InterfazDocente/subir-foto}" 
 			                  method="post"
 			                  enctype="multipart/form-data"
 			                  class="subir-imagen-form">
-
-			                <input type="file" name="foto" accept="image/*" class="input-file">
-
+			                <label class="input-file-label">
+				                <input type="file" name="foto" accept="image/*" class="input-file">
+				                <span class="input-file-text">Seleccionar archivo</span>
+			                </label>
 			                <button type="submit" class="btn-subir">
 			                    Subir
 			                </button>

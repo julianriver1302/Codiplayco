@@ -32,6 +32,8 @@ public class RolService {
             .findFirst();
     }
     
-   
+    public Optional<Rol> findById(Integer id) {
+        return rolRepository.findById(id);
+    }
 
 }

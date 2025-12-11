@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mensajes - CodiPlayCo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <link rel="stylesheet" th:href="@{/assetsAdmin/css/panel_codiplay.css}">
+  <link rel="stylesheet" th:href="@{/assetsAdmin/css/registrar_docentes.css}">
+  <link rel="stylesheet" th:href="@{/assetsAdmin/css/mensajes_admin.css}">
+  <link th:href="@{/assets/loader.css}" rel="stylesheet" />
+</head>
+<body>
+  <div class="admin-container">
+    <!-- Animated Background -->
+    <div class="bg-element bg-element-1"></div>
+    <div class="bg-element bg-element-2"></div>
+
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+      <div class="nav-container">
+        <!-- Logo -->
+        <div class="logo-section">
+          <div class="logo-icon">
+            <img th:src="@{/assetsAdmin/images/ChatGPT Image 4 jul 2025, 02_22_14 p.m..png}" alt="CodiPlayCo Logo" />
+          </div>
+          <div class="logo-text">
+            <h1>CodiPlayCo</h1>
+            <p>Admin Dashboard</p>
+          </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="nav-tabs">
+          <a th:href="@{/PanelCodiplay}" class="nav-tab">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="7"></rect>
+              <rect x="14" y="3" width="7" height="7"></rect>
+              <rect x="14" y="14" width="7" height="7"></rect>
+              <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+            <span>Dashboard</span>
+          </a>
+          <a th:href="@{/PanelCodiplay/Admin/editar_usuarios}" class="nav-tab">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+            <span>Usuarios</span>
+          </a>
+          <a th:href="@{/PanelCodiplay/Admin/registrar_docentes}" class="nav-tab">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+            <span>Registrar Docentes</span>
+          </a>
+          <a th:href="@{/PanelCodiplay/Admin/listar_cursos}" class="nav-tab">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+              <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+            </svg>
+            <span>Cursos</span>
+          </a>
+          <a th:href="@{/PanelCodiplay/Admin/proceso_estudiantes}" class="nav-tab active">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+            </svg>
+            <span>Mensajes</span>
+          </a>
+        </div>
+
+        <!-- Right Actions -->
+        <div class="nav-actions">
+          <label aria-checked="false" role="switch" class="switch">
+            <input type="checkbox" id="theme-switch" />
+            <span class="slider">
+              <span class="slider-inner"></span>
+            </span>
+          </label>
+          <div class="user-profile" id="userProfileBtn">
+            <div class="user-avatar">
+              <svg fill="none" viewBox="0 0 24 24" stroke-width="2">
+                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+            </div>
+            <div class="user-info">
+              <h3>Admin User</h3>
+              <p>Administrador</p>
+            </div>
+            <i class="fas fa-chevron-down user-profile-arrow"></i>
+            <div class="user-submenu" id="userProfileMenu">
+              <a th:href="@{/logout}" class="submenu-item">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Cerrar Sesión</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="dashboard-content">
+        <!-- Header Section -->
+        <div class="page-header-section">
+          <div>
+            <div class="page-header-title-group">
+              <h1 class="page-main-title">Mensajes</h1>
+              <p class="page-subtitle">Envía mensajes a los usuarios inscritos en los cursos</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Container -->
+        <div class="form-container">
+          <div class="form-wrapper">
+            <!-- Formulario -->
+            <form th:action="@{/PanelCodiplay/Admin/enviar-mensaje}" method="post" class="registration-form" id="mensajeForm">
+              <div class="form-header">
+                <h2><i class="fas fa-paper-plane"></i> Enviar Mensaje</h2>
+              </div>
+
+              <div class="form-grid">
+                <!-- Apartado de Correos -->
+                <div class="form-section">
+                  <h3 class="section-title">
+                    <i class="fas fa-envelope"></i>
+                    Correos de Usuarios Inscritos
+                  </h3>
+                  
+                  <div class="form-group">
+                    <label for="correos">
+                      <i class="fas fa-envelope"></i>
+                      Agregar Correos
+                    </label>
+                    <div class="correos-container">
+                      <div class="correos-list" id="correosList">
+                        <!-- Los correos se agregarán aquí dinámicamente -->
+                      </div>
+                      <div class="correos-input-wrapper">
+                        <input 
+                          type="email" 
+                          id="correoInput" 
+                          class="correo-input" 
+                          placeholder="Ingresa un correo electrónico o selecciona de la lista"
+                          autocomplete="off"
+                        />
+                        <button type="button" class="btn-add-correo" id="btnAddCorreo">
+                          <i class="fas fa-plus"></i>
+                          Agregar
+                        </button>
+                      </div>
+                      <div class="usuarios-sugerencias" id="usuariosSugerencias">
+                        <!-- Sugerencias de usuarios -->
+                      </div>
+                    </div>
+                    <input type="hidden" name="correos" id="correosHidden" />
+                  </div>
+                </div>
+
+                <!-- Apartado de Mensaje -->
+                <div class="form-section">
+                  <h3 class="section-title">
+                    <i class="fas fa-comment-alt"></i>
+                    Mensaje
+                  </h3>
+                  
+                  <div class="form-group">
+                    <label for="mensaje">
+                      <i class="fas fa-comment-alt"></i>
+                      Escribe tu mensaje
+                    </label>
+                    <textarea 
+                      id="mensaje" 
+                      name="mensaje" 
+                      class="mensaje-textarea" 
+                      placeholder="Escribe tu mensaje aquí..."
+                      rows="10"
+                    ></textarea>
+                    <div class="mensaje-info">
+                      <span class="char-count" id="charCount">0 caracteres</span>
+                      <span class="no-limit">Sin límite de caracteres</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Botón de Envío -->
+              <div class="form-actions">
+                <button type="button" class="btn-secondary" id="btnClear">
+                  <i class="fas fa-trash"></i>
+                  Limpiar
+                </button>
+                <button type="submit" class="btn-primary">
+                  <i class="fas fa-paper-plane"></i>
+                  Enviar Mensaje
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Lista de Usuarios Inscritos -->
+        <div class="form-container" th:if="${not #lists.isEmpty(usuariosInscritos)}">
+          <div class="form-wrapper">
+            <div class="form-header">
+              <h2>
+                <i class="fas fa-users"></i>
+                Usuarios Inscritos
+                <span class="badge" th:text="${#lists.size(usuariosInscritos)}">0</span>
+              </h2>
+            </div>
+            <div class="usuarios-grid">
+              <div 
+                class="usuario-item" 
+                th:each="usuario : ${usuariosInscritos}"
+                th:data-email="${usuario.email}"
+                th:data-nombre="${usuario.nombre + ' ' + usuario.apellido}"
+              >
+                <div class="usuario-avatar">
+                  <i class="fas fa-user-graduate"></i>
+                </div>
+                <div class="usuario-info">
+                  <h4 th:text="${usuario.nombre + ' ' + usuario.apellido}">Nombre Usuario</h4>
+                  <p th:text="${usuario.email}" class="usuario-email">correo@ejemplo.com</p>
+                </div>
+                <button type="button" class="btn-select-email" th:data-email="${usuario.email}">
+                  <i class="fas fa-plus-circle"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script th:inline="javascript">
+    // Actualizar hora actual
+    function updateTime() {
+      const now = new Date();
+      const timeString = now.toLocaleString('es-ES', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+      const timeElement = document.getElementById('currentTime');
+      if (timeElement) {
+        timeElement.textContent = timeString;
+      }
+    }
+    
+    updateTime();
+    setInterval(updateTime, 60000);
+
+    // Lista de correos agregados
+    let correosAgregados = new Set();
+
+    // Agregar correo manualmente
+    document.getElementById('btnAddCorreo')?.addEventListener('click', function() {
+      const input = document.getElementById('correoInput');
+      const correo = input.value.trim();
+      
+      if (correo && isValidEmail(correo)) {
+        if (!correosAgregados.has(correo.toLowerCase())) {
+          agregarCorreo(correo);
+          input.value = '';
+          ocultarSugerencias();
+        } else {
+          alert('Este correo ya está agregado');
+        }
+      } else {
+        alert('Por favor ingresa un correo electrónico válido');
+      }
+    });
+
+    // Agregar correo al presionar Enter
+    document.getElementById('correoInput')?.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        document.getElementById('btnAddCorreo')?.click();
+      }
+    });
+
+    // Búsqueda de usuarios
+    document.getElementById('correoInput')?.addEventListener('input', function(e) {
+      const query = e.target.value.trim().toLowerCase();
+      if (query.length > 0) {
+        mostrarSugerencias(query);
+      } else {
+        ocultarSugerencias();
+      }
+    });
+
+    // Seleccionar correo desde la lista de usuarios
+    document.querySelectorAll('.btn-select-email').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const email = this.getAttribute('data-email');
+        if (email && !correosAgregados.has(email.toLowerCase())) {
+          agregarCorreo(email);
+        }
+      });
+    });
+
+    // Agregar correo a la lista
+    function agregarCorreo(correo) {
+      correosAgregados.add(correo.toLowerCase());
+      
+      const correosList = document.getElementById('correosList');
+      const correoItem = document.createElement('div');
+      correoItem.className = 'correo-item';
+      correoItem.innerHTML = `
+        <span class="correo-text">${correo}</span>
+        <button type="button" class="btn-remove-correo" data-correo="${correo}">
+          <i class="fas fa-times"></i>
+        </button>
+      `;
+      
+      correosList.appendChild(correoItem);
+      
+      // Remover correo
+      correoItem.querySelector('.btn-remove-correo').addEventListener('click', function() {
+        const correoToRemove = this.getAttribute('data-correo');
+        correosAgregados.delete(correoToRemove.toLowerCase());
+        correoItem.remove();
+        actualizarCorreosHidden();
+      });
+      
+      actualizarCorreosHidden();
+    }
+
+    // Mostrar sugerencias de usuarios
+    function mostrarSugerencias(query) {
+      const sugerencias = document.getElementById('usuariosSugerencias');
+      const usuarios = document.querySelectorAll('.usuario-item');
+      sugerencias.innerHTML = '';
+      
+      usuarios.forEach(usuario => {
+        const email = usuario.getAttribute('data-email') || '';
+        const nombre = usuario.getAttribute('data-nombre') || '';
+        
+        if (email.toLowerCase().includes(query) || nombre.toLowerCase().includes(query)) {
+          if (!correosAgregados.has(email.toLowerCase())) {
+            const sugerencia = document.createElement('div');
+            sugerencia.className = 'sugerencia-item';
+            sugerencia.innerHTML = `
+              <i class="fas fa-user"></i>
+              <div class="sugerencia-info">
+                <strong>${nombre}</strong>
+                <span>${email}</span>
+              </div>
+            `;
+            sugerencia.addEventListener('click', function() {
+              agregarCorreo(email);
+              document.getElementById('correoInput').value = '';
+              ocultarSugerencias();
+            });
+            sugerencias.appendChild(sugerencia);
+          }
+        }
+      });
+      
+      if (sugerencias.children.length > 0) {
+        sugerencias.style.display = 'block';
+      } else {
+        sugerencias.style.display = 'none';
+      }
+    }
+
+    // Ocultar sugerencias
+    function ocultarSugerencias() {
+      document.getElementById('usuariosSugerencias').style.display = 'none';
+    }
+
+    // Actualizar campo hidden con los correos
+    function actualizarCorreosHidden() {
+      const correosArray = Array.from(correosAgregados);
+      document.getElementById('correosHidden').value = correosArray.join(',');
+    }
+
+    // Contador de caracteres
+    document.getElementById('mensaje')?.addEventListener('input', function(e) {
+      const count = e.target.value.length;
+      document.getElementById('charCount').textContent = count + ' caracteres';
+    });
+
+    // Limpiar formulario
+    document.getElementById('btnClear')?.addEventListener('click', function() {
+      if (confirm('¿Estás seguro de que quieres limpiar el formulario?')) {
+        correosAgregados.clear();
+        document.getElementById('correosList').innerHTML = '';
+        document.getElementById('mensaje').value = '';
+        document.getElementById('correoInput').value = '';
+        document.getElementById('charCount').textContent = '0 caracteres';
+        actualizarCorreosHidden();
+        ocultarSugerencias();
+      }
+    });
+
+    // Validar email
+    function isValidEmail(email) {
+      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return re.test(email);
+    }
+
+    // Validar formulario antes de enviar
+    document.getElementById('mensajeForm')?.addEventListener('submit', function(e) {
+      if (correosAgregados.size === 0) {
+        e.preventDefault();
+        alert('Por favor agrega al menos un correo electrónico');
+        return false;
+      }
+      
+      if (!document.getElementById('mensaje').value.trim()) {
+        e.preventDefault();
+        alert('Por favor escribe un mensaje');
+        return false;
+      }
+    });
+
+    // Toggle theme switch
+    const themeSwitch = document.getElementById('theme-switch');
+    const switchLabel = document.querySelector('.switch');
+    
+    // Aplicar tema guardado
+    (function() {
+      const theme = localStorage.getItem('theme');
+      if (theme === 'dark-mode') {
+        document.body.classList.add('dark-mode');
+        if (themeSwitch) themeSwitch.checked = true;
+        if (switchLabel) switchLabel.setAttribute('aria-checked', 'true');
+      }
+    })();
+    
+    if (themeSwitch) {
+      themeSwitch.addEventListener('change', function() {
+        const isDark = this.checked;
+        if (isDark) {
+          document.body.classList.add('dark-mode');
+          localStorage.setItem('theme', 'dark-mode');
+        } else {
+          document.body.classList.remove('dark-mode');
+          localStorage.setItem('theme', 'light-mode');
+        }
+        if (switchLabel) {
+          switchLabel.setAttribute('aria-checked', isDark ? 'true' : 'false');
+        }
+      });
+    }
+
+    // User profile menu toggle
+    const userProfileBtn = document.getElementById('userProfileBtn');
+    const userProfileMenu = document.getElementById('userProfileMenu');
+    
+    if (userProfileBtn && userProfileMenu) {
+      userProfileBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        userProfileMenu.classList.toggle('show');
+      });
+      
+      document.addEventListener('click', function(e) {
+        if (!userProfileBtn.contains(e.target) && !userProfileMenu.contains(e.target)) {
+          userProfileMenu.classList.remove('show');
+        }
+      });
+    }
+  </script>
+</body>
+</html>
+

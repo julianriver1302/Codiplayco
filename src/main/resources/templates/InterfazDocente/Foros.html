@@ -19,93 +19,92 @@
 	<link rel="stylesheet" th:href="@{/assetsDocente/foros.css}">
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+	
+	<!-- SweetAlert2 -->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
 
 
 
 <body>
+	<!-- Top Navigation Bar -->
+	<nav class="top-nav">
+		<div class="top-nav-container">
+			<!-- Logo y Brand -->
+			<div class="top-nav-brand">
+				<div class="top-nav-logo">
+					<img th:src="@{/assetsDocente/img/ChatGPT Image 4 jul 2025, 02_22_14 p.m..png}" alt="CodiPlayCo Mascot" class="top-nav-logo-img" />
+				</div>
+				<div class="top-nav-brand-text">
+					<h1 class="top-nav-brand-title">CodiPlayCo</h1>
+					<p class="top-nav-brand-subtitle">Aprende programando</p>
+				</div>
+			</div>
 
-	<nav>
-
-		<div class="nav-logo">
-
-			<img th:src="@{/assetsDocente/img/ChatGPT Image 4 jul 2025, 02_22_14 p.m..png}" alt="CodiPlayCo Logo" />
-
+			<!-- Navigation Links -->
+			<div class="top-nav-links">
+				<a th:href="@{/InterfazDocente/paneldocente}" class="top-nav-link">
+					<i class="fa-solid fa-house"></i>
+					<span>Inicio</span>
+				</a>
+				<a th:href="@{/InterfazDocente/mis-cursos}" class="top-nav-link">
+					<i class="fa-solid fa-book"></i>
+					<span>Mis Cursos</span>
+				</a>
+				<a th:href="@{/InterfazDocente/tareas}" class="top-nav-link">
+					<i class="fa-solid fa-clipboard-list"></i>
+					<span>Tareas</span>
+				</a>
+			<a th:href="@{/InterfazDocente/foros}" class="top-nav-link active">
+				<i class="fa-solid fa-comments"></i>
+				<span>Foros</span>
+			</a>
+			<a th:href="@{/InterfazDocente/mensajes}" class="top-nav-link">
+				<i class="fa-solid fa-envelope"></i>
+				<span>Mensajes</span>
+			</a>
 		</div>
 
-		<button class="toggle-mode-btn" title="Cambiar modo"
-
-			style="margin:0 auto 0.5rem auto; display:block; background:#fff2; border:none; color:#fff; font-size:1.7rem; border-radius:50%; width:44px; height:44px; box-shadow:0 2px 8px #0002; cursor:pointer; transition:background 0.2s, color 0.2s; display:flex; align-items:center; justify-content:center;"><i
-
-				class="fa-solid fa-moon"></i></button>
-
-		<a th:href="@{/InterfazDocente/paneldocente}"><span class="nav-icon"><i
-
-					class="fa-solid fa-house"></i></span>Inicio</a>
-
-		<a th:href="@{/InterfazDocente/mis-cursos}"><span class="nav-icon"><i class="fa-solid fa-book"></i></span>Mis
-
-			Cursos</a>
-
-		<a th:href="@{/InterfazDocente/tareas}"><span class="nav-icon"><i
-
-					class="fa-solid fa-clipboard-list"></i></span>Tareas</a>
-
-		<a th:href="@{/InterfazDocente/foros}"><span class="nav-icon"><i
-
-					class="fa-solid fa-comments"></i></span>Foros</a>
-
-		<a th:href="@{/InterfazDocente/mensajes}"><span class="nav-icon"><i
-
-					class="fa-solid fa-envelope"></i></span>Mensajes</a>
-
-		
-
+			<!-- Right Actions -->
+			<div class="top-nav-actions">
+				<label aria-checked="false" role="switch" class="switch" title="Cambiar modo claro/oscuro">
+					<input type="checkbox" id="themeSwitch" />
+					<span class="slider">
+						<span class="slider-inner"></span>
+					</span>
+				</label>
+				<div class="top-nav-profile" id="userProfileBtn">
+					<div class="top-nav-profile-info">
+						<span class="top-nav-profile-name" th:if="${docente != null}" th:text="${docente.nombre}">Docente</span>
+						<span class="top-nav-profile-name" th:if="${docente == null}">Docente</span>
+						<span class="top-nav-profile-role">Docente</span>
+					</div>
+					<div class="top-nav-profile-avatar">
+						<i class="fa-solid fa-user"></i>
+					</div>
+					<div class="top-nav-submenu" id="userProfileMenu">
+						<div class="submenu-header">
+							<p th:if="${docente != null}"><strong>Nombre:</strong> <span th:text="${docente.nombre + ' ' + docente.apellido}">Nombre Completo</span></p>
+							<p th:if="${docente == null}"><strong>Nombre:</strong> No disponible</p>
+							<p><strong>Rol:</strong> Docente</p>
+						</div>
+						<div class="submenu-divider"></div>
+						<a th:href="@{/InterfazDocente/logout}" class="submenu-logout-btn">
+							<i class="fa-solid fa-right-from-bracket"></i>
+							<span>Cerrar Sesión</span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
 	</nav>
 
 	<div class="main-layout">
-
 		<header>
-
 			<div class="header-logo-title">
-
 				<h1 class="titulo-blanco"><span class="panel-icon"><i class="fa-solid fa-comments"></i></span>Foros</h1>
-
 			</div>
-
-			<div class="topbar-right">
-
-				<div class="notificaciones" title="Notificaciones"><i class="fa-solid fa-bell"></i></div>
-
-				<div class="perfil">
-
-					<i class="fa-solid fa-user"></i>
-
-					<span th:if="${docente != null}" th:text="${docente.nombre}">Docente</span>
-
-					<span th:if="${docente == null}">Docente</span>
-
-					<div class="submenu">
-
-						<p th:if="${docente != null}"><strong>Nombre:</strong> <span th:text="${docente.nombre + ' ' + docente.apellido}">Nombre Completo</span></p>
-
-						<p th:if="${docente == null}"><strong>Nombre:</strong> No disponible</p>
-
-						<p><strong>Rol:</strong> Docente</p>
-
-						<a th:href="@{/InterfazDocente/logout}" style="color: inherit; text-decoration: none;">
-
-							<button><i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión</button>
-
-						</a>
-
-					</div>
-
-				</div>
-
-			</div>
-
 		</header>
 
 		<div class="container">
@@ -200,7 +199,7 @@
 
 										      method="post" style="display:inline;"
 
-										      onsubmit="return confirm('¿Seguro que quieres eliminar este foro y todas sus respuestas?');">
+										      class="form-eliminar-foro">
 
 											<input type="hidden" name="foroId" th:value="${foro.id}" />
 
@@ -284,91 +283,188 @@
 
 	</div>
 
-	<script>
-
-		// Mantener modo oscuro con localStorage
-
-		function setDarkMode(enabled) {
-
-			if (enabled) {
-
-				document.body.classList.add('dark-mode');
-
-				localStorage.setItem('theme', 'dark-mode');
-
-			} else {
-
-				document.body.classList.remove('dark-mode');
-
-				localStorage.setItem('theme', 'light-mode');
-
-			}
-
-		}
-
-		// Al cargar la página, aplicar preferencia
-
-		(function () {
-
-			const theme = localStorage.getItem('theme');
-
-			if (theme === 'dark-mode') {
-
-				document.body.classList.add('dark-mode');
-
-				const btn = document.querySelector('.toggle-mode-btn');
-
-				if (btn) {
-
-					const icon = btn.querySelector('i');
-
-					icon.classList.remove('fa-moon');
-
-					icon.classList.add('fa-sun');
-
+		<script>
+			// Mantener modo oscuro con localStorage
+			function setDarkMode(enabled) {
+				if (enabled) {
+					document.body.classList.add('dark-mode');
+					localStorage.setItem('theme', 'dark-mode');
+				} else {
+					document.body.classList.remove('dark-mode');
+					localStorage.setItem('theme', 'light-mode');
 				}
-
 			}
-
-		})();
-
-		// Alternar icono luna/sol y modo oscuro
-
-		const btn = document.querySelector('.toggle-mode-btn');
-
-		if (btn) btn.addEventListener('click', function () {
-
-			const icon = btn.querySelector('i');
-
-			const isDark = !document.body.classList.contains('dark-mode');
-
-			setDarkMode(isDark);
-
-			if (isDark) {
-
-				icon.classList.remove('fa-moon');
-
-				icon.classList.add('fa-sun');
-
-			} else {
-
-				icon.classList.remove('fa-sun');
-
-				icon.classList.add('fa-moon');
-
+			// Al cargar la página, aplicar preferencia
+			(function () {
+				const theme = localStorage.getItem('theme');
+				if (theme === 'dark-mode') {
+					document.body.classList.add('dark-mode');
+					const btn = document.querySelector('.toggle-mode-btn');
+					if (btn) {
+						const icon = btn.querySelector('i');
+						icon.classList.remove('fa-moon');
+						icon.classList.add('fa-sun');
+					}
+				}
+			})();
+			// Switch de modo oscuro/claro
+			const themeSwitch = document.getElementById('themeSwitch');
+			const switchLabel = document.querySelector('.switch');
+			
+			// Aplicar estado inicial del switch según el tema
+			(function () {
+				const theme = localStorage.getItem('theme');
+				if (theme === 'dark-mode') {
+					document.body.classList.add('dark-mode');
+					if (themeSwitch) {
+						themeSwitch.checked = true;
+						if (switchLabel) switchLabel.setAttribute('aria-checked', 'true');
+					}
+				} else {
+					if (themeSwitch) {
+						themeSwitch.checked = false;
+						if (switchLabel) switchLabel.setAttribute('aria-checked', 'false');
+					}
+				}
+			})();
+			
+			// Event listener para el switch
+			if (themeSwitch) {
+				themeSwitch.addEventListener('change', function () {
+					const isDark = this.checked;
+					setDarkMode(isDark);
+					if (switchLabel) {
+						switchLabel.setAttribute('aria-checked', isDark ? 'true' : 'false');
+					}
+				});
 			}
+			
+			// Marcar link activo según la URL
+			const currentPath = window.location.pathname;
+			const navLinks = document.querySelectorAll('.top-nav-link');
+			navLinks.forEach(link => {
+				link.classList.remove('active');
+				if (link.getAttribute('href') && currentPath.includes(link.getAttribute('href').replace('@{', '').replace('}', ''))) {
+					link.classList.add('active');
+				}
+			});
+			
+			// User Profile Menu Toggle
+			const userProfileBtn = document.getElementById('userProfileBtn');
+			const userProfileMenu = document.getElementById('userProfileMenu');
+			
+			if (userProfileBtn && userProfileMenu) {
+				// Toggle menu on click
+				userProfileBtn.addEventListener('click', function(e) {
+					e.stopPropagation();
+					userProfileMenu.classList.toggle('show');
+				});
+				
+				// Close menu when clicking outside
+				document.addEventListener('click', function(e) {
+					if (!userProfileBtn.contains(e.target) && !userProfileMenu.contains(e.target)) {
+						userProfileMenu.classList.remove('show');
+					}
+				});
+				
+				// Close menu when clicking on logout button
+				const logoutBtn = userProfileMenu.querySelector('.submenu-logout-btn');
+				if (logoutBtn) {
+					logoutBtn.addEventListener('click', function() {
+						userProfileMenu.classList.remove('show');
+					});
+				}
+			}
+		</script>
 
-		});
-
-	</script>
 
 
+	<!-- Script para el manejo del modal de edición y SweetAlert para eliminar -->
 
-	<!-- Script para el manejo del modal de edición -->
-
-	<script>
+	<script th:inline="javascript">
+		// Ruta del logo para usar en SweetAlert
+		const logoUrl = /*[[@{/assetsDocente/img/ChatGPT Image 4 jul 2025, 02_22_14 p.m..png}]]*/ '/assetsDocente/img/ChatGPT Image 4 jul 2025, 02_22_14 p.m..png';
 
 		document.addEventListener('DOMContentLoaded', function() {
+
+			// SweetAlert para eliminar foro
+			document.querySelectorAll('.form-eliminar-foro').forEach(form => {
+				form.addEventListener('submit', function(e) {
+					e.preventDefault();
+					
+					const form = this;
+					const foroId = form.querySelector('input[name="foroId"]').value;
+					const foroTitulo = form.closest('.foro-item').querySelector('.foro-header strong').textContent;
+					
+					Swal.fire({
+						title: '<div class="swal-custom-header"><div class="swal-logo-wrapper"><img src="' + logoUrl + '" class="swal-logo" alt="CodiPlayCo Logo"></div><h2 class="swal-title">Confirmar Eliminación</h2></div>',
+						html: `
+							<div class="swal-custom-content">
+								<div class="swal-icon-wrapper">
+									<div class="swal-icon-circle">
+										<i class="fas fa-trash-alt swal-warning-icon"></i>
+									</div>
+								</div>
+								<div class="swal-text-content">
+									<p class="swal-message">Estás a punto de eliminar el foro:</p>
+									<div class="swal-course-badge">
+										<i class="fas fa-comments"></i>
+										<span class="swal-course-name">${foroTitulo}</span>
+									</div>
+									<div class="swal-warning-badge">
+										<i class="fas fa-exclamation-circle"></i>
+										<span>Esta acción no se puede deshacer</span>
+									</div>
+								</div>
+							</div>
+						`,
+						icon: null,
+						showCancelButton: true,
+						confirmButtonText: '<i class="fas fa-trash"></i> Sí, eliminar',
+						cancelButtonText: '<i class="fas fa-times"></i> Cancelar',
+						reverseButtons: true,
+						customClass: {
+							popup: 'swal2-popup-custom',
+							title: 'swal2-title-custom',
+							htmlContainer: 'swal2-html-container-custom',
+							confirmButton: 'swal2-confirm-custom',
+							cancelButton: 'swal2-cancel-custom',
+							actions: 'swal2-actions-custom'
+						},
+						buttonsStyling: true,
+						allowOutsideClick: false,
+						allowEscapeKey: true,
+						showClass: {
+							popup: 'swal2-show-custom'
+						},
+						hideClass: {
+							popup: 'swal2-hide-custom'
+						}
+					}).then((result) => {
+						if (result.isConfirmed) {
+							// Mostrar loading personalizado mientras se elimina
+							Swal.fire({
+								title: '<div class="swal-custom-header-loading"><div class="swal-logo-wrapper-small"><img src="' + logoUrl + '" class="swal-logo-small" alt="CodiPlayCo Logo"></div><h2 class="swal-title-loading">Eliminando foro</h2></div>',
+								html: '<div class="swal-loading-content"><div class="swal-spinner-wrapper"><div class="swal-spinner"></div></div><p class="swal-loading-text">Procesando tu solicitud...</p></div>',
+								icon: null,
+								allowOutsideClick: false,
+								allowEscapeKey: false,
+								showConfirmButton: false,
+								customClass: {
+									popup: 'swal2-popup-custom swal2-popup-loading',
+									htmlContainer: 'swal2-html-container-custom'
+								},
+								didOpen: () => {
+									Swal.showLoading();
+								}
+							});
+							
+							// Enviar el formulario
+							form.submit();
+						}
+					});
+				});
+			});
 
 			const modal = document.getElementById('editarForoModal');
 
@@ -457,8 +553,6 @@
 		});
 
 	</script>
-
-	<link rel="stylesheet" href="estilos.css">
 
 </body>
 

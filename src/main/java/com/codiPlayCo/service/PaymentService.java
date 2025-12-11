@@ -136,8 +136,9 @@ public class PaymentService {
                         }
 
                         if (usuario.getRol() == null) {
-                            Optional<Rol> rolEstudianteOpt = rolService.findByNombre("ESTUDIANTE");
-                            rolEstudianteOpt.ifPresent(usuario::setRol);
+                            // Asignar rol USUARIO (ID 3) - usuarios que se inscriben y pagan cursos
+                            Optional<Rol> rolUsuarioOpt = rolService.findById(3);
+                            rolUsuarioOpt.ifPresent(usuario::setRol);
                         }
 
                         usuario = usuarioService.save(usuario);
@@ -156,8 +157,9 @@ public class PaymentService {
                         nuevo.setActivo("activo");
                         nuevo.setFecharegistro(new Date(System.currentTimeMillis()));
 
-                        Optional<Rol> rolEstudianteOpt = rolService.findByNombre("ESTUDIANTE");
-                        rolEstudianteOpt.ifPresent(nuevo::setRol);
+                        // Asignar rol USUARIO (ID 3) - usuarios que se inscriben y pagan cursos
+                        Optional<Rol> rolUsuarioOpt = rolService.findById(3);
+                        rolUsuarioOpt.ifPresent(nuevo::setRol);
 
                         usuario = usuarioService.save(nuevo);
                         System.out.println("Nuevo usuario creado: " + usuario.getId());
